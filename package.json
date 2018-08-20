@@ -1,0 +1,31 @@
+{
+  "name": "boolet-home",
+  "version": "0.1.0",
+  "description": "BooleT home page",
+  "main": "index.js",
+  "author": "Alexey Levin (https://github.com/BooleT37)",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "tsc -p server && node server/dist/server.js",
+    "dev": "node node_modules/nodemon/bin/nodemon.js --config server/nodemon.json",
+    "lint:server": "tslint -p server -e /client/*"
+  },
+  "dependencies": {
+    "@types/react": "^16.4.7",
+    "@types/react-dom": "^16.0.6",
+    "express": "^4.16.3",
+    "module-alias": "^2.1.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "ignore-styles": "^5.0.1",
+    "nodemon": "^1.18.3",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.11.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.0.1"
+  }
+}
