@@ -5,7 +5,7 @@ import "./aliasesSetup";
 
 import { clientDistPath, clientPublicPath } from "./paths";
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 const app = express();
 
 console.log(clientDistPath);

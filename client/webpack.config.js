@@ -5,7 +5,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const path = require('path');
 
-const devServerPort = process.env.PORT || 8081;
+const devServerPort = 8081;
 
 module.exports = () => {
     const isProduction = process.env.WEBPACK_SERVE !== 'true';
