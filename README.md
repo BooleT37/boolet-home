@@ -4,7 +4,7 @@ My home page
 ## scripts:
 
 ### for production:
-* **`npm start`** - build and start server
+* **`npm start`** - build everything and start server
 * **`build:server`** - build server
 * **`build:client`** - build client assets
 ### for developement:

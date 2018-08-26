@@ -2,14 +2,13 @@
   "name": "boolet-home",
   "version": "0.1.0",
   "description": "BooleT home page",
-  "main": "index.js",
   "author": "Alexey Levin (https://github.com/BooleT37)",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "npm run build:server && node server/dist/server.js",
+    "start": "npm run build:client && npm run build:server && node server/dist/server.js",
     "build:server": "tsc -p server",
-    "build:client": "webpack client/webpack.config.js",
+    "build:client": "webpack --config client/webpack.config.js",
     "watch:server": "node node_modules/nodemon/bin/nodemon.js --config server/nodemon.json",
     "watch:client": "webpack-serve client/webpack.config.js",
     "lint:server": "tslint -p server -e /client/*"
@@ -20,7 +19,8 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-hot-loader": "^4.3.5",
-    "style-loader": "^0.22.1"
+    "style-loader": "^0.22.1",
+    "webpack-cli": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-rc.3",
@@ -38,11 +38,13 @@
     "ignore-styles": "^5.0.1",
     "mini-css-extract-plugin": "^0.4.2",
     "nodemon": "^1.18.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-loader": "^3.6.0",
     "tslint-react": "^3.6.0",
     "typescript": "^3.0.1",
+    "uglifyjs-webpack-plugin": "^1.3.0",
     "webpack": "^4.17.1",
     "webpack-serve": "^2.0.2"
   }

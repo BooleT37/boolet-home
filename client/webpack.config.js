@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const path = require('path');
 
 const devServerPort = 8081;
@@ -16,25 +18,15 @@ module.exports = () => {
     };
 
     const urlLoaderOptions = Object.assign(fileLoaderOptions, { limit: 100000 });
-    const tsConfigFile = path.join(__dirname, 'tsconfig.json');
 
-    const typeScriptLoaders = [
+    const scriptLoaders = [
         {
-            loader: "babel-loader",
+            loader: 'babel-loader',
             options: {
-                cacheDirectory: true
-            }
-        }
+                cacheDirectory: true,
+            },
+        },
     ];
-    if (!isProduction) {
-        typeScriptLoaders.push({
-            loader: 'tslint-loader',
-            options: {
-                tsConfigFile,
-                typeCheck: true,
-            }
-        });
-    }
 
     return {
         context: __dirname,
@@ -56,7 +48,7 @@ module.exports = () => {
                 {
                     test: /\.([jt])sx?$/,
                     exclude: /node_modules/,
-                    use: typeScriptLoaders,
+                    use: scriptLoaders,
                 },
                 {
                     test: /\.(png|gif|ttf|otf|svg|eot|woff|woff2)$/,
@@ -71,49 +63,62 @@ module.exports = () => {
                 {
                     test: /\.css$/,
                     use: [
-                        isProduction ?  MiniCssExtractPlugin.loader : "style-loader",
+                        isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
                         {
-                            loader: "css-loader",
+                            loader: 'css-loader',
                             options: {
-                                sourceMap: !isProduction
-                            }
-                        }
-                    ]
-                }
+                                sourceMap: !isProduction,
+                            },
+                        },
+                    ],
+                },
             ],
         },
         serve: {
-            content: path.join(__dirname, "public"),
+            content: path.join(__dirname, 'public'),
             devMiddleware: {
                 publicPath,
                 headers: {
                     'Access-Control-Allow-Origin': '*',
-                }
+                },
             },
             port: devServerPort,
-            hotClient: true
+            hotClient: true,
+        },
+        optimization: {
+            minimizer: [
+                new UglifyJsPlugin({
+                    cache: true,
+                    parallel: true
+                }),
+                new OptimizeCSSAssetsPlugin(),
+            ],
+        },
+        performance: {
+            maxEntrypointSize: 600000,
+            maxAssetSize: 400000
         },
         plugins: getPlugins(isProduction),
     };
 };
 
-function getPlugins(isProduction, tsConfigFile) {
+function getPlugins(isProduction) {
     const plugins = [
         new MiniCssExtractPlugin({
-            filename: '[name].css',
+            filename: 'bundle.css'
         }),
         new ForkTsCheckerWebpackPlugin({
-            tsconfig: tsConfigFile,
-            tslint: path.join(__dirname, 'tslint.json')
+            tsconfig: path.join(__dirname, 'tsconfig.json'),
+            tslint: isProduction ? undefined : path.join(__dirname, 'tslint.json')
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development')
         })
     ];
 
     if (isProduction) {
         plugins.push(new webpack.LoaderOptionsPlugin({
-            minimize: true,
-        }));
-        plugins.push(new webpack.DefinePlugin({
-            'process.env.NODE_ENV': 'production'
+            minimize: true
         }));
     }
 
