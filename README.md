@@ -10,4 +10,3 @@ My home page
 ### for developement:
 * **`watch:server`** - start server in watch mode
 * **`watch:client`** - start webpack in watch mode
-* **`watch:client`** - start webpack in watch mode
