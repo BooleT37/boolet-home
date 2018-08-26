@@ -1,12 +1,10 @@
 import * as React from "react";
+import { hot } from "react-hot-loader";
 
 import "./App.css";
 
-interface Props {
-
-}
-
-export default class App extends React.Component<Props> {
+class App extends React.Component {
+  // tslint:disable-next-line:prefer-function-over-method
   render(): JSX.Element {
     return (
       <div className="">
@@ -15,3 +13,5 @@ export default class App extends React.Component<Props> {
     );
   }
 }
+
+export default hot(module)(App);

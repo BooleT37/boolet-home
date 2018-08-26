@@ -2,15 +2,15 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
+    "jsx": "react",
     "noImplicitAny": false,
     "sourceMap": true,
-    "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "src/*": [ "src/*" ]
     }
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts?"
   ]
 }
