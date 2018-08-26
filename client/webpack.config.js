@@ -5,7 +5,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const path = require('path');
 
-const devServerPort = 8081;
+const devServerPort = process.env.PORT || 8081;
 
 module.exports = () => {
     const isProduction = process.env.WEBPACK_SERVE !== 'true';
@@ -22,10 +22,8 @@ module.exports = () => {
     const scriptLoaders = [
         {
             loader: 'babel-loader',
-            options: {
-                cacheDirectory: true,
-            },
-        },
+            options: getBabelOptions(isProduction)
+        }
     ];
 
     return {
@@ -41,7 +39,7 @@ module.exports = () => {
             extensions: ['*', '.js', '.ts', '.tsx'],
             alias: {
                 'src': path.join(__dirname, 'src'),
-            },
+            }
         },
         module: {
             rules: [
@@ -123,4 +121,39 @@ function getPlugins(isProduction) {
     }
 
     return plugins;
+}
+
+function getBabelOptions(isProduction) {
+    const presets = [
+        [
+            "@babel/preset-env",
+            {
+                targets: {
+                    "browsers": "last 2 versions"
+                }
+            }
+        ],
+        "@babel/preset-typescript",
+        "@babel/preset-react"
+    ];
+
+    const plugins = [
+        [
+            "@babel/plugin-proposal-class-properties",
+            {
+                loose: true
+            }
+        ]
+    ];
+
+    if (!isProduction) {
+        plugins.push("react-hot-loader/babel");
+    }
+
+    return {
+        cacheDirectory: true,
+        babelrc: false,
+        presets,
+        plugins
+    };
 }
