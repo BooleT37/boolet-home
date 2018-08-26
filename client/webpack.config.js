@@ -22,7 +22,7 @@ module.exports = () => {
     const scriptLoaders = [
         {
             loader: 'babel-loader',
-            options: getBabelOptions(isProduction)
+            options: getBabelOptions()
         }
     ];
 
@@ -123,7 +123,7 @@ function getPlugins(isProduction) {
     return plugins;
 }
 
-function getBabelOptions(isProduction) {
+function getBabelOptions() {
     const presets = [
         [
             "@babel/preset-env",
@@ -146,9 +146,8 @@ function getBabelOptions(isProduction) {
         ]
     ];
 
-    if (!isProduction) {
-        plugins.push("react-hot-loader/babel");
-    }
+    // todo disable HMR in production
+    plugins.push("react-hot-loader/babel");
 
     return {
         cacheDirectory: true,
