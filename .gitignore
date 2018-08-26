@@ -112,3 +112,5 @@ typings/
 # next.js build output
 .next
 
+client/dist
+server/dist
