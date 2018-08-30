@@ -1,0 +1,8 @@
+.counter {
+  text-align: center;
+}
+
+.counter__button {
+  width: 60px;
+  height: 30px;
+}

@@ -66,6 +66,7 @@
     "prefer-template": false,
     "promise-function-async": true,
     "restrict-plus-operands": true,
+    "interface-name": false,
     "semicolon": [ true, "always", "ignore-bound-class-methods"],
     "switch-default": false,
     "trailing-comma": [
