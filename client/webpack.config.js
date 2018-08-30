@@ -3,6 +3,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const history = require('connect-history-api-fallback');
+const convert = require('koa-connect');
 const path = require('path');
 
 const devServerPort = 8081;
@@ -82,6 +84,7 @@ module.exports = () => {
             },
             port: devServerPort,
             hotClient: true,
+            add: (app) => app.use(convert(history({})))
         },
         optimization: {
             minimizer: [

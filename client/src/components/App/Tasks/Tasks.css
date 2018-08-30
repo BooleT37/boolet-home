@@ -1,0 +1,7 @@
+.tasks {
+  margin-left: 3rem;
+}
+
+.tasks__list {
+  display: flex;
+}
