@@ -1,0 +1,31 @@
+.flexbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.flexbox__item {
+    width: 6rem;
+    height: 4rem;
+    border: solid 1px gray;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: bold;
+    margin: auto;
+}
+
+#flexbox__item_1 {
+    background: red;
+}
+
+#flexbox__item_2 {
+    background: royalblue;
+}
+
+#flexbox__item_3 {
+    background: seagreen;
+}
+
+#flexbox__item_4 {
+    background: lightsalmon;
+}

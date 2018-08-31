@@ -5,3 +5,7 @@
 .tasks__list {
   display: flex;
 }
+
+.tasks__list li {
+  margin-right: 2rem;
+}
