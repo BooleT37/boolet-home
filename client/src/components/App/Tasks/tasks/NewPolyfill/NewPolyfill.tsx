@@ -24,9 +24,10 @@ export default class NewPolyfill extends React.Component {
         return (
             <div>
                 <b><pre>{`function Car(make, model, year) {
-                    this.make = make;
-                    this.model = model;
-                    this.year = year;
+    this.make = make;
+    this.model = model;
+    this.year = year;
+}
                 `}</pre></b>
                 <ul>
                     <li>
