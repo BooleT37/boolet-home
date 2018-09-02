@@ -65,7 +65,7 @@
     transform: rotate(-2deg);
     color: darkslateblue;
     top: 40px;
-    animation: slide-left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 4s;
+    animation: slide-left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 3s;
     animation-fill-mode: backwards;
 }
 
@@ -73,7 +73,7 @@
     transform: rotate(2deg);
     color: darkgreen;
     top: 70px;
-    animation: slide-left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 6s;
+    animation: slide-left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 5s;
     animation-fill-mode: backwards;
 }
 
@@ -81,7 +81,7 @@
     transform: rotate(-2deg);
     color: seagreen;
     top: 70px;
-    animation: slide-right 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 9s;
+    animation: slide-right 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 7s;
     animation-fill-mode: backwards;
 }
 
