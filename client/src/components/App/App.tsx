@@ -30,7 +30,7 @@ class App extends React.Component {
                             </li>
                         </ul>
                         <hr className="app__mainMenuHr"/>
-                        <Route exact path="/" component={Home} />
+                        <Route exact path="/" component={Gift} />
                         <Route path="/counter" component={Counter} />
                         <Route path="/tasks" component={Tasks} />
                         <Route path="/gift" component={Gift} />
