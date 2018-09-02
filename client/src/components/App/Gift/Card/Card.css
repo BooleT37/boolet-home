@@ -84,3 +84,23 @@
     animation: slide-right 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 9s;
     animation-fill-mode: backwards;
 }
+
+.card__buttonWrapper {
+    text-align: center;
+}
+
+.card__button {
+    margin-top: 5px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-family: Segoe UI, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px lightgray;
+}
+
+.card_active .card__button {
+    display: none;
+}

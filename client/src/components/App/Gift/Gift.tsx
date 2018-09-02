@@ -42,7 +42,9 @@ function renderCard(index: number, modIndex: number, cursor: number, carouselSta
             backgroundColor={backgroundColors[modIndex]}
             captions={poem[modIndex]}
             active={true}
-        />
+        >
+            {modIndex === 6 ? <div className="gift__puppy"/> : null}
+        </Card>
     );
 }
 
@@ -50,6 +52,14 @@ function renderGift(props: {children: React.ReactNode}): JSX.Element {
     return (
         <div className="gift">
             {props.children}
+        </div>
+    );
+}
+
+function Card6(): JSX.Element {
+    return (
+        <div>
+            <div className="gift__puppy"/>
         </div>
     );
 }

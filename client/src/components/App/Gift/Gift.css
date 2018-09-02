@@ -10,3 +10,31 @@
 .gift {
     height: 640px;
 }
+
+.card__content {
+    text-align: center;
+}
+
+.card_active .gift__puppy {
+    display: inline-block;
+}
+
+.gift__puppy {
+    background-image: url("./images/puppy.png");
+    width: 252px;
+    height: 194px;
+    position: relative;
+    top: 150px;
+    display: none;
+    animation: slide-right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 10s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes slide-right {
+    from {
+        left: -100%;
+    }
+    to {
+        left: 0;
+    }
+}
