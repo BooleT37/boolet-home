@@ -1,0 +1,86 @@
+.card {
+    width: 100%;
+    height: 640px;
+    position: relative;
+    animation: slide-up 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slide-up {
+    from {
+        top: -200px
+    }
+    to {
+        top: 0
+    }
+}
+
+@keyframes slide-right {
+    from {
+        left: -100%;
+    }
+    to {
+        left: 0;
+    }
+}
+
+@keyframes slide-left {
+    from {
+        right: 100%;
+    }
+    to {
+        right: 0;
+    }
+}
+
+.card__caption {
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+}
+
+.card__caption#card__caption_0,
+.card__caption#card__caption_1,
+.card__caption#card__caption_2,
+.card__caption#card__caption_3 {
+    animation-play-state: paused;
+}
+
+.card_active .card__caption#card__caption_0,
+.card_active .card__caption#card__caption_1,
+.card_active .card__caption#card__caption_2,
+.card_active .card__caption#card__caption_3 {
+    animation-play-state: running;
+}
+
+#card__caption_0 {
+    transform: rotate(2deg);
+    color: darkblue;
+    top: 40px;
+    animation: slide-right 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s;
+    animation-fill-mode: backwards;
+}
+
+#card__caption_1 {
+    transform: rotate(-2deg);
+    color: darkslateblue;
+    top: 40px;
+    animation: slide-left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 4s;
+    animation-fill-mode: backwards;
+}
+
+#card__caption_2 {
+    transform: rotate(2deg);
+    color: darkgreen;
+    top: 70px;
+    animation: slide-left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 6s;
+    animation-fill-mode: backwards;
+}
+
+#card__caption_3 {
+    transform: rotate(-2deg);
+    color: seagreen;
+    top: 70px;
+    animation: slide-right 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 9s;
+    animation-fill-mode: backwards;
+}

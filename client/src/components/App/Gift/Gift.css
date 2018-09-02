@@ -1,0 +1,12 @@
+.app {
+    padding: 0 !important;
+    min-height: auto !important;
+}
+
+.app__mainMenu, .app__mainMenuHr {
+    display: none;
+}
+
+.gift {
+    height: 640px;
+}
