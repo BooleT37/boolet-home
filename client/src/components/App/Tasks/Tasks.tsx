@@ -1,14 +1,17 @@
 import * as React from "react";
-import { Route, Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
+import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
 import Rating from "src/components/App/Tasks/tasks/Rating/Rating";
+import withMainMenu from "src/decorators/withMainMenu";
+
+import "./Tasks.css";
 import Flexbox from "./tasks/Flexbox/Flexbox";
 import NewPolyfill from "./tasks/NewPolyfill/NewPolyfill";
 
-import "./Tasks.css";
-
+@withMainMenu(MainMenuItem.Tasks)
 export default class Tasks extends React.Component {
     // tslint:disable-next-line:prefer-function-over-method
-    render(): JSX.Element {
+    render(): React.ReactNode {
         return (
             <div className="tasks">
                 <ul className="tasks__list">

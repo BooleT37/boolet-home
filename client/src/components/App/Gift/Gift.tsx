@@ -1,11 +1,13 @@
 import * as React from "react";
 import TouchCarousel from "react-touch-carousel";
 import touchWithMouseHOC from "react-touch-carousel/lib/touchWithMouseHOC";
+import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
+import withMainMenu from "src/decorators/withMainMenu";
 
 import Card from "./Card/Card";
-import poem from "./poem";
 
 import "./Gift.css";
+import poem from "./poem";
 
 const backgroundColors = [
     "lightBlue",
@@ -19,9 +21,10 @@ const backgroundColors = [
     "#caffd6"
 ];
 
+@withMainMenu(MainMenuItem.Gift, true)
 export default class Gift extends React.Component {
     // tslint:disable-next-line:prefer-function-over-method
-    render(): JSX.Element {
+    render(): React.ReactNode {
         return (
             <TouchCarousel
                 component={touchWithMouseHOC(renderGift)}
@@ -35,7 +38,7 @@ export default class Gift extends React.Component {
     }
 }
 
-function renderCard(index: number, modIndex: number, cursor: number, carouselState: any): JSX.Element {
+function renderCard(index: number, modIndex: number): JSX.Element {
     return (
         <Card
             key={index}
@@ -52,14 +55,6 @@ function renderGift(props: {children: React.ReactNode}): JSX.Element {
     return (
         <div className="gift">
             {props.children}
-        </div>
-    );
-}
-
-function Card6(): JSX.Element {
-    return (
-        <div>
-            <div className="gift__puppy"/>
         </div>
     );
 }

@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const history = require('connect-history-api-fallback');
 const convert = require('koa-connect');
 const path = require('path');
@@ -24,8 +24,8 @@ module.exports = () => {
     const scriptLoaders = [
         {
             loader: 'babel-loader',
-            options: getBabelOptions()
-        }
+            options: getBabelOptions(),
+        },
     ];
 
     return {
@@ -41,7 +41,7 @@ module.exports = () => {
             extensions: ['*', '.js', '.ts', '.tsx'],
             alias: {
                 'src': path.join(__dirname, 'src'),
-            }
+            },
         },
         module: {
             rules: [
@@ -84,20 +84,20 @@ module.exports = () => {
             },
             port: devServerPort,
             hotClient: true,
-            add: (app) => app.use(convert(history({})))
+            add: (app) => app.use(convert(history({}))),
         },
         optimization: {
             minimizer: [
                 new UglifyJsPlugin({
                     cache: true,
-                    parallel: true
+                    parallel: true,
                 }),
                 new OptimizeCSSAssetsPlugin(),
             ],
         },
         performance: {
             maxEntrypointSize: 600000,
-            maxAssetSize: 400000
+            maxAssetSize: 400000,
         },
         plugins: getPlugins(isProduction),
     };
@@ -106,20 +106,20 @@ module.exports = () => {
 function getPlugins(isProduction) {
     const plugins = [
         new MiniCssExtractPlugin({
-            filename: 'bundle.css'
+            filename: 'bundle.css',
         }),
         new ForkTsCheckerWebpackPlugin({
             tsconfig: path.join(__dirname, 'tsconfig.json'),
-            tslint: isProduction ? undefined : path.join(__dirname, 'tslint.json')
+            tslint: isProduction ? undefined : path.join(__dirname, 'tslint.json'),
         }),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development')
-        })
+            'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
+        }),
     ];
 
     if (isProduction) {
         plugins.push(new webpack.LoaderOptionsPlugin({
-            minimize: true
+            minimize: true,
         }));
     }
 
@@ -129,33 +129,37 @@ function getPlugins(isProduction) {
 function getBabelOptions() {
     const presets = [
         [
-            "@babel/preset-env",
+            '@babel/preset-env',
             {
                 targets: {
-                    "browsers": "last 2 versions"
-                }
-            }
+                    'browsers': 'last 2 versions',
+                },
+            },
         ],
-        "@babel/preset-typescript",
-        "@babel/preset-react"
+        '@babel/preset-typescript',
+        '@babel/preset-react',
     ];
 
     const plugins = [
         [
-            "@babel/plugin-proposal-class-properties",
+            '@babel/plugin-proposal-class-properties',
             {
-                loose: true
-            }
+                loose: true,
+            },
+        ],
+        [
+            '@babel/plugin-proposal-decorators',
+            { 'legacy': true }
         ]
     ];
 
     // todo disable HMR in production
-    plugins.push("react-hot-loader/babel");
+    plugins.push('react-hot-loader/babel');
 
     return {
         cacheDirectory: true,
         babelrc: false,
         presets,
-        plugins
+        plugins,
     };
 }
