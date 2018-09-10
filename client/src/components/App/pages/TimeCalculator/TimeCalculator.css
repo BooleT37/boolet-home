@@ -1,0 +1,41 @@
+.timeCalculator {
+    text-align: center;
+}
+
+.timeCalculator__input {
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 20px;
+    width: 15rem;
+}
+
+.timeCalculator__intervals {
+    display: inline-flex;
+}
+
+.timeCalculator__countButton {
+    height: 25px;
+    margin-left: 0.5rem;
+}
+
+.timeCalculator__errorMessage {
+    color: crimson;
+}
+
+.timeCalculator__sum {
+    margin-top: 0.5rem;
+    font-size: 18px;
+}
+
+.timeCalculator__sumValue {
+    font-weight: 600;
+}
+
+.timeCalculator__clearButton {
+    text-decoration: none;
+    margin-left: 0.5rem;
+}
+
+.timeCalculator__clearButton:hover {
+    text-decoration: underline;
+}

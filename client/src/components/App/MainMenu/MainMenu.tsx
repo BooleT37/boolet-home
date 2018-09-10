@@ -8,7 +8,8 @@ export enum MainMenuItem {
     Home = "Home",
     Counter = "Counter",
     Tasks = "Tasks",
-    Gift = "Gift"
+    Gift = "Gift",
+    TimeCalculator = "TimeCalculator"
 }
 
 interface Props {
@@ -42,6 +43,11 @@ export default class MainMenu extends React.Component<Props> {
                             isCurrent={this.props.currentItem === MainMenuItem.Gift}
                             path="/gift"
                             label="Gift"
+                        />
+                        <MenuItem
+                            isCurrent={this.props.currentItem === MainMenuItem.TimeCalculator}
+                            path="/timeCalculator"
+                            label="Time Calculator"
                         />
                     </ul>
                 </div>

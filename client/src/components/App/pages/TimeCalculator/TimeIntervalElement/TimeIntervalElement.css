@@ -1,0 +1,50 @@
+.timeIntervalElement {
+    display: flex;
+    margin-right: 0.3rem;
+    line-height: 1.5;
+    font-size: 18px;
+}
+
+.timeIntervalElement__sign {
+    margin-right: 0.3rem;
+}
+
+.timeIntervalElement_parts {
+    display: flex;;
+    padding: 0 5px;
+    border-radius: 3px;
+    background: white;
+    box-shadow: 2px 2px 3px rgba(185, 185, 185, 0.8);
+}
+
+.timeIntervalElement__part {
+    display: flex;
+    margin-right: 0.2rem;
+}
+
+.timeIntervalElement__partValue {
+    font-weight: 600;
+}
+
+.timeIntervalElement_parts {
+    overflow: hidden;
+    position: relative;
+}
+
+.timeIntervalElement__removeButton {
+    position: absolute;
+    cursor: pointer;
+    font-weight: 600;
+    right: -100%;
+    padding: 0 7px;
+    height: 27px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    transition: right 0.3s;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.timeIntervalElement_parts:hover .timeIntervalElement__removeButton {
+    right: 0;
+}

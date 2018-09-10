@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link, Route } from "react-router-dom";
 import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
-import Rating from "src/components/App/Tasks/tasks/Rating/Rating";
+import Rating from "src/components/App/pages/Tasks/tasks/Rating/Rating";
 import withMainMenu from "src/decorators/withMainMenu";
 
 import "./Tasks.css";
