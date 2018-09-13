@@ -1,5 +1,12 @@
+import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon/Icon";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import Input from "@material-ui/core/Input/Input";
+import { Close } from "@material-ui/icons";
 import * as React from "react";
 import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
+import Row from "src/components/shared/Row/Row";
+import RowItem from "src/components/shared/Row/RowItem/RowItem";
 import withMainMenu from "src/decorators/withMainMenu";
 
 import "./TimeCalculator.css";
@@ -120,30 +127,41 @@ export default class TimeCalculator extends React.Component<undefined, State> {
                     {intervals}
                     {intervals.length > 0 && <span>+&nbsp;</span>}
                 </div>
-                <input
-                    className="timeCalculator__input"
-                    value={this.state.inputValue}
-                    onChange={this.onInputChange}
-                    onKeyPress={this.onInputKeyPress}
-                />
-                <button
-                    type="button"
-                    className="timeCalculator__countButton"
-                    onClick={this.count}
-                >
-                    Посчитать
-                </button>
+                <Row inline>
+                    <RowItem>
+                        <Input
+                            className="timeCalculator__input"
+                            value={this.state.inputValue}
+                            onChange={this.onInputChange}
+                            onKeyPress={this.onInputKeyPress}
+                        />
+                    </RowItem>
+                    <RowItem>
+                        <Button
+                            variant="outlined"
+                            type="button"
+                            color="primary"
+                            onClick={this.count}
+                        >
+                            Посчитать
+                        </Button>
+                    </RowItem>
+                    <RowItem>
+                        <Icon className=""/>
+                        <IconButton
+                            color="secondary"
+                            type="button"
+                            onClick={this.clearAllIntervals}
+                            title="Очистить"
+                        >
+                            <Close/>
+                        </IconButton>
+                    </RowItem>
+                </Row>
                 {this.state.invalidIntervalString && <ErrorMessage message={this.state.invalidIntervalString}/>}
                 <div className="timeCalculator__sum">Сумма:&nbsp;
                     <span className="timeCalculator__sumValue">
                         {intervalToString(countSum(this.state.intervals))}
-                        <a
-                            href="#"
-                            onClick={this.clearAllIntervals}
-                            className="timeCalculator__clearButton"
-                        >
-                            очистить
-                        </a>
                     </span>
                 </div>
             </div>

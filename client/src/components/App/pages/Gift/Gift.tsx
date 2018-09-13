@@ -1,8 +1,6 @@
 import * as React from "react";
 import TouchCarousel from "react-touch-carousel";
 import touchWithMouseHOC from "react-touch-carousel/lib/touchWithMouseHOC";
-import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
-import withMainMenu from "src/decorators/withMainMenu";
 
 import Card from "./Card/Card";
 
@@ -21,7 +19,6 @@ const backgroundColors = [
     "#caffd6"
 ];
 
-@withMainMenu(MainMenuItem.Gift, true)
 export default class Gift extends React.Component {
     // tslint:disable-next-line:prefer-function-over-method
     render(): React.ReactNode {

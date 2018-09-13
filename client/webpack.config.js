@@ -72,6 +72,24 @@ module.exports = () => {
                         },
                     ],
                 },
+                {
+                    test: /\.less/,
+                    use: [
+                        isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: !isProduction,
+                            },
+                        },
+                        {
+                            loader: 'less-loader',
+                            options: {
+                                sourceMap: !isProduction,
+                            },
+                        },
+                    ],
+                }
             ],
         },
         serve: {

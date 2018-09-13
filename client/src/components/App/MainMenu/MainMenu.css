@@ -1,47 +1,10 @@
 .mainMenu {
     text-align: center;
-}
-
-.mainMenu__current {
-    border-bottom: solid 2px dodgerblue;
-}
-
-ul.mainMenu__list {
-    margin: 0;
-    padding: 0 1rem 0.5rem;
-    text-align: center;
+    padding-bottom: 0.5rem;
 }
 
 li.mainMenu__item {
     display: inline-block;
     margin-right: 1rem;
     font-weight: 600;
-}
-
-.mainMenu__container {
-    transition: top 2s;
-}
-
-.mainMenu__container_hidden {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    top: -100%;
-    background: whitesmoke;
-}
-
-.mainMenu__hoverArea {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 4px;
-    border-bottom: solid 1px #dddddd;
-    top: 0;
-    background: whitesmoke;
-    cursor: pointer;
-}
-
-.mainMenu__hoverArea:hover+.mainMenu__container,
-.mainMenu__container:hover {
-    top: 0;
 }

@@ -2,8 +2,11 @@
     text-align: center;
 }
 
+.timeCalculator__container {
+    padding: 1rem 0;
+}
+
 .timeCalculator__input {
-    height: 1.5rem;
     line-height: 1.5rem;
     font-size: 20px;
     width: 15rem;
@@ -11,11 +14,6 @@
 
 .timeCalculator__intervals {
     display: inline-flex;
-}
-
-.timeCalculator__countButton {
-    height: 25px;
-    margin-left: 0.5rem;
 }
 
 .timeCalculator__errorMessage {

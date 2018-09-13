@@ -1,3 +1,5 @@
+@import "./App.typography.css";
+
 body {
     margin: 0;
     font-family: Segoe UI, sans-serif;
@@ -10,4 +12,12 @@ a {
 .app {
     background: #efefef;
     min-height: 720px;
+}
+
+.app__container {
+    padding-top: 1rem;
+}
+
+.app__content {
+    padding: 1rem 0;
 }

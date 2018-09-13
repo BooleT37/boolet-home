@@ -1,0 +1,44 @@
+.row {
+  display: flex;
+  align-items: baseline;
+
+  &.row_inline {
+    display: inline-flex;
+  }
+}
+
+.row > * {
+  margin-right: 1rem;
+}
+
+.row-margin(huge, 4rem);
+.row-margin(wide, 2rem);
+.row-margin(narrow, 0.5rem);
+.row-margin(tiny, 0.2rem);
+.row-margin(none, 0);
+
+.row > *:last-child {
+  margin-right: 0;
+}
+
+.row_justify_end {
+  justify-content: flex-end;
+}
+
+.row-align(flexStart, flex-start);
+.row-align(flexEnd, flex-end);
+.row-align(center);
+.row-align(baseline);
+.row-align(stretch);
+
+.row-align(@name, @value: @name) {
+  .row.row_align_@{name} {
+    align-items: @value;
+  }
+}
+
+.row-margin(@name, @value) {
+  .row.row_margin_@{name} > * {
+    margin-right: @value;
+  }
+}

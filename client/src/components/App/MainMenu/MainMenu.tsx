@@ -1,6 +1,10 @@
-import * as classNames from "classnames";
+import Card from "@material-ui/core/Card/Card";
+import Tab from "@material-ui/core/Tab/Tab";
+import Tabs from "@material-ui/core/Tabs/";
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
+
+import InlineBlock from "src/components/shared/InlineBlock/InlineBlock";
 
 import "./MainMenu.css";
 
@@ -12,59 +16,33 @@ export enum MainMenuItem {
     TimeCalculator = "TimeCalculator"
 }
 
-interface Props {
-    hidden: boolean;
+export interface InitialProps {
     currentItem: MainMenuItem;
 }
 
+type Props = InitialProps & RouteComponentProps<{}>;
+
 export default class MainMenu extends React.Component<Props> {
-    render(): JSX.Element {
+    render(): React.ReactNode {
         return (
-            <div className="mainMenu">
-                {this.props.hidden && <div className="mainMenu__hoverArea"/>}
-                <div className={classNames("mainMenu__container", { mainMenu__container_hidden: this.props.hidden })}>
-                    <ul className="mainMenu__list">
-                        <MenuItem
-                            isCurrent={this.props.currentItem === MainMenuItem.Home}
-                            path="/"
-                            label="Home"
-                        />
-                        <MenuItem
-                            isCurrent={this.props.currentItem === MainMenuItem.Counter}
-                            path="/counter"
-                            label="Counter"
-                        />
-                        <MenuItem
-                            isCurrent={this.props.currentItem === MainMenuItem.Tasks}
-                            path="/tasks"
-                            label="Tasks"
-                        />
-                        <MenuItem
-                            isCurrent={this.props.currentItem === MainMenuItem.Gift}
-                            path="/gift"
-                            label="Gift"
-                        />
-                        <MenuItem
-                            isCurrent={this.props.currentItem === MainMenuItem.TimeCalculator}
-                            path="/timeCalculator"
-                            label="Time Calculator"
-                        />
-                    </ul>
-                </div>
-            </div>
+            <Card className="mainMenu">
+                <InlineBlock>
+                    <Tabs value={this.props.currentItem}>
+                        {this.renderTab(MainMenuItem.Home, "Home", "/")}
+                        {this.renderTab(MainMenuItem.Counter, "Counter", "/counter")}
+                        {this.renderTab(MainMenuItem.Tasks, "Tasks", "/tasks")}
+                        {this.renderTab(MainMenuItem.Gift, "Gift", "/gift")}
+                        {this.renderTab(MainMenuItem.TimeCalculator, "Time Calculator", "/timeCalculator")}
+                    </Tabs>
+                </InlineBlock>
+            </Card>
         );
     }
-}
 
-function MenuItem(props: { isCurrent: boolean, path: string, label: string }): JSX.Element {
-    return (
-        <li className="mainMenu__item">
-            <Link
-                className={props.isCurrent ? `mainMenu__current` : ""}
-                to={`${props.path}`}
-            >
-                {props.label}
-            </Link>
-        </li>
-    );
+    renderTab(value: MainMenuItem, label: string, path: string): JSX.Element {
+        const onClick = () => { this.props.history.push(path); };
+        return (
+            <Tab value={value} label={label} onClick={onClick}/>
+        );
+    }
 }

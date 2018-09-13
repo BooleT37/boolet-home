@@ -1,0 +1,19 @@
+.inlineBlock {
+  display: inline-block;
+}
+
+.inlineBlock(@align) {
+  .inlineBlock.inlineBlock_verticalAlign_@{align} {
+    vertical-align: @align;
+  }
+}
+
+.inlineBlock(baseline);
+.inlineBlock(bottom);
+.inlineBlock(middle);
+.inlineBlock(sub);
+.inlineBlock(super);
+.inlineBlock(text-bottom);
+.inlineBlock(text-top);
+.inlineBlock(top);
+.inlineBlock(inherit);
