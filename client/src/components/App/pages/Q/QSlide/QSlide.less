@@ -20,17 +20,15 @@
 }
 
 .qSlide_state_active {
-    animation: slide-up-down 1s cubic-bezier(0.77, 0, 0.175, 1) 9s;
+    &.qSlide_index_0 {
+        animation: slide-up-down 1s cubic-bezier(0.77, 0, 0.175, 1) 9s;
+    }
 
     .qSlide_line.qSlide_line_0,
     .qSlide_line.qSlide_line_1,
     .qSlide_line.qSlide_line_2,
     .qSlide_line.qSlide_line_3 {
         animation-play-state: running;
-    }
-
-    &.qSlide_index_6 {
-        animation: none;
     }
 }
 

@@ -3,7 +3,7 @@ import * as React from "react";
 import { withRouter } from "react-router";
 import MainMenu, { MainMenuItem, InitialProps as MainMenuProps } from "src/components/App/MainMenu/MainMenu";
 
-const MainMenuWithRouter: React.ComponentClass<MainMenuProps> = withRouter(MainMenu);
+const MainMenuWithRouter = withRouter(MainMenu) as React.ComponentClass<MainMenuProps>;
 // fixme
 // type ComponentWrapper<Props, Class extends React.ComponentClass<Props>> = (WrappedComponent: Class) => Class;
 type ComponentWrapper<Props, Class extends React.ComponentClass<Props>> = (WrappedComponent: any) => any;
