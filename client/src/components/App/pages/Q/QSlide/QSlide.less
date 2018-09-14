@@ -1,0 +1,130 @@
+@import "~src/components/App/App.animations.css";
+@import "../Q.variables.less";
+
+.qSlide {
+    height: @screen-height;
+    width: @screen-width;
+    position: relative;
+}
+
+.qSlide_type_0 {
+    background: #c1f1ff;
+}
+
+.qSlide_type_1 {
+    background: peachpuff;
+}
+
+.qSlide_type_2 {
+    background: #caffd6;
+}
+
+.qSlide_state_active {
+    animation: slide-up-down 1s cubic-bezier(0.77, 0, 0.175, 1) 9s;
+
+    .qSlide_line.qSlide_line_0,
+    .qSlide_line.qSlide_line_1,
+    .qSlide_line.qSlide_line_2,
+    .qSlide_line.qSlide_line_3 {
+        animation-play-state: running;
+    }
+
+    &.qSlide_index_6 {
+        animation: none;
+    }
+}
+
+.qSlide_line.qSlide_line_0,
+.qSlide_line.qSlide_line_1,
+.qSlide_line.qSlide_line_2,
+.qSlide_line.qSlide_line_3 {
+    animation-play-state: paused;
+}
+
+.qSlide_line {
+    font-family: MarckScript-Regular, Arial, sans-serif;
+    font-size: 18px;
+    position: relative;
+    text-align: center;
+}
+
+.qSlide_line_0 {
+    color: darkblue;
+    top: 40px;
+    animation: slide-right 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s;
+    animation-fill-mode: backwards;
+}
+
+.qSlide_line_1 {
+    color: darkslateblue;
+    top: 40px;
+    animation: slide-left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 3s;
+    animation-fill-mode: backwards;
+}
+
+.qSlide_line_2 {
+    color: #d95000;
+    top: 90px;
+    animation: slide-right 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 5s;
+    animation-fill-mode: backwards;
+}
+
+.qSlide_line_3 {
+    color: #e96c01;
+    top: 90px;
+    animation: slide-left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 7s;
+    animation-fill-mode: backwards;
+}
+
+.qSlide__container {
+    height: @screen-height;
+    width: @screen-width;
+}
+
+.qSlide_questionMark {
+    font-family: MarckScript-Regular, Arial, sans-serif;
+    color: #e42700;
+    position: relative;
+    top: 141px;
+    left: 258px;
+    opacity: 0;
+}
+
+.q_container_surprise .qSlide_questionMark {
+    animation: appear 1s linear 14.5s forwards;
+}
+
+.qSlide_secret {
+    background: pink;
+}
+
+.q_container_surprise .qSlide_ring {
+    width: 100px;
+    height: 128px;
+    background: pink;
+    opacity: 0;
+    animation: appear 3s linear 15s forwards;
+    position: absolute;
+    top: 250px;
+    left: 127px;
+
+    &::after {
+        content: "";
+        background: url(./images/ring.png);
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

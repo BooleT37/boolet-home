@@ -13,14 +13,15 @@ export enum MainMenuItem {
     Counter = "Counter",
     Tasks = "Tasks",
     Gift = "Gift",
-    TimeCalculator = "TimeCalculator"
+    TimeCalculator = "TimeCalculator",
+    Q = "Q"
 }
 
 export interface InitialProps {
     currentItem: MainMenuItem;
 }
 
-type Props = InitialProps & RouteComponentProps<{}>;
+type Props = InitialProps & RouteComponentProps;
 
 export default class MainMenu extends React.Component<Props> {
     render(): React.ReactNode {
@@ -33,6 +34,7 @@ export default class MainMenu extends React.Component<Props> {
                         {this.renderTab(MainMenuItem.Tasks, "Tasks", "/tasks")}
                         {this.renderTab(MainMenuItem.Gift, "Gift", "/gift")}
                         {this.renderTab(MainMenuItem.TimeCalculator, "Time Calculator", "/timeCalculator")}
+                        {this.renderTab(MainMenuItem.Q, "Q", "/q")}
                     </Tabs>
                 </InlineBlock>
             </Card>

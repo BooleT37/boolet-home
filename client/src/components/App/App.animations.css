@@ -1,0 +1,38 @@
+@keyframes slide-up {
+  from {
+    top: -200px
+  }
+  to {
+    top: 0
+  }
+}
+
+@keyframes slide-up-down {
+  from {
+    top: 0;
+  }
+  50% {
+    top: -40px;
+  }
+  to {
+    top: 0;
+  }
+}
+
+@keyframes slide-right {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 0;
+  }
+}
+
+@keyframes slide-left {
+  from {
+    left: 100%;
+  }
+  to {
+    left: 0;
+  }
+}

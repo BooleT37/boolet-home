@@ -1,0 +1,32 @@
+@import "./Q.variables.less";
+@import "Q.secret.less";
+
+.q {
+  height: @screen-height;
+  width: @screen-width;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.q__container {
+  height: @screen-height;
+  width: @screen-width;
+  position: relative;
+  top: -@screen-height;
+  transition: top 1s;
+}
+
+.q-active-slide(0);
+.q-active-slide(1);
+.q-active-slide(2);
+.q-active-slide(3);
+.q-active-slide(4);
+.q-active-slide(5);
+.q-active-slide(6);
+.q-active-slide(7);
+
+.q-active-slide(@slide-index) {
+  .q__container.q__container_activeSlide_@{slide-index} {
+    top: -((@slide-index + 1) * @screen-height);
+  }
+}
