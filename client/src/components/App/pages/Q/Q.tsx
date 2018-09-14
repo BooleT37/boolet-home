@@ -13,19 +13,13 @@ interface State {
 
 const surpriseDelay = 10000;
 
-// const screenHeight = 640;
-
 export default class Q extends React.Component<undefined, State> {
     constructor() {
         super(undefined);
         this.state = {
-            activeSlide: 6,
+            activeSlide: 0,
             surpriseReached: false
         };
-    }
-
-    componentDidMount(): void {
-        setTimeout(() => { this.setState({surpriseReached: true}); }, surpriseDelay);
     }
 
     componentDidUpdate(): void {
