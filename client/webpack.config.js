@@ -126,19 +126,20 @@ function getPlugins(isProduction) {
         new MiniCssExtractPlugin({
             filename: 'bundle.css',
         }),
-        new ForkTsCheckerWebpackPlugin({
-            tsconfig: path.join(__dirname, 'tsconfig.json'),
-            tslint: isProduction ? undefined : path.join(__dirname, 'tslint.json'),
-        }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
-        }),
+        })
     ];
 
     if (isProduction) {
         plugins.push(new webpack.LoaderOptionsPlugin({
             minimize: true,
         }));
+    } else {
+        plugins.push(new ForkTsCheckerWebpackPlugin({
+            tsconfig: path.join(__dirname, 'tsconfig.json'),
+            tslint: isProduction ? undefined : path.join(__dirname, 'tslint.json'),
+        }))
     }
 
     return plugins;
