@@ -1,14 +1,11 @@
 import * as React from "react";
-import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
-import page from "src/decorators/page";
 import "./Counter.css";
 
 interface State {
     count: number;
 }
 
-@page(MainMenuItem.Counter)
-export default class Counter extends React.Component<undefined, State> {
+export default class Counter extends React.Component<{}, State> {
     constructor() {
         super(undefined);
         this.state = {

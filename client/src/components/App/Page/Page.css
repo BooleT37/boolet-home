@@ -1,0 +1,8 @@
+.page__container {
+    position: relative;
+    padding-top: 1rem;
+}
+
+.page__content {
+    padding: 1rem 0;
+}

@@ -13,11 +13,3 @@ a {
     background: #efefef;
     min-height: 620px;
 }
-
-.app__container {
-    padding-top: 1rem;
-}
-
-.app__content {
-    padding: 1rem 0;
-}

@@ -1,35 +1,60 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { MainMenuItem } from "src/components/App/Page/MainMenu/MainMenu";
+import Page from "src/components/App/Page/Page";
 
 import Q from "src/components/App/pages/Q/Q";
+
+import "src/fonts/Lobster-Regular";
+import "src/fonts/MarckScript-Regular";
+import { Language } from "src/models/enums";
+
+import "./App.css";
 import Counter from "./pages/Counter/Counter";
 import Gift from "./pages/Gift/Gift";
 import Home from "./pages/Home/Home";
 import Tasks from "./pages/Tasks/Tasks";
 import TimeCalculator from "./pages/TimeCalculator/TimeCalculator";
 
-import "src/fonts/Lobster-Regular";
-import "src/fonts/MarckScript-Regular";
+interface State {
+    language: Language;
+}
 
-import "./App.css";
+class App extends React.Component<{}, State> {
+    constructor() {
+        super(undefined);
+        this.state = {
+            language: Language.Ru
+        };
+    }
 
-class App extends React.Component {
-    // tslint:disable-next-line:prefer-function-over-method
+    onLanguageChange = (language: Language) => {
+        this.setState({language});
+    };
+
     render(): JSX.Element {
         return (
             <div className="app">
                 <Router>
                     <div>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/counter" component={Counter} />
-                        <Route path="/tasks" component={Tasks} />
-                        <Route path="/gift" component={Gift} />
-                        <Route path="/timeCalculator" component={TimeCalculator} />
-                        <Route path="/q" component={Q} />
+                        <Route exact path="/" render={this.renderPage(Home, MainMenuItem.Home)}/>
+                        <Route path="/counter" render={this.renderPage(Counter, MainMenuItem.Counter)}/>
+                        <Route path="/tasks" render={this.renderPage(Tasks, MainMenuItem.Tasks)}/>
+                        <Route path="/gift" component={Gift}/>
+                        <Route path="/timeCalculator" render={this.renderPage(TimeCalculator, MainMenuItem.TimeCalculator)}/>
+                        <Route path="/q" component={Q}/>
                     </div>
                 </Router>
             </div>
+        );
+    }
+
+    renderPage = (Component: React.ComponentClass, menuItem: MainMenuItem): () => React.ReactNode => {
+        return () => (
+            <Page menuItem={menuItem} language={this.state.language} onLanguageChange={this.onLanguageChange}>
+                <Component/>
+            </Page>
         );
     }
 }

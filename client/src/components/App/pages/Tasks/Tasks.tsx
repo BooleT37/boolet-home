@@ -1,14 +1,11 @@
 import * as React from "react";
 import { Link, Route } from "react-router-dom";
-import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
 import Rating from "src/components/App/pages/Tasks/tasks/Rating/Rating";
-import page from "src/decorators/page";
 
 import "./Tasks.css";
 import Flexbox from "./tasks/Flexbox/Flexbox";
 import NewPolyfill from "./tasks/NewPolyfill/NewPolyfill";
 
-@page(MainMenuItem.Tasks)
 export default class Tasks extends React.Component {
     // tslint:disable-next-line:prefer-function-over-method
     render(): React.ReactNode {

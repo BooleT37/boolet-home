@@ -4,10 +4,8 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import Input from "@material-ui/core/Input/Input";
 import { Close } from "@material-ui/icons";
 import * as React from "react";
-import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
 import Row from "src/components/shared/Row/Row";
 import RowItem from "src/components/shared/Row/RowItem/RowItem";
-import page from "src/decorators/page";
 
 import "./TimeCalculator.css";
 import TimeIntervalElement, { SignType, TimeInterval } from "./TimeIntervalElement/TimeIntervalElement";
@@ -22,8 +20,7 @@ interface State {
     intervals: IntervalWithId[];
 }
 
-@page(MainMenuItem.TimeCalculator)
-export default class TimeCalculator extends React.Component<undefined, State> {
+export default class TimeCalculator extends React.Component<{}, State> {
     private intervalId: number;
 
     constructor() {

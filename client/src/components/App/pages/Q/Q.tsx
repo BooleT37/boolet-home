@@ -13,7 +13,7 @@ interface State {
 
 const surpriseDelay = 10000;
 
-export default class Q extends React.Component<undefined, State> {
+export default class Q extends React.Component<{}, State> {
     constructor() {
         super(undefined);
         this.state = {
