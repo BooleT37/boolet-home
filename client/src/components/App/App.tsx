@@ -39,19 +39,22 @@ class App extends React.Component<{}, State> {
                 <Router>
                     <div>
                         <Route exact path="/" render={this.renderPage(Home, MainMenuItem.Home)}/>
-                        <Route
-                            path="/counter"
-                            render={this.renderPage(Counter, MainMenuItem.Counter, {language: this.state.language})}
-                        />
+                        <Route path="/counter" render={this.renderCounterPage}/>
                         <Route path="/tasks" render={this.renderPage(Tasks, MainMenuItem.Tasks)}/>
                         <Route path="/gift" component={Gift}/>
-                        <Route path="/timeCalculator" render={this.renderPage(TimeCalculator, MainMenuItem.TimeCalculator)}/>
+                        <Route path="/timeCalculator" render={this.renderTimeCalculatorPage}/>
                         <Route path="/q" component={Q}/>
                     </div>
                 </Router>
             </div>
         );
     }
+
+    renderCounterPage = () =>
+        this.renderPage(Counter, MainMenuItem.Counter, {language: this.state.language})();
+
+    renderTimeCalculatorPage = () =>
+        this.renderPage(TimeCalculator, MainMenuItem.TimeCalculator, {language: this.state.language})();
 
     renderPage = <Component extends React.ComponentClass>(
             Component: Component,

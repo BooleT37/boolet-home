@@ -1,5 +1,8 @@
 import * as React from "react";
 
+import { getHourAndMinuteChars } from "src/components/App/pages/TimeCalculator/TimeCalculator.utils";
+import { Language } from "src/models/enums";
+
 import "./TimeIntervalElement.css";
 
 export enum SignType {
@@ -14,18 +17,20 @@ export interface TimeInterval {
 }
 
 interface Props extends TimeInterval {
+    language: Language;
     renderSign: boolean;
     onRemove(): void;
 }
 
 export default class TimeIntervalElement extends React.Component<Props> {
     render(): JSX.Element {
+        const [hourChar, minuteChar] = getHourAndMinuteChars(this.props.language);
         return (
             <div className="timeIntervalElement">
                 {this.props.renderSign && <Sign type={this.props.sign}/>}
                 <div className="timeIntervalElement_parts">
-                    {this.props.hours > 0 && <IntervalPart partName="ч" partValue={this.props.hours}/>}
-                    {this.props.minutes > 0 && <IntervalPart partName="м" partValue={this.props.minutes}/>}
+                    {this.props.hours > 0 && <IntervalPart partName={hourChar} partValue={this.props.hours}/>}
+                    {this.props.minutes > 0 && <IntervalPart partName={minuteChar} partValue={this.props.minutes}/>}
                     <div
                         className="timeIntervalElement__removeButton"
                         onClick={this.props.onRemove}

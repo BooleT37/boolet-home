@@ -6,13 +6,22 @@ import { Close } from "@material-ui/icons";
 import * as React from "react";
 import Row from "src/components/shared/Row/Row";
 import RowItem from "src/components/shared/Row/RowItem/RowItem";
+import { Language } from "src/models/enums";
+
+import { getHourAndMinuteChars } from "./TimeCalculator.utils";
 
 import TimeIntervalElement, { SignType, TimeInterval } from "./TimeIntervalElement/TimeIntervalElement";
+import en from "./translations/en";
+import ru from "./translations/ru";
 
 import "./TimeCalculator.css";
 
 interface IntervalWithId extends TimeInterval {
     id: number;
+}
+
+interface Props {
+    language: Language;
 }
 
 interface State {
@@ -21,7 +30,7 @@ interface State {
     intervals: IntervalWithId[];
 }
 
-export default class TimeCalculator extends React.Component<{}, State> {
+export default class TimeCalculator extends React.Component<Props, State> {
     private intervalId: number;
 
     constructor() {
@@ -61,7 +70,11 @@ export default class TimeCalculator extends React.Component<{}, State> {
         const parts = value.split(del);
         parts.shift();
         const parsedIntervals: IntervalWithId[] = [];
-        let parsed = parseInterval(parts[0], parts.length === 1 && !parseIncompleteLastInterval);
+        let parsed = parseInterval(
+            parts[0],
+            this.props.language,
+            parts.length === 1 && !parseIncompleteLastInterval
+        );
         if (parsed !== null) {
             parts.shift();
         }
@@ -69,7 +82,11 @@ export default class TimeCalculator extends React.Component<{}, State> {
         while (parsed !== null) {
             parsedIntervals.push({ ...parsed, id: this.intervalId++ });
             if (parts.length > 0) {
-                parsed = parseInterval(parts.shift(), !isSequence && parts.length === 1 && !parseIncompleteLastInterval);
+                parsed = parseInterval(
+                    parts.shift(),
+                    this.props.language,
+                    !isSequence && parts.length === 1 && !parseIncompleteLastInterval
+                );
                 isSequence = true;
             } else {
                 parsed = null;
@@ -109,6 +126,7 @@ export default class TimeCalculator extends React.Component<{}, State> {
                 return (
                     <TimeIntervalElement
                         key={interval.id}
+                        language={this.props.language}
                         renderSign={index > 0}
                         sign={interval.sign}
                         hours={interval.hours}
@@ -118,9 +136,12 @@ export default class TimeCalculator extends React.Component<{}, State> {
                 );
             }
         );
+
+        const translation = this.props.language === Language.Ru ? ru : en;
+
         return (
             <div className="timeCalculator">
-                <h2>Введите время</h2>
+                <h2>{translation.enterTime}</h2>
                 <div className="timeCalculator__intervals">
                     {intervals}
                     {intervals.length > 0 && <span>+&nbsp;</span>}
@@ -141,7 +162,7 @@ export default class TimeCalculator extends React.Component<{}, State> {
                             color="primary"
                             onClick={this.count}
                         >
-                            Посчитать
+                            {translation.count}
                         </Button>
                     </RowItem>
                     <RowItem>
@@ -157,9 +178,9 @@ export default class TimeCalculator extends React.Component<{}, State> {
                     </RowItem>
                 </Row>
                 {this.state.invalidIntervalString && <ErrorMessage message={this.state.invalidIntervalString}/>}
-                <div className="timeCalculator__sum">Сумма:&nbsp;
+                <div className="timeCalculator__sum">{translation.sum}:&nbsp;
                     <span className="timeCalculator__sumValue">
-                        {intervalToString(countSum(this.state.intervals))}
+                        {intervalToString(countSum(this.state.intervals), this.props.language)}
                     </span>
                 </div>
             </div>
@@ -176,8 +197,8 @@ function ErrorMessage(props: { message: string }): JSX.Element {
     );
 }
 
-function parseInterval(str: string, onlyFullString: boolean = false): TimeInterval {
-    const matches = str.match(/([+-])\s*((\d+)\s*ч)?\s*((\d+)\s*м)?\s*/);
+function parseInterval(str: string, language: Language, onlyFullString: boolean = false): TimeInterval {
+    const matches = str.match(getTimeRegExp(language));
     if (!matches) {
         return null;
     }
@@ -202,8 +223,9 @@ function parseInterval(str: string, onlyFullString: boolean = false): TimeInterv
     };
 }
 
-function intervalToString(interval: TimeInterval): string {
-    return `${interval.sign === SignType.Minus ? "-" : ""}${interval.hours}ч ${interval.minutes}м`;
+function intervalToString(interval: TimeInterval, language: Language): string {
+    const [hourChar, minuteChar] = getHourAndMinuteChars(language);
+    return `${interval.sign === SignType.Minus ? "-" : ""}${interval.hours}${hourChar} ${interval.minutes}${minuteChar}`;
 }
 
 function removeLeadingPlus(str: string): string {
@@ -232,4 +254,9 @@ function countSum(intervals: TimeInterval[]): TimeInterval {
         hours: 0,
         sign: 0
     });
+}
+
+function getTimeRegExp(language: Language): RegExp {
+    const [hourChar, minuteChar] = getHourAndMinuteChars(language);
+    return new RegExp(`([+-])\\s*((\\d+)\\s*${hourChar})?\\s*((\\d+)\\s*${minuteChar})?\\s*`);
 }
