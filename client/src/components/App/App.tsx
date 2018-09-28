@@ -39,7 +39,10 @@ class App extends React.Component<{}, State> {
                 <Router>
                     <div>
                         <Route exact path="/" render={this.renderPage(Home, MainMenuItem.Home)}/>
-                        <Route path="/counter" render={this.renderPage(Counter, MainMenuItem.Counter)}/>
+                        <Route
+                            path="/counter"
+                            render={this.renderPage(Counter, MainMenuItem.Counter, {language: this.state.language})}
+                        />
                         <Route path="/tasks" render={this.renderPage(Tasks, MainMenuItem.Tasks)}/>
                         <Route path="/gift" component={Gift}/>
                         <Route path="/timeCalculator" render={this.renderPage(TimeCalculator, MainMenuItem.TimeCalculator)}/>
@@ -50,10 +53,14 @@ class App extends React.Component<{}, State> {
         );
     }
 
-    renderPage = (Component: React.ComponentClass, menuItem: MainMenuItem): () => React.ReactNode => {
+    renderPage = <Component extends React.ComponentClass>(
+            Component: Component,
+            menuItem: MainMenuItem,
+            componentProps?: any // fixme fix 'any' type
+    ): () => React.ReactNode => {
         return () => (
             <Page menuItem={menuItem} language={this.state.language} onLanguageChange={this.onLanguageChange}>
-                <Component/>
+                <Component {...componentProps}/>
             </Page>
         );
     }

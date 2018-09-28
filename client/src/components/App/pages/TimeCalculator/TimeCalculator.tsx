@@ -7,8 +7,9 @@ import * as React from "react";
 import Row from "src/components/shared/Row/Row";
 import RowItem from "src/components/shared/Row/RowItem/RowItem";
 
-import "./TimeCalculator.css";
 import TimeIntervalElement, { SignType, TimeInterval } from "./TimeIntervalElement/TimeIntervalElement";
+
+import "./TimeCalculator.css";
 
 interface IntervalWithId extends TimeInterval {
     id: number;
