@@ -8,10 +8,10 @@ const MainMenuWithRouter = withRouter(MainMenu) as React.ComponentClass<MainMenu
 // type ComponentWrapper<Props, Class extends React.ComponentClass<Props>> = (WrappedComponent: Class) => Class;
 type ComponentWrapper<Props, Class extends React.ComponentClass<Props>> = (WrappedComponent: any) => any;
 
-export default function withMainMenu<Props, Class extends React.ComponentClass<Props>>(item?: MainMenuItem): ComponentWrapper<Props, Class> {
+export default function page<Props, Class extends React.ComponentClass<Props>>(item?: MainMenuItem): ComponentWrapper<Props, Class> {
     return WrappedComponent =>
-        class extends React.Component<any> {
-            render(): any {
+        class extends React.Component<Props> {
+            render(): React.ReactNode {
                 return (
                     <div>
                         <MainMenuWithRouter currentItem={item}/>

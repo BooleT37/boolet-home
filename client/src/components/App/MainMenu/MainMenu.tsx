@@ -21,7 +21,7 @@ export interface InitialProps {
     currentItem: MainMenuItem;
 }
 
-type Props = InitialProps & RouteComponentProps<{}>;
+type Props = InitialProps & RouteComponentProps;
 
 export default class MainMenu extends React.Component<Props> {
     render(): React.ReactNode {

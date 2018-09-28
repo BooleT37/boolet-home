@@ -1,13 +1,13 @@
 import * as React from "react";
 import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
-import withMainMenu from "src/decorators/withMainMenu";
+import page from "src/decorators/page";
 import "./Counter.css";
 
 interface State {
     count: number;
 }
 
-@withMainMenu(MainMenuItem.Counter)
+@page(MainMenuItem.Counter)
 export default class Counter extends React.Component<undefined, State> {
     constructor() {
         super(undefined);

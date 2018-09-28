@@ -7,7 +7,7 @@ import * as React from "react";
 import { MainMenuItem } from "src/components/App/MainMenu/MainMenu";
 import Row from "src/components/shared/Row/Row";
 import RowItem from "src/components/shared/Row/RowItem/RowItem";
-import withMainMenu from "src/decorators/withMainMenu";
+import page from "src/decorators/page";
 
 import "./TimeCalculator.css";
 import TimeIntervalElement, { SignType, TimeInterval } from "./TimeIntervalElement/TimeIntervalElement";
@@ -22,7 +22,7 @@ interface State {
     intervals: IntervalWithId[];
 }
 
-@withMainMenu(MainMenuItem.TimeCalculator)
+@page(MainMenuItem.TimeCalculator)
 export default class TimeCalculator extends React.Component<undefined, State> {
     private intervalId: number;
 

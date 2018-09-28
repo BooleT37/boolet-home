@@ -29,7 +29,7 @@ export default class Q extends React.Component<undefined, State> {
     }
 
     moveToNextSlide = () => {
-        // console.log(this.state.activeSlide + 1);
+        console.log(this.state.activeSlide + 1);
         if (this.state.activeSlide < poemQuatrains.length - 1) {
             this.setState({ activeSlide: this.state.activeSlide + 1 });
         }
