@@ -1,8 +1,10 @@
 import * as classNames from "classnames";
 import * as React from "react";
-import QSlide from "./QSlide/QSlide";
+
+import "src/fonts/MarckScript-Regular";
 
 import { poemQuatrains } from "./Q.poem";
+import QSlide from "./QSlide/QSlide";
 
 import "./Q.less";
 

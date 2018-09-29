@@ -4,12 +4,12 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import Input from "@material-ui/core/Input/Input";
 import { Close } from "@material-ui/icons";
 import * as React from "react";
+
 import Row from "src/components/shared/Row/Row";
 import RowItem from "src/components/shared/Row/RowItem/RowItem";
 import { Language } from "src/models/enums";
 
 import { getHourAndMinuteChars } from "./TimeCalculator.utils";
-
 import TimeIntervalElement, { SignType, TimeInterval } from "./TimeIntervalElement/TimeIntervalElement";
 import en from "./translations/en";
 import ru from "./translations/ru";
@@ -252,7 +252,7 @@ function countSum(intervals: TimeInterval[]): TimeInterval {
     }, {
         minutes: 0,
         hours: 0,
-        sign: 0
+        sign: SignType.Plus
     });
 }
 

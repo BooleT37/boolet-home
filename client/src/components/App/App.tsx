@@ -1,21 +1,20 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import { Language } from "src/models/enums";
+
 import { MainMenuItem } from "src/components/App/Page/MainMenu/MainMenu";
 import Page from "src/components/App/Page/Page";
 
-import Q from "src/components/App/pages/Q/Q";
-
-import "src/fonts/Lobster-Regular";
-import "src/fonts/MarckScript-Regular";
-import { Language } from "src/models/enums";
-
-import "./App.css";
 import Counter from "./pages/Counter/Counter";
 import Gift from "./pages/Gift/Gift";
 import Home from "./pages/Home/Home";
+import Q from "./pages/Q/Q";
 import Tasks from "./pages/Tasks/Tasks";
 import TimeCalculator from "./pages/TimeCalculator/TimeCalculator";
+
+import "./App.css";
 
 interface State {
     language: Language;
