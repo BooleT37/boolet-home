@@ -31,10 +31,7 @@ export default class MainMenu extends React.Component<Props> {
                     <Tabs value={this.props.currentItem}>
                         {this.renderTab(MainMenuItem.Home, "Home", "/")}
                         {this.renderTab(MainMenuItem.Counter, "Counter", "/counter")}
-                        {this.renderTab(MainMenuItem.Tasks, "Tasks", "/tasks")}
-                        {this.renderTab(MainMenuItem.Gift, "Gift", "/gift")}
                         {this.renderTab(MainMenuItem.TimeCalculator, "Time Calculator", "/timeCalculator")}
-                        {this.renderTab(MainMenuItem.Q, "Q", "/q")}
                     </Tabs>
                 </InlineBlock>
             </Card>
