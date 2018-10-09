@@ -6,3 +6,28 @@
 .page__content {
     padding: 1rem 0;
 }
+
+.page__footer {
+    margin-top: 1rem;
+}
+
+.page__footerLinks {
+    text-align: right;
+    font-size: 20px;
+}
+
+.page__gitHubLogo {
+    color: dimgray;
+    position: relative;
+    margin-right: 1rem;
+}
+
+.page__gitHubLogo:before {
+    content: "";
+    position: absolute;
+    left: -36px;
+    bottom: 0;
+    width: 32px;
+    height: 32px;
+    background-image: url(./images/GitHub-Mark-32px.png);
+}
