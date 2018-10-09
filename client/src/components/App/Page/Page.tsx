@@ -5,6 +5,8 @@ import { Language } from "src/models/enums";
 
 import LanguageToggle from "./LanguageToggle/LanguageToggle";
 import MainMenu, { InitialProps as MainMenuProps, MainMenuItem } from "./MainMenu/MainMenu";
+import en from "./translations/en";
+import ru from "./translations/ru";
 
 import "./Page.css";
 
@@ -19,6 +21,7 @@ interface Props {
 
 export default class extends React.Component<Props> {
     render(): React.ReactNode {
+        const translation = this.props.language === Language.Ru ? ru : en;
         return (
             <div>
                 <MainMenuWithRouter currentItem={this.props.menuItem}/>
@@ -29,14 +32,14 @@ export default class extends React.Component<Props> {
                         </div>
                     </Card>
                     <LanguageToggle language={this.props.language} onChange={this.props.onLanguageChange}/>
-                    <Footer/>
+                    <Footer title={translation.gitHubLinkTitle}/>
                 </div>
             </div>
         );
     }
 }
 
-function Footer(): JSX.Element {
+function Footer(props: {title: string}): JSX.Element {
     return (
         <div className="page__footer">
             <div className="page__footerLinks">
@@ -44,7 +47,7 @@ function Footer(): JSX.Element {
                     target="_blank"
                     className="page__gitHubLogo"
                     href="https://github.com/BooleT37/boolet-home"
-                    title="Исходный код"
+                    title={props.title}
                 >
                     GitHub
                 </a>
