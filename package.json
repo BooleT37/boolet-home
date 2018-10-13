@@ -6,7 +6,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "npm run build:client && npm run build:server && node server/dist/server.js",
+    "start": "node server/dist/server.js",
+    "postinstall": "npm run build:all",
+    "build:all": "concurrently \"npm run build:server\" \"npm run build:client\"",
     "build:server": "tsc -p server",
     "build:client": "webpack --config client/webpack.config.js",
     "watch:server": "node node_modules/nodemon/bin/nodemon.js --config server/nodemon.json",
@@ -31,6 +33,7 @@
     "babel-cli": "^7.0.0-beta.3",
     "babel-loader": "^8.0.0-beta",
     "classnames": "^2.2.6",
+    "concurrently": "^4.0.1",
     "connect-history-api-fallback": "^1.5.0",
     "css-loader": "^1.0.0",
     "express": "^4.16.3",
