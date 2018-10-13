@@ -10,9 +10,9 @@
     "postinstall": "if-env NODE_ENV=production && npm run build:all",
     "build:all": "concurrently \"npm run build:server\" \"npm run build:client\"",
     "build:server": "tsc -p server",
-    "build:client": "webpack --config client/webpack.config.js",
+    "build:client": "cross-env NODE_ENV=production webpack --config client/webpack.config.js",
     "watch:server": "node node_modules/nodemon/bin/nodemon.js --config server/nodemon.json",
-    "watch:client": "webpack-serve client/webpack.config.js",
+    "watch:client": "cross-env NODE_ENV=developement webpack-dev-server --config client/webpack.config.js",
     "lint:server": "tslint -p server -e /client/*"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
     "babel-loader": "^8.0.0-beta",
     "classnames": "^2.2.6",
     "concurrently": "^4.0.1",
-    "connect-history-api-fallback": "^1.5.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "express": "^4.16.3",
     "express-history-api-fallback": "^2.2.1",
@@ -42,7 +42,6 @@
     "fork-ts-checker-webpack-plugin": "^0.4.9",
     "if-env": "^1.0.4",
     "ignore-styles": "^5.0.1",
-    "koa-connect": "^2.0.1",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.2",
@@ -67,6 +66,6 @@
     "style-loader": "^0.22.1",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0",
-    "webpack-serve": "^2.0.2"
+    "webpack-dev-server": "^3.1.9"
   }
 }

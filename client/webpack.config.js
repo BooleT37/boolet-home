@@ -3,14 +3,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const history = require('connect-history-api-fallback');
-const convert = require('koa-connect');
 const path = require('path');
 
 const devServerPort = 8081;
 
 module.exports = () => {
-    const isProduction = process.env.WEBPACK_SERVE !== 'true';
+    const isProduction = process.env.NODE_ENV === 'production';
     const publicPath = '/dist/';
 
     const fileLoaderOptions = {
@@ -92,17 +90,13 @@ module.exports = () => {
                 }
             ],
         },
-        serve: {
-            content: path.join(__dirname, 'public'),
-            devMiddleware: {
-                publicPath,
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                },
-            },
+        devServer: {
+            contentBase: path.join(__dirname, 'public'),
+            compress: true,
+            publicPath,
             port: devServerPort,
-            hotClient: true,
-            add: (app) => app.use(convert(history({}))),
+            hot: true,
+            historyApiFallback: true,
         },
         optimization: {
             minimizer: [
@@ -114,8 +108,8 @@ module.exports = () => {
             ],
         },
         performance: {
-            maxEntrypointSize: 600000,
-            maxAssetSize: 400000,
+            maxEntrypointSize: 1000000,
+            maxAssetSize: 800000,
         },
         plugins: getPlugins(isProduction),
     };
@@ -139,7 +133,8 @@ function getPlugins(isProduction) {
         plugins.push(new ForkTsCheckerWebpackPlugin({
             tsconfig: path.join(__dirname, 'tsconfig.json'),
             tslint: isProduction ? undefined : path.join(__dirname, 'tslint.json'),
-        }))
+        }));
+        plugins.push(new webpack.HotModuleReplacementPlugin());
     }
 
     return plugins;
