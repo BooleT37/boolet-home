@@ -11,14 +11,12 @@ import "./MainMenu.css";
 export enum MainMenuItem {
     Home = "Home",
     Counter = "Counter",
-    Tasks = "Tasks",
-    Gift = "Gift",
     TimeCalculator = "TimeCalculator",
-    Q = "Q"
+    GamesAssistant = "GamesAssistant"
 }
 
 export interface InitialProps {
-    currentItem: MainMenuItem;
+    currentItem?: MainMenuItem;
 }
 
 type Props = InitialProps & RouteComponentProps;
@@ -28,10 +26,11 @@ export default class MainMenu extends React.Component<Props> {
         return (
             <Card className="mainMenu">
                 <InlineBlock>
-                    <Tabs value={this.props.currentItem}>
+                    <Tabs value={this.props.currentItem || ""}>
                         {this.renderTab(MainMenuItem.Home, "Home", "/")}
                         {this.renderTab(MainMenuItem.Counter, "Counter", "/counter")}
                         {this.renderTab(MainMenuItem.TimeCalculator, "Time Calculator", "/timeCalculator")}
+                        {this.renderTab(MainMenuItem.GamesAssistant, "Games assistant", "/gamesAssistant")}
                     </Tabs>
                 </InlineBlock>
             </Card>

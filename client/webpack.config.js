@@ -6,6 +6,9 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+process.env.NODE_CONFIG_DIR = resolve(__dirname, "config");
+const config = require('config');
+
 const devServerPort = 8081;
 
 module.exports = () => {
@@ -29,7 +32,7 @@ module.exports = () => {
 
     return {
         context: __dirname,
-        entry: './src/entry.tsx',
+        entry: ['@babel/polyfill', './src/entry.tsx'],
         output: {
             path: resolve(__dirname, 'dist'),
             publicPath,
@@ -123,6 +126,7 @@ function getPlugins(isProduction) {
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
+            'process.env.API_URL': JSON.stringify(config.get('api.url')),
         }),
         new HtmlWebpackPlugin({
             filename: resolve(__dirname, "dist", "index.html"),

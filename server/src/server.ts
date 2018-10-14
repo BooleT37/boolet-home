@@ -13,16 +13,24 @@ const port = process.env.PORT || 8000;
 const app = express();
 
 app.use("/", express.static(clientDistPath));
-app.use(fallback("index.html", { root: clientDistPath }));
+app.use("/api/getGames", req => {
+    console.log(req.url);
+});
 
-app.use("/getGames", proxy("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/",
+app.use("/api/getGames", proxy("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/",
 {
     proxyReqPathResolver: (req: express.Request) => `${req.url}&key=${config.get<string>("gamesAssistant.steamApiKey")}&format=json`,
-    userResDecorator: (proxyRes, proxyResData) => {
+    userResHeaderDecorator: (headers: object) => {
+        headers["Access-Control-Allow-Origin"] = "*";
+        return headers;
+    },
+    userResDecorator: (proxyRes: express.Response, proxyResData) => {
         const data = JSON.parse(proxyResData.toString());
         return JSON.stringify(data.response.games.map(g => g.appid));
       }
 }));
+
+app.use(fallback("index.html", { root: clientDistPath }));
 
 app.listen(port, () => {
     console.log(`Server running on ${port}!`);

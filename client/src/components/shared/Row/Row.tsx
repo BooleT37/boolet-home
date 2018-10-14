@@ -4,7 +4,7 @@ import "./Row.less";
 
 interface Props {
     margin?: "huge" | "wide" | "narrow" | "tiny" | "none";
-    align?: "flexStart" | "flexEnd" | "center" |  "stretch";
+    align?: "flexStart" | "flexEnd" | "center" | "baseline" | "stretch";
     justify?: "end";
     inline?: boolean;
 }

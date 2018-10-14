@@ -15,6 +15,7 @@ import Tasks from "./pages/Tasks/Tasks";
 import TimeCalculator from "./pages/TimeCalculator/TimeCalculator";
 
 import "./App.css";
+import GamesAssistant from "./pages/GamesAssistant/GamesAssistant";
 
 interface State {
     language: Language;
@@ -39,11 +40,11 @@ class App extends React.Component<{}, State> {
                     <div>
                         <Route exact path="/" render={this.renderPage(Home, MainMenuItem.Home)}/>
                         <Route path="/counter" render={this.renderCounterPage}/>
-                        <Route path="/tasks" render={this.renderPage(Tasks, MainMenuItem.Tasks)}/>
+                        <Route path="/tasks" render={this.renderPage(Tasks)}/>
                         <Route path="/gift" component={Gift}/>
                         <Route path="/timeCalculator" render={this.renderTimeCalculatorPage}/>
                         <Route path="/q" component={Q}/>
-                        <Route path="/gamesAssistant"/>
+                        <Route path="/gamesAssistant" render={this.renderGamesAssistantPage}/>
                     </div>
                 </Router>
             </div>
@@ -56,9 +57,12 @@ class App extends React.Component<{}, State> {
     renderTimeCalculatorPage = () =>
         this.renderPage(TimeCalculator, MainMenuItem.TimeCalculator, {language: this.state.language})();
 
+    renderGamesAssistantPage = () =>
+        this.renderPage(GamesAssistant, MainMenuItem.GamesAssistant, {language: this.state.language})();
+
     renderPage = <Component extends React.ComponentClass>(
             Component: Component,
-            menuItem: MainMenuItem,
+            menuItem?: MainMenuItem,
             componentProps?: any // fixme fix 'any' type
     ): () => React.ReactNode => {
         return () => (

@@ -11,7 +11,7 @@ import "./Page.css";
 const MainMenuWithRouter = withRouter(MainMenu) as React.ComponentClass<MainMenuProps>;
 
 interface Props {
-    menuItem: MainMenuItem;
+    menuItem?: MainMenuItem;
     language: Language;
 
     onLanguageChange(language: Language): void;
