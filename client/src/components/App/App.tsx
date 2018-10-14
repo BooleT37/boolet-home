@@ -43,6 +43,7 @@ class App extends React.Component<{}, State> {
                         <Route path="/gift" component={Gift}/>
                         <Route path="/timeCalculator" render={this.renderTimeCalculatorPage}/>
                         <Route path="/q" component={Q}/>
+                        <Route path="/gamesAssistant"/>
                     </div>
                 </Router>
             </div>
