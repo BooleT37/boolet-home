@@ -3,13 +3,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const path = require('path');
+const { resolve } = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const devServerPort = 8081;
 
 module.exports = () => {
     const isProduction = process.env.NODE_ENV === 'production';
-    const publicPath = '/dist/';
+    const publicPath = '/';
 
     const fileLoaderOptions = {
         name: '[name]-[hash].[ext]',
@@ -30,15 +31,15 @@ module.exports = () => {
         context: __dirname,
         entry: './src/entry.tsx',
         output: {
-            path: path.resolve(__dirname, 'dist'),
-            filename: 'bundle.js',
+            path: resolve(__dirname, 'dist'),
             publicPath,
+            filename: 'bundle.js',
         },
         mode: isProduction ? 'production' : 'development',
         resolve: {
             extensions: ['*', '.js', '.ts', '.tsx'],
             alias: {
-                'src': path.join(__dirname, 'src'),
+                'src': resolve(__dirname, 'src'),
             },
         },
         module: {
@@ -91,8 +92,8 @@ module.exports = () => {
             ],
         },
         devServer: {
-            contentBase: path.join(__dirname, 'public'),
             compress: true,
+            contentBase: resolve(__dirname, 'dist'),
             publicPath,
             port: devServerPort,
             hot: true,
@@ -122,6 +123,13 @@ function getPlugins(isProduction) {
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
+        }),
+        new HtmlWebpackPlugin({
+            filename: resolve(__dirname, "dist", "index.html"),
+            title: 'Домашняя страница',
+            meta: {
+                viewport: 'user-scalable=no, width=device-width, initial-scale=1.0'
+            },
         })
     ];
 
@@ -131,8 +139,8 @@ function getPlugins(isProduction) {
         }));
     } else {
         plugins.push(new ForkTsCheckerWebpackPlugin({
-            tsconfig: path.join(__dirname, 'tsconfig.json'),
-            tslint: isProduction ? undefined : path.join(__dirname, 'tslint.json'),
+            tsconfig: resolve(__dirname, 'tsconfig.json'),
+            tslint: isProduction ? undefined : resolve(__dirname, 'tslint.json'),
         }));
         plugins.push(new webpack.HotModuleReplacementPlugin());
     }

@@ -10,7 +10,7 @@ const app = express();
 
 app.use("/dist", express.static(clientDistPath));
 app.use(express.static(serverPublicPath));
-app.use(fallback("index.html", { root: serverPublicPath }));
+app.use(fallback("index.html", { root: clientDistPath }));
 
 app.listen(port, () => {
     console.log(`Server running on ${port}!`);
