@@ -114,3 +114,6 @@ typings/
 
 client/dist
 server/dist
+
+#local configs
+server/config/local.json
