@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Input from "@material-ui/core/Input/Input";
+import * as classNames from "classnames";
 import * as React from "react";
 
 import InlineBlock from "src/components/shared/InlineBlock/InlineBlock";
@@ -78,21 +79,27 @@ export default class GamesAssistant extends React.Component<Props, State> {
                                             </Button>
                                         </RowItem>
                                         <RowItem>
-                                            {this.state.loading && <CircularProgress size={20}/>}
+                                            <Spinner shown={this.state.loading}/>
                                         </RowItem>
                                     </Row>
                                 </RowItem>
                             </Row>
                         </InlineBlock>
                     </div>
-                    <div>
-                        {this.state.games.join()}
-                    </div>
+                    {this.state.games.length !== 0 && <div>{JSON.stringify(this.state.games.join())}</div>}
                     {this.state.errorMessage && <div className="GamesAssistant__error">{this.state.errorMessage}</div>}
                 </div>
             </div>
         );
     }
+}
+
+function Spinner(props: {shown: boolean}): JSX.Element {
+    return (
+        <div className={classNames("GamesAssistant__spinner", {GamesAssistant__spinner_shown: props.shown})}>
+            <CircularProgress size={20}/>
+        </div>
+    );
 }
 
 function getErrorMessage(e: any): string {

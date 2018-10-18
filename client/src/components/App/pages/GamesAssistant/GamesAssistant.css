@@ -1,3 +1,8 @@
+.GamesAssistant {
+    min-height: 120px;
+    padding-top: 20px;
+}
+
 .GamesAssistant__body {
     text-align: center;
 }
@@ -8,4 +13,12 @@
 
 .GamesAssistant__error {
     color: orangered;
+}
+
+.GamesAssistant__spinner {
+    visibility: hidden;
+}
+
+.GamesAssistant__spinner_shown {
+    visibility: visible;
 }
