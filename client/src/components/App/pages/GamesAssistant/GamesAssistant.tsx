@@ -37,13 +37,13 @@ export default class GamesAssistant extends React.Component<Props, State> {
 
     onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({inputValue: e.target.value, errorMessage: ""});
-    }
+    };
 
     onInputKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.keyCode === 13 || e.which === 13) { // Enter
             await this.showGames();
         }
-    }
+    };
 
     showGames = async () => {
         this.setState({loading: true, errorMessage: ""});
@@ -51,42 +51,59 @@ export default class GamesAssistant extends React.Component<Props, State> {
             const games = await SteamApi.getGames(this.state.inputValue);
             this.setState({loading: false, games});
         } catch (e) {
-            this.setState({loading: false, games: [], errorMessage: e.message});
+            console.log(e.response);
+            this.setState({loading: false, games: [], errorMessage: getErrorMessage(e.response || e)});
         }
-    }
+    };
 
     render(): JSX.Element {
         return (
             <div className="GamesAssistant">
-                <div className="GamesAssistant__controls">
-                    <InlineBlock>
-                        <Row>
-                            <RowItem>
-                                <Input
-                                    value={this.state.inputValue}
-                                    onChange={this.onInputChange}
-                                    onKeyPress={this.onInputKeyPress}
-                                />
-                            </RowItem>
-                            <RowItem>
-                                <Row align="center">
-                                    <RowItem>
-                                        <Button variant="outlined" onClick={this.showGames}>
-                                            Показать игры
-                                        </Button>
-                                    </RowItem>
-                                    <RowItem>
-                                        {this.state.loading && <CircularProgress size={20}/>}
-                                    </RowItem>
-                                </Row>
-                            </RowItem>
-                        </Row>
-                    </InlineBlock>
-                </div>
-                <div>
-                    {this.state.games.join()}
+                <div className="GamesAssistant__body">
+                    <div className="GamesAssistant__controls">
+                        <InlineBlock>
+                            <Row>
+                                <RowItem>
+                                    <Input
+                                        value={this.state.inputValue}
+                                        onChange={this.onInputChange}
+                                        onKeyPress={this.onInputKeyPress}
+                                    />
+                                </RowItem>
+                                <RowItem>
+                                    <Row align="center">
+                                        <RowItem>
+                                            <Button variant="outlined" onClick={this.showGames}>
+                                                Показать игры
+                                            </Button>
+                                        </RowItem>
+                                        <RowItem>
+                                            {this.state.loading && <CircularProgress size={20}/>}
+                                        </RowItem>
+                                    </Row>
+                                </RowItem>
+                            </Row>
+                        </InlineBlock>
+                    </div>
+                    <div>
+                        {this.state.games.join()}
+                    </div>
+                    {this.state.errorMessage && <div className="GamesAssistant__error">{this.state.errorMessage}</div>}
                 </div>
             </div>
         );
     }
+}
+
+function getErrorMessage(e: any): string {
+    let message = "Ошибка Steam API";
+    if (e.status) {
+        message += ` [${e.status}]`;
+    }
+    if (e.message) {
+        message += `: ${e.message}`;
+    } else if (e.statusText) {
+        message += `: ${e.statusText}`;
+    }
+    return message;
 }

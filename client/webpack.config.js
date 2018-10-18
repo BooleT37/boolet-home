@@ -9,8 +9,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 process.env.NODE_CONFIG_DIR = resolve(__dirname, "config");
 const config = require('config');
 
-const devServerPort = 8081;
-
 module.exports = () => {
     const isProduction = process.env.NODE_ENV === 'production';
     const publicPath = '/';
@@ -94,11 +92,11 @@ module.exports = () => {
                 }
             ],
         },
+        devtool: "eval-source-map",
         devServer: {
             compress: true,
             contentBase: resolve(__dirname, 'dist'),
             publicPath,
-            port: devServerPort,
             hot: true,
             historyApiFallback: true,
         },
