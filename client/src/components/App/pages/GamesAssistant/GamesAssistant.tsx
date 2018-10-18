@@ -15,9 +15,11 @@ import Row from "src/components/shared/Row/Row";
 import RowItem from "src/components/shared/Row/RowItem/RowItem";
 import { Language } from "src/models/enums";
 
-import SteamApi from "./SteamApi/SteamApi";
-
 import "./GamesAssistant.css";
+
+import SteamApi from "./SteamApi/SteamApi";
+import en from "./translations/en";
+import ru from "./translations/ru";
 
 interface Props {
     language: Language;
@@ -77,22 +79,23 @@ export default class GamesAssistant extends React.Component<Props, State> {
     };
 
     render(): JSX.Element {
+        const translations = this.props.language === Language.Ru ? ru : en;
         const inputEmpty = this.state.inputValue.length === 0;
         const alreadyHaveSamePlayerId = this.state.playerIds.some(
             id => this.state.inputValue.toLowerCase() === id.toLowerCase()
         );
         const tooltipTitle = inputEmpty
-            ? "Enter player ID"
+            ? translations.enterPlayerId
             : alreadyHaveSamePlayerId
-                ? "Player id is already in list"
-                : "Add player";
+                ? translations.idAlreadyInList
+                : translations.addIdButtonTooltip;
         const idsListEmpty = this.state.playerIds.length === 0;
 
         return (
             <div className="GamesAssistant">
                 <div className="GamesAssistant__body">
                     <div className="GamesAssistant__fakeApiSwitch">
-                        <Tooltip placement="left" title="Use fake api in case real api fails to work">
+                        <Tooltip placement="left" title={translations.fakeApiTooltip}>
                             <InlineBlock>
                                 <Switch
                                     checked={this.state.useFakeApi}
@@ -143,21 +146,21 @@ export default class GamesAssistant extends React.Component<Props, State> {
                             </Row>
                         </div>
                         <div>
-                            <Tooltip title={idsListEmpty ? "Enter at least one player ID" : ""} placement="right-start">
+                            <Tooltip title={idsListEmpty ? translations.atLeastOnePlayerIdRequired : ""} placement="right-start">
                                 <InlineBlock>
                                     <Button
                                         disabled={idsListEmpty}
                                         variant="outlined"
                                         onClick={this.showGames}
                                     >
-                                        Показать игры
+                                        {translations.buttonText}
                                     </Button>
                                 </InlineBlock>
                             </Tooltip>
                         </div>
                     </div>
                     {this.state.games.length !== 0 && <div>{JSON.stringify(this.state.games.join())}</div>}
-                    {this.state.errorMessage && <div className="GamesAssistant__error">{this.state.errorMessage}</div>}
+                    {this.state.errorMessage && <div className="GamesAssistant__error">{`${translations.baseErrorMessage} ${this.state.errorMessage}`}</div>}
                 </div>
             </div>
         );
@@ -193,7 +196,7 @@ function Spinner(props: {shown: boolean}): JSX.Element {
 }
 
 function getErrorMessage(e: any): string {
-    let message = "Ошибка Steam API";
+    let message = "";
     if (e.status) {
         message += ` [${e.status}]`;
     }
