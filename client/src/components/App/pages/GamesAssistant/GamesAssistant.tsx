@@ -3,10 +3,12 @@ import Chip from "@material-ui/core/Chip/Chip";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Input from "@material-ui/core/Input/Input";
+import Switch from "@material-ui/core/Switch/Switch";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import { AddCircle } from "@material-ui/icons";
 import * as classNames from "classnames";
 import * as React from "react";
+import FakeSteamApi from "src/components/App/pages/GamesAssistant/SteamApi/FakeSteamApi";
 
 import InlineBlock from "src/components/shared/InlineBlock/InlineBlock";
 import Row from "src/components/shared/Row/Row";
@@ -27,6 +29,7 @@ interface State {
     errorMessage: string;
     games: string[];
     playerIds: string[];
+    useFakeApi: boolean;
 }
 
 export default class GamesAssistant extends React.Component<Props, State> {
@@ -38,7 +41,8 @@ export default class GamesAssistant extends React.Component<Props, State> {
             loading: false,
             errorMessage: "",
             games: [],
-            playerIds: []
+            playerIds: [],
+            useFakeApi: false
         };
     }
 
@@ -59,13 +63,17 @@ export default class GamesAssistant extends React.Component<Props, State> {
     showGames = async () => {
         this.setState({loading: true, errorMessage: ""});
         try {
-            const responseModels = await Promise.all(this.state.playerIds.map(async id => SteamApi.getGames(id)));
+            const api = this.state.useFakeApi ? FakeSteamApi : SteamApi;
+            const responseModels = await Promise.all(this.state.playerIds.map(async id => api.getGames(id)));
             const commonIds = getCommonElements(responseModels.map(m => m.ids));
             this.setState({loading: false, games: commonIds});
         } catch (e) {
-            console.log(e.response);
             this.setState({loading: false, games: [], errorMessage: getErrorMessage(e.response || e)});
         }
+    };
+
+    onUseFakeApiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({useFakeApi: e.target.checked});
     };
 
     render(): JSX.Element {
@@ -83,6 +91,20 @@ export default class GamesAssistant extends React.Component<Props, State> {
         return (
             <div className="GamesAssistant">
                 <div className="GamesAssistant__body">
+                    <div className="GamesAssistant__fakeApiSwitch">
+                        <Tooltip placement="left" title="Use fake api in case real api fails to work">
+                            <InlineBlock>
+                                <Switch
+                                    checked={this.state.useFakeApi}
+                                    onChange={this.onUseFakeApiChange}
+                                    id="GamesAssistant__fakeApiSwitch"
+                                />
+                                <label htmlFor="GamesAssistant__fakeApiSwitch">
+                                    Fake API
+                                </label>
+                            </InlineBlock>
+                        </Tooltip>
+                    </div>
                     {this.state.playerIds.length !== 0 && this.renderPlayerIds()}
                     <div className="GamesAssistant__controls">
                         <div>

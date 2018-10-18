@@ -5,6 +5,6 @@ export type SteamApiResponse = SteamApiValidResponse & ErrorResponse;
 
 export default {
     getGames: async (playerId: string): Promise<SteamApiResponse> => {
-        return AxiosInstance.get(`getGames?playerId=${playerId}`).then(r => r.data);
+        return AxiosInstance.get(`fakeGetGames?playerId=${playerId}`).then(r => r.data);
     }
 };

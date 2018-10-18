@@ -22,3 +22,7 @@
 .GamesAssistant__spinner_shown {
     visibility: visible;
 }
+
+.GamesAssistant__fakeApiSwitch {
+    text-align: right;
+}
