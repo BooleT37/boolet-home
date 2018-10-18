@@ -1,6 +1,10 @@
 import Button from "@material-ui/core/Button/Button";
+import Chip from "@material-ui/core/Chip/Chip";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import IconButton from "@material-ui/core/IconButton/IconButton";
 import Input from "@material-ui/core/Input/Input";
+import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+import { AddCircle } from "@material-ui/icons";
 import * as classNames from "classnames";
 import * as React from "react";
 
@@ -22,6 +26,7 @@ interface State {
     loading: boolean;
     errorMessage: string;
     games: string[];
+    playerIds: string[];
 }
 
 export default class GamesAssistant extends React.Component<Props, State> {
@@ -29,10 +34,11 @@ export default class GamesAssistant extends React.Component<Props, State> {
         super(props);
 
         this.state = {
-          inputValue: "",
-          loading: false,
-          errorMessage: "",
-          games: []
+            inputValue: "",
+            loading: false,
+            errorMessage: "",
+            games: [],
+            playerIds: []
         };
     }
 
@@ -46,11 +52,16 @@ export default class GamesAssistant extends React.Component<Props, State> {
         }
     };
 
+    addPlayerId = () => {
+        this.setState({playerIds: this.state.playerIds.concat(this.state.inputValue), inputValue: ""});
+    };
+
     showGames = async () => {
         this.setState({loading: true, errorMessage: ""});
         try {
-            const games = await SteamApi.getGames(this.state.inputValue);
-            this.setState({loading: false, games});
+            const responseModels = await Promise.all(this.state.playerIds.map(async id => SteamApi.getGames(id)));
+            const commonIds = getCommonElements(responseModels.map(m => m.ids));
+            this.setState({loading: false, games: commonIds});
         } catch (e) {
             console.log(e.response);
             this.setState({loading: false, games: [], errorMessage: getErrorMessage(e.response || e)});
@@ -58,37 +69,94 @@ export default class GamesAssistant extends React.Component<Props, State> {
     };
 
     render(): JSX.Element {
+        const inputEmpty = this.state.inputValue.length === 0;
+        const alreadyHaveSamePlayerId = this.state.playerIds.some(
+            id => this.state.inputValue.toLowerCase() === id.toLowerCase()
+        );
+        const tooltipTitle = inputEmpty
+            ? "Enter player ID"
+            : alreadyHaveSamePlayerId
+                ? "Player id is already in list"
+                : "Add player";
+        const idsListEmpty = this.state.playerIds.length === 0;
+
         return (
             <div className="GamesAssistant">
                 <div className="GamesAssistant__body">
+                    {this.state.playerIds.length !== 0 && this.renderPlayerIds()}
                     <div className="GamesAssistant__controls">
-                        <InlineBlock>
-                            <Row>
+                        <div>
+                            <Row inline>
                                 <RowItem>
-                                    <Input
-                                        value={this.state.inputValue}
-                                        onChange={this.onInputChange}
-                                        onKeyPress={this.onInputKeyPress}
-                                    />
+                                    <Row margin="none">
+                                        <RowItem>
+                                            <Input
+                                                value={this.state.inputValue}
+                                                onChange={this.onInputChange}
+                                                onKeyPress={this.onInputKeyPress}
+                                                placeholder="Player Id"
+                                            />
+                                        </RowItem>
+                                        <RowItem>
+                                            <Tooltip title={tooltipTitle} placement="right-start">
+                                                <div>
+                                                    <IconButton
+                                                        disabled={inputEmpty || alreadyHaveSamePlayerId}
+                                                        onClick={this.addPlayerId}
+                                                    >
+                                                        <AddCircle color={inputEmpty || alreadyHaveSamePlayerId ? "disabled" : "primary"}/>
+                                                    </IconButton>
+                                                </div>
+                                            </Tooltip>
+                                        </RowItem>
+                                    </Row>
                                 </RowItem>
                                 <RowItem>
                                     <Row align="center">
-                                        <RowItem>
-                                            <Button variant="outlined" onClick={this.showGames}>
-                                                Показать игры
-                                            </Button>
-                                        </RowItem>
                                         <RowItem>
                                             <Spinner shown={this.state.loading}/>
                                         </RowItem>
                                     </Row>
                                 </RowItem>
                             </Row>
-                        </InlineBlock>
+                        </div>
+                        <div>
+                            <Tooltip title={idsListEmpty ? "Enter at least one player ID" : ""} placement="right-start">
+                                <InlineBlock>
+                                    <Button
+                                        disabled={idsListEmpty}
+                                        variant="outlined"
+                                        onClick={this.showGames}
+                                    >
+                                        Показать игры
+                                    </Button>
+                                </InlineBlock>
+                            </Tooltip>
+                        </div>
                     </div>
                     {this.state.games.length !== 0 && <div>{JSON.stringify(this.state.games.join())}</div>}
                     {this.state.errorMessage && <div className="GamesAssistant__error">{this.state.errorMessage}</div>}
                 </div>
+            </div>
+        );
+    }
+
+    renderPlayerIds(): JSX.Element {
+        const list = this.state.playerIds.map(id => {
+            const onDelete = () => {
+                this.setState({playerIds: this.state.playerIds.filter(currentId => currentId !== id)});
+            };
+            return (
+                <RowItem key={id}>
+                    <Chip onDelete={onDelete} label={id} />
+                </RowItem>
+            );
+        });
+        return (
+            <div className="GamesAssistant__playersList">
+                <Row inline margin="narrow">
+                    {list}
+                </Row>
             </div>
         );
     }
@@ -113,4 +181,22 @@ function getErrorMessage(e: any): string {
         message += `: ${e.statusText}`;
     }
     return message;
+}
+
+function getCommonElements<TValue>(list: TValue[][]): TValue[] {
+    if (list.length === 0) {
+        return [];
+    }
+    return getCommonElementsRecursive(list[0], list.slice(1));
+}
+
+function getCommonElementsRecursive<TValue>(currentList: TValue[], remainingLists: TValue[][]): TValue[] {
+    if (remainingLists.length === 0) {
+        return currentList;
+    }
+    return getCommonElementsRecursive(getCommonElementsOfTwoLists(currentList, remainingLists[0]), remainingLists.slice(1));
+}
+
+function getCommonElementsOfTwoLists<TValue>(list1: TValue[], list2: TValue[]): TValue[] {
+    return list1.filter(el1 => list2.some(el2 => el1 === el2));
 }

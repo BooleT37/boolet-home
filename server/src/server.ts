@@ -30,7 +30,7 @@ app.use("/api/getGames", proxy("http://api.steampowered.com",
             };
         }
         const data = JSON.parse(proxyResData.toString());
-        return JSON.stringify(data.response.games.map(g => g.appid));
+        return JSON.stringify({ids: data.response.games.map(g => g.appid)});
       }
 }));
 
