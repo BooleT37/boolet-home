@@ -1,5 +1,5 @@
 export interface ErrorResponse {
-    error?: true;
+    error?: true | string;
 }
 
 export interface SteamApiValidResponse {

@@ -17,6 +17,7 @@ import { Language } from "src/models/enums";
 
 import "./GamesAssistant.css";
 
+import { Game } from "./GamesAssistant.models";
 import SteamApi from "./SteamApi/SteamApi";
 import en from "./translations/en";
 import ru from "./translations/ru";
@@ -29,7 +30,7 @@ interface State {
     inputValue: string;
     loading: boolean;
     errorMessage: string;
-    games: string[];
+    games: Game[];
     playerIds: string[];
     useFakeApi: boolean;
 }
@@ -54,7 +55,7 @@ export default class GamesAssistant extends React.Component<Props, State> {
 
     onInputKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.keyCode === 13 || e.which === 13) { // Enter
-            await this.showGames();
+            await this.addPlayerId();
         }
     };
 
@@ -193,6 +194,20 @@ function Spinner(props: {shown: boolean}): JSX.Element {
             <CircularProgress size={20}/>
         </div>
     );
+}
+
+function GamesList(props: {gameIds: string[]}): JSX.Element {
+    return (
+        <div>
+            {props.gameIds.map(id => <Game key={id} id={id}/>)}
+        </div>
+    )
+}
+
+function Game(props: {id: string, name: string}): JSX.Element {
+    return (
+        <div className=""></div>
+    )
 }
 
 function getErrorMessage(e: any): string {

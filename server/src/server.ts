@@ -4,6 +4,7 @@ import * as config from "config";
 import * as express from "express";
 import * as fallback from "express-history-api-fallback";
 import * as proxy from "express-http-proxy";
+import { playerIds } from "./fakeData";
 
 import "./aliasesSetup";
 
@@ -33,6 +34,17 @@ app.use("/api/getGames", proxy("http://api.steampowered.com",
         return JSON.stringify({ids: data.response.games.map(g => g.appid)});
       }
 }));
+
+app.get("/api/fakeGetGames", (req, res) => {
+    const playerId = req.query.playerId.toLowerCase();
+    res.setHeader("Content-type", "application/json");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    if (!(playerId in playerIds)) {
+        res.statusCode = 404;
+        res.send(JSON.stringify({error: "Player id not found"}));
+    }
+    res.send(JSON.stringify({ ids: playerIds[playerId]}));
+});
 
 app.use(fallback("index.html", { root: clientDistPath }));
 
