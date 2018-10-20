@@ -1,26 +1,41 @@
+import * as classNames from "classnames";
+import * as React from "react";
+
 import Button from "@material-ui/core/Button/Button";
-import Chip from "@material-ui/core/Chip/Chip";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Input from "@material-ui/core/Input/Input";
 import Switch from "@material-ui/core/Switch/Switch";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import { AddCircle } from "@material-ui/icons";
-import * as classNames from "classnames";
-import * as React from "react";
-import FakeSteamApi from "src/components/App/pages/GamesAssistant/SteamApi/FakeSteamApi";
 
+import GameModel from "serverModels/GameModel";
+
+import FakeSteamApi from "src/components/App/pages/GamesAssistant/SteamApi/FakeSteamApi";
 import InlineBlock from "src/components/shared/InlineBlock/InlineBlock";
 import Row from "src/components/shared/Row/Row";
 import RowItem from "src/components/shared/Row/RowItem/RowItem";
 import { Language } from "src/models/enums";
 
-import "./GamesAssistant.css";
+import FakeApiTooltip from "./GamesList/FakeApiTooltip/FakeApiTooltip";
+import GamesList from "./GamesList/GamesList";
+import OneIdChosenModal from "./OneIdChosenModal/OneIdChosenModal";
+import PlayerIdsList from "./PlayerIdsList/PlayerIdsList";
 
-import { Game } from "./GamesAssistant.models";
+import ISteamApi from "./SteamApi/ISteamApi";
 import SteamApi from "./SteamApi/SteamApi";
+
+import { areGamesEqual, getCommonElements, getErrorMessage } from "./GamesAssistant.utils";
+import IGamesAssistantTranslations from "./translations/IGamesAssistantTranslations";
+
 import en from "./translations/en";
 import ru from "./translations/ru";
+
+import "./GamesAssistant.css";
+
+enum LocalStorageItems {
+    UseFakeApi = "UseFakeApi"
+}
 
 interface Props {
     language: Language;
@@ -30,9 +45,10 @@ interface State {
     inputValue: string;
     loading: boolean;
     errorMessage: string;
-    games: Game[];
+    games: GameModel[];
     playerIds: string[];
     useFakeApi: boolean;
+    oneIdChosenModalOpen: boolean;
 }
 
 export default class GamesAssistant extends React.Component<Props, State> {
@@ -45,7 +61,8 @@ export default class GamesAssistant extends React.Component<Props, State> {
             errorMessage: "",
             games: [],
             playerIds: [],
-            useFakeApi: false
+            useFakeApi: Boolean(localStorage.getItem(LocalStorageItems.UseFakeApi)) || false,
+            oneIdChosenModalOpen: false
         };
     }
 
@@ -53,9 +70,9 @@ export default class GamesAssistant extends React.Component<Props, State> {
         this.setState({inputValue: e.target.value, errorMessage: ""});
     };
 
-    onInputKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    onInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.keyCode === 13 || e.which === 13) { // Enter
-            await this.addPlayerId();
+            this.addPlayerId();
         }
     };
 
@@ -63,40 +80,67 @@ export default class GamesAssistant extends React.Component<Props, State> {
         this.setState({playerIds: this.state.playerIds.concat(this.state.inputValue), inputValue: ""});
     };
 
-    showGames = async () => {
-        this.setState({loading: true, errorMessage: ""});
-        try {
-            const api = this.state.useFakeApi ? FakeSteamApi : SteamApi;
-            const responseModels = await Promise.all(this.state.playerIds.map(async id => api.getGames(id)));
-            const commonIds = getCommonElements(responseModels.map(m => m.ids));
-            this.setState({loading: false, games: commonIds});
-        } catch (e) {
-            this.setState({loading: false, games: [], errorMessage: getErrorMessage(e.response || e)});
+    deletePlayerId = (id: string) => {
+        this.setState({playerIds: this.state.playerIds.filter(currentId => currentId !== id)});
+    }
+
+    onShowGamesButtonClick = async () => {
+        if (this.state.playerIds.length === 1) {
+            this.openOneIdChosenModal();
+        } else {
+            await this.showGames();
         }
-    };
+    }
+
+    async showGames(): Promise<void> {
+        this.setState({games: [], loading: true, errorMessage: ""});
+        try {
+            const api: ISteamApi = this.state.useFakeApi ? FakeSteamApi : SteamApi;
+            const responses = await Promise.all(this.state.playerIds.map(async id => api.getGames(id)));
+            const commonGames = getCommonElements(responses.map(r => r.games), areGamesEqual);
+            this.setState({loading: false, games: commonGames});
+        } catch (e) {
+            this.setState({loading: false, errorMessage: getErrorMessage(e.response || e)});
+        }
+    }
 
     onUseFakeApiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.checked;
+        localStorage.setItem(LocalStorageItems.UseFakeApi, value.toString());
         this.setState({useFakeApi: e.target.checked});
     };
 
+    openOneIdChosenModal = () => {
+        this.setState({oneIdChosenModalOpen: true});
+    }
+
+    closeOneIdChosenModal = () => {
+        this.setState({oneIdChosenModalOpen: false});
+    }
+
+    onOneIdChosenModalConfirm = async () => {
+        this.closeOneIdChosenModal();
+        await this.showGames();
+    }
+
     render(): JSX.Element {
-        const translations = this.props.language === Language.Ru ? ru : en;
-        const inputEmpty = this.state.inputValue.length === 0;
-        const alreadyHaveSamePlayerId = this.state.playerIds.some(
+        const translations: IGamesAssistantTranslations = this.props.language === Language.Ru ? ru : en;
+        const inputEmpty: boolean = this.state.inputValue.length === 0;
+        const alreadyHaveSamePlayerId: boolean = this.state.playerIds.some(
             id => this.state.inputValue.toLowerCase() === id.toLowerCase()
         );
-        const tooltipTitle = inputEmpty
+        const tooltipTitle: string = inputEmpty
             ? translations.enterPlayerId
             : alreadyHaveSamePlayerId
                 ? translations.idAlreadyInList
                 : translations.addIdButtonTooltip;
-        const idsListEmpty = this.state.playerIds.length === 0;
+        const idsListEmpty: boolean = this.state.playerIds.length === 0;
 
         return (
             <div className="GamesAssistant">
                 <div className="GamesAssistant__body">
                     <div className="GamesAssistant__fakeApiSwitch">
-                        <Tooltip placement="left" title={translations.fakeApiTooltip}>
+                        <Tooltip placement="left" title={<FakeApiTooltip lines={translations.fakeApiTooltip}/>}>
                             <InlineBlock>
                                 <Switch
                                     checked={this.state.useFakeApi}
@@ -109,7 +153,7 @@ export default class GamesAssistant extends React.Component<Props, State> {
                             </InlineBlock>
                         </Tooltip>
                     </div>
-                    {this.state.playerIds.length !== 0 && this.renderPlayerIds()}
+                    {this.state.playerIds.length !== 0 && <PlayerIdsList ids={this.state.playerIds} onDelete={this.deletePlayerId}/>}
                     <div className="GamesAssistant__controls">
                         <div>
                             <Row inline>
@@ -152,7 +196,7 @@ export default class GamesAssistant extends React.Component<Props, State> {
                                     <Button
                                         disabled={idsListEmpty}
                                         variant="outlined"
-                                        onClick={this.showGames}
+                                        onClick={this.onShowGamesButtonClick}
                                     >
                                         {translations.buttonText}
                                     </Button>
@@ -160,29 +204,17 @@ export default class GamesAssistant extends React.Component<Props, State> {
                             </Tooltip>
                         </div>
                     </div>
-                    {this.state.games.length !== 0 && <div>{JSON.stringify(this.state.games.join())}</div>}
+                    {!this.state.errorMessage && <GamesList games={this.state.games} language={this.props.language}/>}
                     {this.state.errorMessage && <div className="GamesAssistant__error">{`${translations.baseErrorMessage} ${this.state.errorMessage}`}</div>}
+                    <OneIdChosenModal
+                        open={this.state.oneIdChosenModalOpen}
+                        text={translations.oneIdChosenModal.text}
+                        yesLabel={translations.oneIdChosenModal.yesLabel}
+                        noLabel={translations.oneIdChosenModal.noLabel}
+                        onConfirm={this.onOneIdChosenModalConfirm}
+                        onCancel={this.closeOneIdChosenModal}
+                    />
                 </div>
-            </div>
-        );
-    }
-
-    renderPlayerIds(): JSX.Element {
-        const list = this.state.playerIds.map(id => {
-            const onDelete = () => {
-                this.setState({playerIds: this.state.playerIds.filter(currentId => currentId !== id)});
-            };
-            return (
-                <RowItem key={id}>
-                    <Chip onDelete={onDelete} label={id} />
-                </RowItem>
-            );
-        });
-        return (
-            <div className="GamesAssistant__playersList">
-                <Row inline margin="narrow">
-                    {list}
-                </Row>
             </div>
         );
     }
@@ -194,49 +226,4 @@ function Spinner(props: {shown: boolean}): JSX.Element {
             <CircularProgress size={20}/>
         </div>
     );
-}
-
-function GamesList(props: {gameIds: string[]}): JSX.Element {
-    return (
-        <div>
-            {props.gameIds.map(id => <Game key={id} id={id}/>)}
-        </div>
-    )
-}
-
-function Game(props: {id: string, name: string}): JSX.Element {
-    return (
-        <div className=""></div>
-    )
-}
-
-function getErrorMessage(e: any): string {
-    let message = "";
-    if (e.status) {
-        message += ` [${e.status}]`;
-    }
-    if (e.message) {
-        message += `: ${e.message}`;
-    } else if (e.statusText) {
-        message += `: ${e.statusText}`;
-    }
-    return message;
-}
-
-function getCommonElements<TValue>(list: TValue[][]): TValue[] {
-    if (list.length === 0) {
-        return [];
-    }
-    return getCommonElementsRecursive(list[0], list.slice(1));
-}
-
-function getCommonElementsRecursive<TValue>(currentList: TValue[], remainingLists: TValue[][]): TValue[] {
-    if (remainingLists.length === 0) {
-        return currentList;
-    }
-    return getCommonElementsRecursive(getCommonElementsOfTwoLists(currentList, remainingLists[0]), remainingLists.slice(1));
-}
-
-function getCommonElementsOfTwoLists<TValue>(list1: TValue[], list2: TValue[]): TValue[] {
-    return list1.filter(el1 => list2.some(el2 => el1 === el2));
 }

@@ -41,6 +41,7 @@ module.exports = () => {
             extensions: ['*', '.js', '.ts', '.tsx'],
             alias: {
                 'src': resolve(__dirname, 'src'),
+                'serverModels': resolve(__dirname, '../server/../server/src/models')
             },
         },
         module: {

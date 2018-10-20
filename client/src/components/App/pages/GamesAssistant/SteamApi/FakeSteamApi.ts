@@ -1,10 +1,11 @@
+import GetGamesResponse from "serverModels/GetGamesResponse";
 import AxiosInstance from "./AxiosInstance";
-import { ErrorResponse, SteamApiValidResponse } from "./SteamApi.models";
+import ISteamApi from "./ISteamApi";
 
-export type SteamApiResponse = SteamApiValidResponse & ErrorResponse;
-
-export default {
-    getGames: async (playerId: string): Promise<SteamApiResponse> => {
+const FakeSteamApi: ISteamApi = {
+    getGames: async (playerId: string): Promise<GetGamesResponse> => {
         return AxiosInstance.get(`fakeGetGames?playerId=${playerId}`).then(r => r.data);
     }
 };
+
+export default FakeSteamApi;

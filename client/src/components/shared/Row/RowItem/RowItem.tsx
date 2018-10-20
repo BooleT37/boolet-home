@@ -4,6 +4,7 @@ import "./RowItem.css";
 
 interface Props {
     expanded?: boolean;
+    className?: string;
 }
 
 export default class RowItem extends React.Component<Props> {
@@ -13,7 +14,10 @@ export default class RowItem extends React.Component<Props> {
     render(): JSX.Element {
         let className = "rowItem";
         if (this.props.expanded) {
-            className += `rowItem_expanded`;
+            className += " rowItem_expanded";
+        }
+        if (this.props.className) {
+            className += ` ${this.props.className}`;
         }
         return (
             <div className={className}>

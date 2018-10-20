@@ -15,6 +15,7 @@
       true,
       "CRLF"
     ],
+    "interface-name": false,
     "match-default-export-name": true,
     "max-line-length": [
       true,

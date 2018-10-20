@@ -8,10 +8,12 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "src/*": [ "src/*" ]
+      "src/*": [ "src/*" ],
+      "serverModels/*": [ "../server/src/models/*" ]
     }
   },
   "include": [
-    "src/**/*.ts?"
+    "src/**/*",
+    "../server/src/models/*.ts"
   ]
 }

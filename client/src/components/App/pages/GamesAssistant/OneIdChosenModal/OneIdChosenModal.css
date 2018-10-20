@@ -1,0 +1,12 @@
+.OneIdChosenModal {
+    width: 480px;
+    margin: 10% auto;
+}
+
+.OneIdChosenModal__conent {
+    padding: 10px 20px 20px;
+}
+
+.OneIdChosenModal__buttons {
+    text-align: center;
+}

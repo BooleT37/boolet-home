@@ -1,0 +1,13 @@
+.Game__title {
+    width: 152px;
+}
+
+.Game__icon {
+    width: 20px;
+    height: 20px;
+}
+
+.Game__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

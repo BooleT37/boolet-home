@@ -7,6 +7,7 @@ interface Props {
     align?: "flexStart" | "flexEnd" | "center" | "baseline" | "stretch";
     justify?: "end";
     inline?: boolean;
+    className?: string;
 }
 
 export default class Row extends React.Component<Props> {
@@ -23,6 +24,9 @@ export default class Row extends React.Component<Props> {
         }
         if (this.props.justify) {
             className += ` row_align_${this.props.justify}`;
+        }
+        if (this.props.className) {
+            className += ` ${this.props.className}`;
         }
         return (
             <div className={className}>

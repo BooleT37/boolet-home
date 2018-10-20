@@ -1,0 +1,17 @@
+.GamesList {
+    margin: 0 auto;
+    width: 400px;
+}
+
+.GamesList__emptyListMessage {
+    color: gray;
+}
+
+.GamesList__title {
+    height: auto;
+}
+
+.Game__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
