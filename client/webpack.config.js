@@ -93,7 +93,7 @@ module.exports = () => {
                 }
             ],
         },
-        devtool: "eval-source-map",
+        devtool: isProduction ? false : "eval-source-map",
         devServer: {
             compress: true,
             contentBase: resolve(__dirname, 'dist'),
