@@ -1,3 +1,4 @@
 export default {
-    title: "Общие игры"
+    title: "Общие игры",
+    noCommonGames: "Нет общих игр"
 };

@@ -18,9 +18,10 @@ interface Props {
 
 export default class GamesList extends React.PureComponent<Props> {
     render(): JSX.Element {
+        const noCommonGamesMessage = (this.props.language === Language.En ? en : ru).noCommonGames;
         return (
             <div className="GamesList">
-                {this.props.games.length === 0 ? <EmptyListMessage/> : this.renderGrid()}
+                {this.props.games.length === 0 ? <EmptyListMessage message={noCommonGamesMessage}/> : this.renderGrid()}
             </div>
         );
     }
@@ -38,6 +39,6 @@ export default class GamesList extends React.PureComponent<Props> {
     }
 }
 
-function EmptyListMessage(): JSX.Element {
-    return <div className="GamesList__emptyListMessage">Нет общих игр</div>;
+function EmptyListMessage(props: {message: string}): JSX.Element {
+    return <div className="GamesList__emptyListMessage">{props.message}</div>;
 }
