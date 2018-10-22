@@ -82,7 +82,7 @@ export default class GamesAssistant extends React.Component<Props, State> {
 
     deletePlayerId = (id: string) => {
         this.setState({playerIds: this.state.playerIds.filter(currentId => currentId !== id)});
-    }
+    };
 
     onShowGamesButtonClick = async () => {
         if (this.state.playerIds.length === 1) {
@@ -90,7 +90,7 @@ export default class GamesAssistant extends React.Component<Props, State> {
         } else {
             await this.showGames();
         }
-    }
+    };
 
     async showGames(): Promise<void> {
         this.setState({games: [], loading: true, errorMessage: ""});
@@ -112,16 +112,16 @@ export default class GamesAssistant extends React.Component<Props, State> {
 
     openOneIdChosenModal = () => {
         this.setState({oneIdChosenModalOpen: true});
-    }
+    };
 
     closeOneIdChosenModal = () => {
         this.setState({oneIdChosenModalOpen: false});
-    }
+    };
 
     onOneIdChosenModalConfirm = async () => {
         this.closeOneIdChosenModal();
         await this.showGames();
-    }
+    };
 
     render(): JSX.Element {
         const translations: IGamesAssistantTranslations = this.props.language === Language.Ru ? ru : en;

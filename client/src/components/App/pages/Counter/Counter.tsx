@@ -31,6 +31,7 @@ export default class Counter extends React.Component<Props, State> {
 
         return (
             <div className="counter">
+                <p>{translation.text[0]}<br/>{translation.text[1]}</p>
                 <h2>{translation.count}: {this.state.count}</h2>
                 <button className="counter__button" type="button" onClick={this.onButtonClick}>+1</button>
             </div>

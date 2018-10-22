@@ -15,11 +15,22 @@ const MainMenuWithRouter = withRouter(MainMenu) as React.ComponentClass<MainMenu
 interface Props {
     menuItem?: MainMenuItem;
     language: Language;
+    title: string;
 
     onLanguageChange(language: Language): void;
 }
 
 export default class extends React.Component<Props> {
+    constructor(props: Props) {
+        super(props);
+
+        setPageTitle(this.props.title);
+    }
+
+    componentDidUpdate(): void {
+        setPageTitle(this.props.title);
+    }
+
     render(): React.ReactNode {
         const translation = this.props.language === Language.Ru ? ru : en;
         return (
@@ -54,4 +65,8 @@ function Footer(props: {title: string}): JSX.Element {
             </div>
         </div>
     );
+}
+
+function setPageTitle(title: string): void {
+    document.title = `Boolet-Home | ${title}`;
 }

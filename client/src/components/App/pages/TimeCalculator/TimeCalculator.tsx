@@ -150,6 +150,7 @@ export default class TimeCalculator extends React.Component<Props, State> {
                     <RowItem>
                         <Input
                             className="timeCalculator__input"
+                            placeholder={translation.inputPlaceholder}
                             value={this.state.inputValue}
                             onChange={this.onInputChange}
                             onKeyPress={this.onInputKeyPress}

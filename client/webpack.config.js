@@ -129,7 +129,7 @@ function getPlugins(isProduction) {
         }),
         new HtmlWebpackPlugin({
             filename: resolve(__dirname, "dist", "index.html"),
-            title: 'Домашняя страница',
+            title: 'Boolet-Home',
             meta: {
                 viewport: 'user-scalable=no, width=device-width, initial-scale=1.0'
             },

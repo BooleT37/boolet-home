@@ -2,20 +2,24 @@ import * as React from "react";
 import { hot } from "react-hot-loader";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { Language } from "src/models/enums";
-
 import { MainMenuItem } from "src/components/App/Page/MainMenu/MainMenu";
 import Page from "src/components/App/Page/Page";
+import { Language } from "src/models/enums";
+
+import en from "./translations/en";
+import ru from "./translations/ru";
 
 import Counter from "./pages/Counter/Counter";
+import GamesAssistant from "./pages/GamesAssistant/GamesAssistant";
 import Gift from "./pages/Gift/Gift";
 import Home from "./pages/Home/Home";
 import Q from "./pages/Q/Q";
 import Tasks from "./pages/Tasks/Tasks";
 import TimeCalculator from "./pages/TimeCalculator/TimeCalculator";
 
+import IPageTitles from "./translations/IPageTitles";
+
 import "./App.css";
-import GamesAssistant from "./pages/GamesAssistant/GamesAssistant";
 
 interface State {
     language: Language;
@@ -29,6 +33,10 @@ class App extends React.Component<{}, State> {
         };
     }
 
+    getPageTitles(): IPageTitles {
+        return this.state.language === Language.Ru ? ru.pageTitles : en.pageTitles;
+    }
+
     onLanguageChange = (language: Language) => {
         this.setState({language});
     };
@@ -38,39 +46,68 @@ class App extends React.Component<{}, State> {
             <div className="app">
                 <Router>
                     <div>
-                        <Route exact path="/" render={this.renderPage(Home, MainMenuItem.Home)}/>
+                        <Route exact path="/" render={this.renderHomePage}/>
                         <Route path="/counter" render={this.renderCounterPage}/>
-                        <Route path="/tasks" render={this.renderPage(Tasks)}/>
+                        <Route path="/tasks" render={this.renderPage(Tasks, this.getPageTitles().tasks)}/>
                         <Route path="/gift" component={Gift}/>
                         <Route path="/timeCalculator" render={this.renderTimeCalculatorPage}/>
                         <Route path="/q" component={Q}/>
-                        <Route path="/gamesAssistant" render={this.renderGamesAssistantPage}/>
+                        <Route path="/gamesAssistant"  render={this.renderGamesAssistantPage}/>
                     </div>
                 </Router>
             </div>
         );
     }
 
+    renderHomePage = () =>
+        this.renderPage(
+            Home,
+            this.getPageTitles().home,
+            MainMenuItem.Home,
+            {language: this.state.language}
+        )();
+
     renderCounterPage = () =>
-        this.renderPage(Counter, MainMenuItem.Counter, {language: this.state.language})();
+        this.renderPage(
+            Counter,
+            this.getPageTitles().counter,
+            MainMenuItem.Counter,
+            {language: this.state.language}
+        )();
 
     renderTimeCalculatorPage = () =>
-        this.renderPage(TimeCalculator, MainMenuItem.TimeCalculator, {language: this.state.language})();
+        this.renderPage(
+            TimeCalculator,
+            this.getPageTitles().timeCalculator,
+            MainMenuItem.TimeCalculator,
+            {language: this.state.language}
+        )();
 
     renderGamesAssistantPage = () =>
-        this.renderPage(GamesAssistant, MainMenuItem.GamesAssistant, {language: this.state.language})();
+        this.renderPage(
+            GamesAssistant,
+            this.getPageTitles().gamesAssistant,
+            MainMenuItem.GamesAssistant,
+            {language: this.state.language}
+        )();
 
     renderPage = <Component extends React.ComponentClass>(
             Component: Component,
+            title: string,
             menuItem?: MainMenuItem,
             componentProps?: any // fixme fix 'any' type
     ): () => React.ReactNode => {
         return () => (
-            <Page menuItem={menuItem} language={this.state.language} onLanguageChange={this.onLanguageChange}>
+            <Page
+                title={title}
+                menuItem={menuItem}
+                language={this.state.language}
+                onLanguageChange={this.onLanguageChange}
+            >
                 <Component {...componentProps}/>
             </Page>
         );
-    }
+    };
 }
 
 export default hot(module)(App);
