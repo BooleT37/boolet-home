@@ -37,10 +37,10 @@ app.use("/api/getGames", proxy("http://api.steampowered.com",
 }));
 
 app.get("/api/fakeGetGames", (req, res) => {
-    const playerId = req.query.playerId.toLowerCase();
-    res.setHeader("Content-type", "application/json");
-    res.setHeader("Access-Control-Allow-Origin", "*");
     try {
+        const playerId = req.query.playerId.toLowerCase();
+        res.setHeader("Content-type", "application/json");
+        res.setHeader("Access-Control-Allow-Origin", "*");
         const gamesForPlayerId = getGamesForPlayerId(playerId);
         res.send(JSON.stringify({ games: gamesForPlayerId}));
     } catch (e) {
