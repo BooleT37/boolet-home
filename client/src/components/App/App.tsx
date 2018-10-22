@@ -2,7 +2,7 @@ import * as React from "react";
 import { hot } from "react-hot-loader";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { MainMenuItem } from "src/components/App/Page/MainMenu/MainMenu";
+import MainMenuItem from "src/components/App/Page/MainMenu/MainMenuItem";
 import Page from "src/components/App/Page/Page";
 import { Language } from "src/models/enums";
 

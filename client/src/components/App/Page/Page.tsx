@@ -4,7 +4,8 @@ import { withRouter } from "react-router";
 import { Language } from "src/models/enums";
 
 import LanguageToggle from "./LanguageToggle/LanguageToggle";
-import MainMenu, { InitialProps as MainMenuProps, MainMenuItem } from "./MainMenu/MainMenu";
+import MainMenu, { InitialProps as MainMenuProps } from "./MainMenu/MainMenu";
+import MainMenuItem from "./MainMenu/MainMenuItem";
 import en from "./translations/en";
 import ru from "./translations/ru";
 
@@ -35,7 +36,7 @@ export default class extends React.Component<Props> {
         const translation = this.props.language === Language.Ru ? ru : en;
         return (
             <div>
-                <MainMenuWithRouter currentItem={this.props.menuItem}/>
+                <MainMenuWithRouter language={this.props.language} currentItem={this.props.menuItem}/>
                 <div className="page__container">
                     <Card>
                         <div className="page__content">

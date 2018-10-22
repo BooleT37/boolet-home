@@ -4,18 +4,19 @@ import Tabs from "@material-ui/core/Tabs/";
 import * as React from "react";
 import { RouteComponentProps } from "react-router-dom";
 
+import MainMenuItem from "src/components/App/Page/MainMenu/MainMenuItem";
+
 import InlineBlock from "src/components/shared/InlineBlock/InlineBlock";
+
+import { Language } from "src/models/enums";
+
+import en from "./translations/en";
+import ru from "./translations/ru";
 
 import "./MainMenu.css";
 
-export enum MainMenuItem {
-    Home = "Home",
-    Counter = "Counter",
-    TimeCalculator = "TimeCalculator",
-    GamesAssistant = "GamesAssistant"
-}
-
 export interface InitialProps {
+    language: Language;
     currentItem?: MainMenuItem;
 }
 
@@ -23,14 +24,15 @@ type Props = InitialProps & RouteComponentProps;
 
 export default class MainMenu extends React.Component<Props> {
     render(): React.ReactNode {
+        const itemNames = this.props.language === Language.Ru ? ru.items : en.items;
         return (
             <Card className="mainMenu">
                 <InlineBlock>
                     <Tabs value={this.props.currentItem || ""}>
-                        {this.renderTab(MainMenuItem.Home, "Home", "/")}
-                        {this.renderTab(MainMenuItem.Counter, "Counter", "/counter")}
-                        {this.renderTab(MainMenuItem.TimeCalculator, "Time Calculator", "/timeCalculator")}
-                        {this.renderTab(MainMenuItem.GamesAssistant, "Games assistant", "/gamesAssistant")}
+                        {this.renderTab(MainMenuItem.Home, itemNames[MainMenuItem.Home], "/")}
+                        {this.renderTab(MainMenuItem.Counter, itemNames[MainMenuItem.Counter], "/counter")}
+                        {this.renderTab(MainMenuItem.TimeCalculator, itemNames[MainMenuItem.TimeCalculator], "/timeCalculator")}
+                        {this.renderTab(MainMenuItem.GamesAssistant, itemNames[MainMenuItem.GamesAssistant], "/gamesAssistant")}
                     </Tabs>
                 </InlineBlock>
             </Card>
