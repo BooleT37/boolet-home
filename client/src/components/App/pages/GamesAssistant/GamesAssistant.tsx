@@ -61,7 +61,7 @@ export default class GamesAssistant extends React.Component<Props, State> {
             errorMessage: "",
             games: [],
             playerIds: [],
-            useFakeApi: Boolean(localStorage.getItem(LocalStorageItems.UseFakeApi)) || false,
+            useFakeApi: Boolean(localStorage.getItem(LocalStorageItems.UseFakeApi) === "true") || false,
             oneIdChosenModalOpen: false
         };
     }
