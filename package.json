@@ -13,6 +13,7 @@
     "build:client": "cross-env NODE_ENV=production webpack --config client/webpack.config.js",
     "watch:server": "node node_modules/nodemon/bin/nodemon.js --config server/nodemon.json",
     "watch:client": "cross-env NODE_ENV=developement webpack-dev-server --config client/webpack.config.js",
+    "run:server": "npm run build:server && npm start",
     "lint:server": "tslint -p server -e /client/*"
   },
   "dependencies": {

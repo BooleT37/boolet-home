@@ -1,0 +1,11 @@
+.rentCalculator {
+    text-align: center;
+}
+
+.rentCalculator_line {
+    margin-bottom: 2rem;
+}
+
+.rentCalculator_secondary {
+    color: gray;
+}

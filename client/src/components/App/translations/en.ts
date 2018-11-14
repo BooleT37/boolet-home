@@ -8,7 +8,8 @@ const en: { pageTitles: IPageTitles } = {
         gift: "Gift",
         timeCalculator: "Time calculator",
         q: "Question",
-        gamesAssistant: "Games assistant"
+        gamesAssistant: "Games assistant",
+        rentCalculator: "Rent calculator"
     }
 };
 

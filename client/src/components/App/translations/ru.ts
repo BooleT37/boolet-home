@@ -8,7 +8,8 @@ const ru: { pageTitles: IPageTitles } = {
         gift: "Подарок",
         timeCalculator: "Калькулятор времени",
         q: "Предложение",
-        gamesAssistant: "Игровой помощник"
+        gamesAssistant: "Игровой помощник",
+        rentCalculator: "Калькулятор аренды"
     }
 };
 

@@ -1,9 +1,15 @@
-export default interface IPageTitles {
-    home: string;
-    counter: string;
-    tasks: string;
-    gift: string;
-    timeCalculator: string;
-    q: string;
-    gamesAssistant: string;
-}
+type IPageTitles = {
+    [key in PageTitles]: string;
+};
+
+type PageTitles =
+      "home"
+    | "counter"
+    | "tasks"
+    | "gift"
+    | "timeCalculator"
+    | "q"
+    | "gamesAssistant"
+    | "rentCalculator";
+
+export default IPageTitles;
