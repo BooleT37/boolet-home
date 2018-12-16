@@ -1,0 +1,43 @@
+.EnglishTask1 {
+    background: white;
+}
+
+.EnglishTask1__header {
+    text-align: center;
+}
+
+.EnglishTask1__images {
+    position: relative;
+}
+
+.EnglishTask1__img {
+    width: 800px;
+    display: block;
+    margin: 0 auto;
+}
+
+.EnglishTask1__input {
+    font-family: Helvetica arial sans-serif;
+    font-weight: bold;
+    position: absolute;
+}
+
+.EnglishTask1__checkButton {
+    margin-bottom: 0.5rem;
+}
+
+.EnglishTask1__bottomText {
+    height: 3rem;
+}
+
+.EnglishTask1__correct {
+    color: mediumseagreen;
+}
+
+.EnglishTask1__incorrect {
+    color: orangered;
+}
+
+.EnglishTask1__bottom {
+    text-align: center;
+}

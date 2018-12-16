@@ -11,6 +11,7 @@ import en from "./translations/en";
 import ru from "./translations/ru";
 
 import Counter from "./pages/Counter/Counter";
+import EnglishTask1 from "./pages/englishTasks/EnglishTask1/EnglishTask1";
 import GamesAssistant from "./pages/GamesAssistant/GamesAssistant";
 import Gift from "./pages/Gift/Gift";
 import Home from "./pages/Home/Home";
@@ -68,6 +69,10 @@ class App extends React.Component<{}, State> {
                     <Route
                         path="/rentCalculator"
                         render={this.renderRentCalculatorPage}
+                    />
+                    <Route
+                        path="/english/task1"
+                        component={EnglishTask1}
                     />
                 </div>
             </Router>
