@@ -14,7 +14,7 @@
     ],
     "linebreak-style": [
       true,
-      "CRLF"
+      "LF"
     ],
     "match-default-export-name": true,
     "max-line-length": [
