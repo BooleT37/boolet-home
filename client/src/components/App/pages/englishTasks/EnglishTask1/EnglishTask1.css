@@ -7,13 +7,14 @@
 }
 
 .EnglishTask1__images {
+    width: 800px;
     position: relative;
+    margin: 0 auto;
 }
 
 .EnglishTask1__img {
-    width: 800px;
+    width: 100%;
     display: block;
-    margin: 0 auto;
 }
 
 .EnglishTask1__input {
