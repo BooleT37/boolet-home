@@ -89,6 +89,7 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
                             {this.state.checkButtonPressed && allInputsCorrect && <CorrectText/>}
                             {this.state.checkButtonPressed && !allInputsCorrect && <IncorrectText count={this.state.invalidInputs.size}/>}
                         </div>
+                        <Footer/>
                     </div>
                 </div>
             </div>
@@ -99,4 +100,13 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
 const CorrectText = () => <div className="EnglishTask1__correct">Все верно! Ты умница!</div>;
 const IncorrectText = (props: {count: number}) => (
     <div className="EnglishTask1__incorrect">Есть ошибки :( Общее число ошибок: {props.count}</div>
+);
+const Footer = () => (
+    <div className="EnglishTask1__footer">
+        © Copyright <a target="_blank" href="https://www.instagram.com/sanesparza/">sanesparza</a><br/>
+        Check out his awesome webtoon&nbsp;
+            <b><a target="_blank" href="https://www.webtoons.com/en/challenge/everything-about-you/ep1-talk-to-her/viewer?title_no=204587&episode_no=1">
+                EVERYTHING ABOUT YOU
+            </a></b>
+    </div>
 );
