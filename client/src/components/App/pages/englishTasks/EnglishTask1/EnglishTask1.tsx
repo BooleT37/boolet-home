@@ -6,6 +6,8 @@ import { images, inputs } from "./EnglishTask1.data";
 
 import "./EnglishTask1.css";
 
+const LOCAL_STORAGE_VALUES_KEY = "ENGLISH_TASK_1_LOCAL_STORAGE_VALUES";
+
 interface State {
     inputValues: string[];
     invalidInputs: Set<number>;
@@ -23,18 +25,26 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
         };
     }
 
-    onInputChange = (index: number, value: string) => {
+    componentDidMount(): void {
+        const inputValues = localStorage.getItem(LOCAL_STORAGE_VALUES_KEY);
+        if (inputValues) {
+            this.setState({inputValues: JSON.parse(inputValues)});
+        }
+    }
+
+    onInputChange = (id: number, value: string) => {
         const inputValues = this.state.inputValues.slice();
-        inputValues[index] = value;
+        inputValues[id] = value;
         const invalidInputs = new Set(this.state.invalidInputs);
-        invalidInputs.delete(index);
+        invalidInputs.delete(id);
+        localStorage.setItem(LOCAL_STORAGE_VALUES_KEY, JSON.stringify(inputValues));
         this.setState({ inputValues, checkButtonPressed: false, invalidInputs });
     };
 
     onCheckButtonClick = () => {
         const invalidInputs = new Set(inputs
-            .filter((input, index) => this.state.inputValues[index] !== input.answer)
-            .map((_, index) => index)
+            .filter(input => this.state.inputValues[input.id].toLowerCase() !== input.answer.toLowerCase())
+            .map(input => input.id)
         );
         this.setState({ invalidInputs, checkButtonPressed: true });
     };
@@ -59,17 +69,17 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
                         />
                     ))}
                     {/* tslint:disable-next-line:jsx-no-multiline-js */}
-                    {inputs.map((input, ind) => (
+                    {inputs.map(input => (
                         <div
-                            key={ind}
+                            key={input.id}
                             className="EnglishTask1__input"
                             style={{left: input.left, top: input.top, width: input.width}}
                         >
                             <Input
-                                value={this.state.inputValues[ind]}
-                                error={this.state.invalidInputs.has(ind)}
+                                value={this.state.inputValues[input.id]}
+                                error={this.state.invalidInputs.has(input.id)}
                                 // tslint:disable-next-line:jsx-no-lambda
-                                onChange={e => { this.onInputChange(ind, e.target.value); }}
+                                onChange={e => { this.onInputChange(input.id, e.target.value); }}
                                 placeholder={input.hint}
                                 style={{ fontSize: "28px" }}
                             />

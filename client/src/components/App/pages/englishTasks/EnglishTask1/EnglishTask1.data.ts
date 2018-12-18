@@ -27,7 +27,7 @@ export const images: string[] = [
     "https://i.imgur.com/kWZKsBs.jpg"
 ];
 
-interface InputModel {
+interface InputDataModel {
     left: number;
     top: number;
     hint: string;
@@ -35,7 +35,11 @@ interface InputModel {
     width: number;
 }
 
-export const inputs: InputModel[] = [
+interface InputModel extends InputDataModel {
+    id: number;
+}
+
+const inputsData: InputDataModel[] = [
     {
         left: 238,
         top: 710,
@@ -345,3 +349,5 @@ export const inputs: InputModel[] = [
         width: 74
     }
 ];
+
+export const inputs: InputModel[] = inputsData.map((inputData: InputDataModel, index: number) => ({...inputData, ...{id: index}}));
