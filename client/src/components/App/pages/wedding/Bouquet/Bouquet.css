@@ -1,0 +1,15 @@
+.Bouquet {
+    text-align: center;
+}
+
+.Bouquet_wheel {
+    position: relative;
+}
+
+.Bouquet_img {
+    position: absolute;
+}
+
+.Bouquet_center {
+    cursor: pointer;
+}

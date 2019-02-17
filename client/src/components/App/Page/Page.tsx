@@ -35,7 +35,7 @@ export default class extends React.Component<Props> {
     render(): React.ReactNode {
         const translation = this.props.language === Language.Ru ? ru : en;
         return (
-            <div>
+            <div className="page">
                 <MainMenuWithRouter language={this.props.language} currentItem={this.props.menuItem}/>
                 <div className="page__container">
                     <Card>

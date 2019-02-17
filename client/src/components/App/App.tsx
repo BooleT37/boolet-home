@@ -19,6 +19,7 @@ import Q from "./pages/Q/Q";
 import RentCalculator from "./pages/RentCalculator/RentCalculator";
 import Tasks from "./pages/Tasks/Tasks";
 import TimeCalculator from "./pages/TimeCalculator/TimeCalculator";
+import Bouquet from "./pages/wedding/Bouquet/Bouquet";
 
 import IPageTitles from "./translations/IPageTitles";
 
@@ -73,6 +74,10 @@ class App extends React.Component<{}, State> {
                     <Route
                         path="/english/task1"
                         component={EnglishTask1}
+                    />
+                    <Route
+                        path="/wedding/bouquet"
+                        component={Bouquet}
                     />
                 </div>
             </Router>
