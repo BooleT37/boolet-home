@@ -71,13 +71,19 @@ export default class Bouquet extends React.Component<undefined, State> {
     };
 
     onSpeedInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const gradPerSec = parseInt(e.target.value, 10);
+        const gradPerSec = e.target.value
+            ? parseInt(e.target.value, 10)
+            : 0;
         const speed = (gradPerSec * Math.PI / 180) / FPS;
         this.setState({speed});
     };
 
     // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
+        const speedInputValue: string = this.state.speed
+            ? Math.round(this.state.speed * FPS * 180 / Math.PI).toString()
+            : "";
+
         return (
             <div className="Bouquet">
                 <div
@@ -105,7 +111,7 @@ export default class Bouquet extends React.Component<undefined, State> {
                     <input
                         className="Bouquet_speedInput"
                         type="number"
-                        value={Math.round(this.state.speed * FPS * 180 / Math.PI)}
+                        value={speedInputValue}
                         step={15}
                         onChange={this.onSpeedInputChange}
                     />
