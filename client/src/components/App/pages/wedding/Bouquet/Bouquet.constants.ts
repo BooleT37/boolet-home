@@ -25,3 +25,5 @@ export const BOUQUET_IMAGE_POSITION: Position = {
     left: RADIUS + GIRL_IMAGE_WIDTH - BOUQUET_IMAGE_WIDTH / 2,
     top: RADIUS + (GIRL_IMAGE_HEIGHT - BOUQUET_IMAGE_HEIGHT) / 2
 };
+
+export const FPS = 60;

@@ -5,7 +5,7 @@ import {
     WHEEL_HEIGHT,
     WHEEL_CENTER,
     RADIUS,
-    BRIDE_IMAGE_POSITION, BOUQUET_IMAGE_POSITION, GIRL_IMAGE_WIDTH, GIRL_IMAGE_HEIGHT
+    BRIDE_IMAGE_POSITION, BOUQUET_IMAGE_POSITION, GIRL_IMAGE_WIDTH, GIRL_IMAGE_HEIGHT, FPS
 } from "src/components/App/pages/wedding/Bouquet/Bouquet.constants";
 import { firstNWithRepeat, getGirlsPositions } from "src/components/App/pages/wedding/Bouquet/Bouquet.utils";
 
@@ -29,6 +29,8 @@ import "./Bouquet.css";
 
 interface State {
     isSpinning: boolean;
+    speed: number; // rad per frame
+    angle: number; // rad
 }
 
 const girlImages: string[] = [
@@ -43,17 +45,35 @@ export default class Bouquet extends React.Component<undefined, State> {
         super(undefined);
 
         this.state = {
-            isSpinning: false
+            isSpinning: false,
+            speed: (Math.PI * 30 / 180) / FPS,
+            angle: 0
         };
     }
+
+    iterateLoop = () => {
+        if (this.state.isSpinning) {
+            this.setState(oldState => ({
+                angle: oldState.angle + this.state.speed
+            }));
+        }
+        requestAnimationFrame(this.iterateLoop);
+    };
 
     // tslint:disable-next-line:prefer-function-over-method
     componentDidMount(): void {
         document.title = "Свадебный букет";
+        this.iterateLoop();
     }
 
     onCenterClick = () => {
         this.setState(oldState => ({ isSpinning: !(oldState.isSpinning)}));
+    };
+
+    onSpeedInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const gradPerSec = parseInt(e.target.value, 10);
+        const speed = (gradPerSec * Math.PI / 180) / FPS;
+        this.setState({speed});
     };
 
     // tslint:disable-next-line:prefer-function-over-method
@@ -78,20 +98,31 @@ export default class Bouquet extends React.Component<undefined, State> {
                             style={BOUQUET_IMAGE_POSITION}
                         />
                     </span>
+                    {this.renderGirls()}
                 </div>
-                {this.renderGirls()}
+                <div className="Bouquet_speedInputWrapper">
+                    Скорость:&nbsp;
+                    <input
+                        className="Bouquet_speedInput"
+                        type="number"
+                        value={Math.round(this.state.speed * FPS * 180 / Math.PI)}
+                        step={15}
+                        onChange={this.onSpeedInputChange}
+                    />
+                    &thinsp;&deg;&nbsp;/ sec
+                </div>
             </div>
         );
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
     renderGirls(): JSX.Element[] {
         const positions = getGirlsPositions(
             WHEEL_CENTER,
             girlsCount,
             RADIUS,
             GIRL_IMAGE_WIDTH,
-            GIRL_IMAGE_HEIGHT
+            GIRL_IMAGE_HEIGHT,
+            this.state.angle
         );
         return firstNWithRepeat(girlImages, girlsCount)
             .map((img, i) => (

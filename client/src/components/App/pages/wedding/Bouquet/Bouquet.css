@@ -13,3 +13,13 @@
 .Bouquet_center {
     cursor: pointer;
 }
+
+.Bouquet_speedInputWrapper {
+    font-size: 20px;
+}
+
+.Bouquet_speedInput {
+    height: 20px;
+    width: 40px;
+    font-size: 20px;
+}
