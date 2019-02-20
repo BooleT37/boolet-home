@@ -1,13 +1,23 @@
 import * as React from "react";
+import Field from "src/components/App/pages/wedding/Bouquet/Field/Field";
 
 import {
     WHEEL_WIDTH,
     WHEEL_HEIGHT,
     WHEEL_CENTER,
     RADIUS,
-    BRIDE_IMAGE_POSITION, BOUQUET_IMAGE_POSITION, GIRL_IMAGE_WIDTH, GIRL_IMAGE_HEIGHT, FPS
-} from "src/components/App/pages/wedding/Bouquet/Bouquet.constants";
-import { firstNWithRepeat, getGirlsPositions } from "src/components/App/pages/wedding/Bouquet/Bouquet.utils";
+    BRIDE_IMAGE_POSITION,
+    GIRL_IMAGE_WIDTH,
+    GIRL_IMAGE_HEIGHT,
+    V0,
+    GIRLS_COUNT, FPS, SPIN_DURATION
+} from "./Bouquet.constants";
+import {
+    firstNWithRepeat,
+    getCirclePositions,
+    getBouquetPosition,
+    getCurrentAngle
+} from "./Bouquet.utils";
 
 import * as bouquetImg from "./images/Bouquet.png";
 import * as brideImg from "./images/Bride.png";
@@ -29,8 +39,10 @@ import "./Bouquet.css";
 
 interface State {
     isSpinning: boolean;
-    speed: number; // rad per frame
+    t: number; // time spinning (frames)
     angle: number; // rad
+    v0: number; // grad per sec
+    spinDuration: number; // sec
 }
 
 const girlImages: string[] = [
@@ -38,24 +50,32 @@ const girlImages: string[] = [
     girlImg8, girlImg9, girlImg10, girlImg11, girlImg12, girlImg13
 ];
 
-const girlsCount = 5;
-
 export default class Bouquet extends React.Component<undefined, State> {
     constructor() {
         super(undefined);
 
         this.state = {
             isSpinning: false,
-            speed: (Math.PI * 30 / 180) / FPS,
-            angle: 0
+            t: 0,
+            angle: 0,
+            spinDuration: SPIN_DURATION,
+            v0: V0
         };
     }
 
     iterateLoop = () => {
-        if (this.state.isSpinning) {
-            this.setState(oldState => ({
-                angle: oldState.angle + this.state.speed
-            }));
+        const { isSpinning } = this.state;
+        if (isSpinning) {
+            this.setState(oldState => {
+                const angle = getCurrentAngle(
+                    - oldState.v0 / oldState.spinDuration,
+                    oldState.v0,
+                    oldState.t
+                );
+                return angle >= oldState.angle
+                    ? { ...oldState, angle, t: oldState.t + 1 }
+                    : { ...oldState, isSpinning: false, t: 0 };
+            });
         }
         requestAnimationFrame(this.iterateLoop);
     };
@@ -67,28 +87,36 @@ export default class Bouquet extends React.Component<undefined, State> {
     }
 
     onCenterClick = () => {
-        this.setState(oldState => ({ isSpinning: !(oldState.isSpinning)}));
+        this.setState(oldState => ({
+            isSpinning: !oldState.isSpinning,
+            t: 0,
+            angle: oldState.isSpinning ? oldState.angle : 0
+        }));
     };
 
-    onSpeedInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const gradPerSec = e.target.value
-            ? parseInt(e.target.value, 10)
-            : 0;
-        const speed = (gradPerSec * Math.PI / 180) / FPS;
-        this.setState({speed});
+    onV0Change = (v0: number) => {
+        this.setState({
+            isSpinning: false,
+            t: 0,
+            v0: (Math.PI * v0 / 180) / FPS
+        });
+    };
+
+    onSpinDurationChange = (spinDuration: number) => {
+        this.setState({
+            isSpinning: false,
+            t: 0,
+            spinDuration: spinDuration * FPS
+        });
     };
 
     // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
-        const speedInputValue: string = this.state.speed
-            ? Math.round(this.state.speed * FPS * 180 / Math.PI).toString()
-            : "";
-
         return (
             <div className="Bouquet">
                 <div
                     className="Bouquet_wheel"
-                    style={{width: WHEEL_WIDTH, height: WHEEL_HEIGHT}}
+                    style={{ width: WHEEL_WIDTH, height: WHEEL_HEIGHT }}
                 >
                     <span className="Bouquet_center" onClick={this.onCenterClick}>
                         <img
@@ -101,36 +129,37 @@ export default class Bouquet extends React.Component<undefined, State> {
                             className="Bouquet_img"
                             src={bouquetImg}
                             alt="bouquet"
-                            style={BOUQUET_IMAGE_POSITION}
+                            style={getBouquetPosition(this.state.angle)}
                         />
                     </span>
                     {this.renderGirls()}
                 </div>
-                <div className="Bouquet_speedInputWrapper">
-                    Скорость:&nbsp;
-                    <input
-                        className="Bouquet_speedInput"
-                        type="number"
-                        value={speedInputValue}
-                        step={15}
-                        onChange={this.onSpeedInputChange}
-                    />
-                    &thinsp;&deg;&nbsp;/ sec
-                </div>
+                <Field
+                    label="Начальная скорость: "
+                    suffix={<span>&thinsp;&deg;&nbsp;/ сек</span>}
+                    value={Math.round(this.state.v0 * FPS * 180 / Math.PI)}
+                    onChange={this.onV0Change}
+                />
+                <Field
+                    label="Длительность вращения: "
+                    suffix={<span>&thinsp;сек</span>}
+                    value={Math.round(this.state.spinDuration / FPS)}
+                    onChange={this.onSpinDurationChange}
+                />
             </div>
         );
     }
 
     renderGirls(): JSX.Element[] {
-        const positions = getGirlsPositions(
+        const positions = getCirclePositions(
             WHEEL_CENTER,
-            girlsCount,
+            GIRLS_COUNT,
             RADIUS,
             GIRL_IMAGE_WIDTH,
             GIRL_IMAGE_HEIGHT,
             this.state.angle
         );
-        return firstNWithRepeat(girlImages, girlsCount)
+        return firstNWithRepeat(girlImages, GIRLS_COUNT)
             .map((img, i) => (
                 <img
                     key={i}

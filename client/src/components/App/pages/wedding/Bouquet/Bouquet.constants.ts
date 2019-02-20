@@ -7,6 +7,7 @@ export const BOUQUET_IMAGE_WIDTH = 128;
 export const BOUQUET_IMAGE_HEIGHT = 128;
 
 export const RADIUS = 320;
+export const BOUQUET_SPIN_RADIUS = (GIRL_IMAGE_WIDTH + BOUQUET_IMAGE_WIDTH) / 2;
 
 export const WHEEL_WIDTH = RADIUS * 2 + GIRL_IMAGE_HEIGHT;
 export const WHEEL_HEIGHT = RADIUS * 2 + GIRL_IMAGE_WIDTH;
@@ -17,13 +18,15 @@ export const WHEEL_CENTER: Position = {
 };
 
 export const BRIDE_IMAGE_POSITION: Position = {
-    left: RADIUS - BOUQUET_IMAGE_WIDTH / 2,
+    left: RADIUS,
     top: RADIUS
 };
 
-export const BOUQUET_IMAGE_POSITION: Position = {
-    left: RADIUS + GIRL_IMAGE_WIDTH - BOUQUET_IMAGE_WIDTH / 2,
-    top: RADIUS + (GIRL_IMAGE_HEIGHT - BOUQUET_IMAGE_HEIGHT) / 2
-};
-
 export const FPS = 60;
+
+export const GIRLS_COUNT = 5;
+
+const V0_GRAD_PER_SEC = 120;
+export const V0 = (Math.PI * V0_GRAD_PER_SEC / 180) / FPS; // rad per frame
+export const SPIN_DURATION =  FPS * 10; // frames
+export const ACC = - V0 / SPIN_DURATION;

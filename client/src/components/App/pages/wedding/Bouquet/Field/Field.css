@@ -1,0 +1,9 @@
+.Field {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.Field_input {
+    font-size: inherit;
+    width: 50px;
+}
