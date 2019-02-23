@@ -10,14 +10,13 @@ import {
     GIRL_IMAGE_WIDTH,
     GIRL_IMAGE_HEIGHT,
     V0,
-    GIRLS_COUNT, FPS, SPIN_DURATION
+    GIRLS_COUNT,
+    FPS,
+    ACC
 } from "./Bouquet.constants";
-import {
-    firstNWithRepeat,
-    getCirclePositions,
-    getBouquetPosition,
-    getCurrentAngle
-} from "./Bouquet.utils";
+
+import "./Bouquet.css";
+import { firstNWithRepeat, getCirclePositions, getBouquetPosition } from "./Bouquet.utils";
 
 import * as bouquetImg from "./images/Bouquet.png";
 import * as brideImg from "./images/Bride.png";
@@ -35,14 +34,12 @@ import * as girlImg11 from "./images/girls/girl-11.png";
 import * as girlImg12 from "./images/girls/girl-12.png";
 import * as girlImg13 from "./images/girls/girl-13.png";
 
-import "./Bouquet.css";
-
 interface State {
     isSpinning: boolean;
-    t: number; // time spinning (frames)
     angle: number; // rad
-    v0: number; // grad per sec
-    spinDuration: number; // sec
+    v0: number; // rad per frame
+    v: number;
+    acc: number; // rad per frame^2
 }
 
 const girlImages: string[] = [
@@ -56,25 +53,29 @@ export default class Bouquet extends React.Component<undefined, State> {
 
         this.state = {
             isSpinning: false,
-            t: 0,
+            v: 0,
             angle: 0,
-            spinDuration: SPIN_DURATION,
-            v0: V0
+            v0: V0,
+            acc: ACC
         };
     }
 
     iterateLoop = () => {
         const { isSpinning } = this.state;
         if (isSpinning) {
-            this.setState(oldState => {
-                const angle = getCurrentAngle(
-                    - oldState.v0 / oldState.spinDuration,
-                    oldState.v0,
-                    oldState.t
-                );
-                return angle >= oldState.angle
-                    ? { ...oldState, angle, t: oldState.t + 1 }
-                    : { ...oldState, isSpinning: false, t: 0 };
+            this.setState((oldState: State): State => {
+                const newV = oldState.v + oldState.acc;
+                return newV > 0
+                    ? {
+                        ...oldState,
+                        angle: oldState.angle + oldState.v,
+                        v: oldState.v + oldState.acc
+                    }
+                    : {
+                        ...oldState,
+                        isSpinning: false,
+                        v: V0
+                    };
             });
         }
         requestAnimationFrame(this.iterateLoop);
@@ -87,27 +88,29 @@ export default class Bouquet extends React.Component<undefined, State> {
     }
 
     onCenterClick = () => {
-        this.setState(oldState => ({
-            isSpinning: !oldState.isSpinning,
-            t: 0,
-            angle: oldState.isSpinning ? oldState.angle : 0
-        }));
+        this.setState(oldState => (
+            oldState.isSpinning
+                ? { isSpinning: false, v: 0 }
+                : { isSpinning: true, v: oldState.v0 }
+        ));
     };
 
     onV0Change = (v0: number) => {
-        this.setState({
-            isSpinning: false,
-            t: 0,
-            v0: (Math.PI * v0 / 180) / FPS
-        });
+        this.setState((oldState => {
+            const newV0 = (Math.PI * v0 / 180) / FPS;
+            return {
+                isSpinning: false,
+                v0: newV0,
+                acc: oldState.acc * (newV0 / oldState.v0)
+            };
+        }));
     };
 
     onSpinDurationChange = (spinDuration: number) => {
-        this.setState({
+        this.setState(oldState => ({
             isSpinning: false,
-            t: 0,
-            spinDuration: spinDuration * FPS
-        });
+            acc:  - oldState.v0 / (spinDuration * FPS)
+        }));
     };
 
     // tslint:disable-next-line:prefer-function-over-method
@@ -143,7 +146,7 @@ export default class Bouquet extends React.Component<undefined, State> {
                 <Field
                     label="Длительность вращения: "
                     suffix={<span>&thinsp;сек</span>}
-                    value={Math.round(this.state.spinDuration / FPS)}
+                    value={Math.round(- (this.state.v0 / this.state.acc) / FPS)}
                     onChange={this.onSpinDurationChange}
                 />
             </div>

@@ -40,7 +40,3 @@ export function getBouquetPosition(angle: number): Position {
         -angle - Math.PI / 2
     )[0];
 }
-
-export function getCurrentAngle(acc: number, v0: number, t: number): number {
-    return (acc * t * t) / 2 + v0 * t;
-}
