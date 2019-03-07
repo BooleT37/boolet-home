@@ -1,4 +1,6 @@
+import * as classNames from "classnames";
 import * as React from "react";
+import { Position } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
 import Field from "src/components/App/pages/wedding/Bouquet/Field/Field";
 import { getTime } from "src/components/App/pages/wedding/Bouquet/movementUtils";
 
@@ -17,7 +19,13 @@ import {
 } from "./Bouquet.constants";
 
 import "./Bouquet.css";
-import { firstNWithRepeat, getCirclePositions, getBouquetPosition, countV0AndAccForIndex, seedRandomIndex} from "./Bouquet.utils";
+import {
+    firstNWithRepeat,
+    getCirclePositions,
+    getBouquetPosition,
+    countV0AndAccForIndex,
+    seedRandomIndex, getBouquetPositionNextToGirl
+} from "./Bouquet.utils";
 
 import * as bouquetImg from "./images/Bouquet.png";
 import * as brideImg from "./images/Bride.png";
@@ -44,6 +52,7 @@ interface State {
     acc: number; // rad per frame^2
     accAdjusted: number; // rad per frame^2
     chosenIndex: number;
+    isBouquetMovingToGirl: boolean;
 }
 
 const girlImages: string[] = [
@@ -63,7 +72,8 @@ export default class Bouquet extends React.Component<undefined, State> {
             v0Adjusted: V0,
             acc: ACC,
             accAdjusted: ACC,
-            chosenIndex: -1
+            chosenIndex: -1,
+            isBouquetMovingToGirl: false
         };
     }
 
@@ -76,11 +86,13 @@ export default class Bouquet extends React.Component<undefined, State> {
                     ? {
                         ...oldState,
                         angle: oldState.angle + oldState.v,
+                        isBouquetMovingToGirl: false,
                         v: newV
                     }
                     : {
                         ...oldState,
                         isSpinning: false,
+                        isBouquetMovingToGirl: true,
                         v: oldState.v0
                     };
             });
@@ -103,7 +115,8 @@ export default class Bouquet extends React.Component<undefined, State> {
                     v: 0,
                     v0Adjusted: oldState.v0,
                     accAdjusted: oldState.acc,
-                    chosenIndex: -1
+                    chosenIndex: -1,
+                    isBouquetMovingToGirl: false
                 };
             }
             const chosenIndex = seedRandomIndex(GIRLS_COUNT);
@@ -123,7 +136,8 @@ export default class Bouquet extends React.Component<undefined, State> {
                 v: v0,
                 v0Adjusted: v0,
                 accAdjusted: acc,
-                chosenIndex
+                chosenIndex,
+                isBouquetMovingToGirl: false
             };
         });
     };
@@ -147,7 +161,15 @@ export default class Bouquet extends React.Component<undefined, State> {
 
     // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
-        const { chosenIndex } = this.state;
+        const { chosenIndex, isBouquetMovingToGirl, angle } = this.state;
+        const bouquetPosition: Position = isBouquetMovingToGirl
+            ? getBouquetPositionNextToGirl(angle, chosenIndex)
+            : getBouquetPosition(angle);
+        const bouquetClassName = classNames(
+            "Bouquet_img",
+            "Bouquet_bouquet",
+            { Bouquet_bouquet_moving: isBouquetMovingToGirl }
+        );
         return (
             <div className="Bouquet">
                 <div
@@ -162,10 +184,10 @@ export default class Bouquet extends React.Component<undefined, State> {
                             style={BRIDE_IMAGE_POSITION}
                         />
                         <img
-                            className="Bouquet_img"
+                            className={bouquetClassName}
                             src={bouquetImg}
                             alt="bouquet"
-                            style={getBouquetPosition(this.state.angle)}
+                            style={bouquetPosition}
                         />
                     </span>
                     {this.renderGirls()}
@@ -182,7 +204,6 @@ export default class Bouquet extends React.Component<undefined, State> {
                     value={Math.round(getTime(this.state.acc, this.state.v0) / FPS)}
                     onChange={this.onSpinDurationChange}
                 />
-                {chosenIndex !== -1 ? <ChosenGirl chosenIndex={chosenIndex} /> : null}
             </div>
         );
     }
@@ -207,17 +228,4 @@ export default class Bouquet extends React.Component<undefined, State> {
                 />
             ));
     }
-}
-
-function ChosenGirl(props: {chosenIndex: number}): JSX.Element {
-    return (
-        <div>
-            Выбранный портрет:&nbsp;
-            <img
-                className="Bouquet_img"
-                src={girlImages[props.chosenIndex]}
-                alt={`girl_image_${props.chosenIndex}`}
-            />
-        </div>
-    );
 }

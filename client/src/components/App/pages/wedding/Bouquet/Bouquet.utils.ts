@@ -1,4 +1,9 @@
-import { WHEEL_CENTER, BOUQUET_SPIN_RADIUS, BOUQUET_IMAGE_WIDTH, BOUQUET_IMAGE_HEIGHT } from "src/components/App/pages/wedding/Bouquet/Bouquet.constants";
+import {
+    WHEEL_CENTER,
+    BOUQUET_SPIN_RADIUS,
+    BOUQUET_IMAGE_WIDTH,
+    BOUQUET_IMAGE_HEIGHT, GIRLS_COUNT, RADIUS, GIRL_IMAGE_WIDTH, GIRL_IMAGE_HEIGHT
+} from "src/components/App/pages/wedding/Bouquet/Bouquet.constants";
 import { getAcc, getV0, getTime, getDistance } from "src/components/App/pages/wedding/Bouquet/movementUtils";
 import { Position } from "./Bouquet.models";
 
@@ -102,5 +107,24 @@ export function countV0AndAccForIndex(
     return {
         v0: getV0(newDistance, t),
         acc: getAcc(newDistance, t)
+    };
+}
+
+export function getBouquetPositionNextToGirl(
+    angle: number,
+    chosenIndex: number
+): Position {
+    const positions = getCirclePositions(
+        WHEEL_CENTER,
+        GIRLS_COUNT,
+        RADIUS,
+        GIRL_IMAGE_WIDTH,
+        GIRL_IMAGE_HEIGHT,
+        angle
+    );
+    const girlPosition = positions[chosenIndex];
+    return {
+        left: girlPosition.left + GIRL_IMAGE_WIDTH,
+        top: girlPosition.top + (GIRL_IMAGE_HEIGHT - BOUQUET_IMAGE_HEIGHT) / 2
     };
 }

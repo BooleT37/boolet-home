@@ -24,3 +24,11 @@
     width: 40px;
     font-size: 20px;
 }
+
+.Bouquet_bouquet {
+    z-index: 2;
+}
+
+.Bouquet_bouquet_moving {
+    transition: top 3s, left 3s;
+}
