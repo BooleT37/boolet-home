@@ -1,5 +1,6 @@
 import * as React from "react";
 import Field from "src/components/App/pages/wedding/Bouquet/Field/Field";
+import { getTime } from "src/components/App/pages/wedding/Bouquet/movementUtils";
 
 import {
     WHEEL_WIDTH,
@@ -16,7 +17,7 @@ import {
 } from "./Bouquet.constants";
 
 import "./Bouquet.css";
-import { firstNWithRepeat, getCirclePositions, getBouquetPosition } from "./Bouquet.utils";
+import { firstNWithRepeat, getCirclePositions, getBouquetPosition, countV0AndAccForIndex, seedRandomIndex} from "./Bouquet.utils";
 
 import * as bouquetImg from "./images/Bouquet.png";
 import * as brideImg from "./images/Bride.png";
@@ -38,8 +39,11 @@ interface State {
     isSpinning: boolean;
     angle: number; // rad
     v0: number; // rad per frame
+    v0Adjusted: number; // rad per frame
     v: number;
     acc: number; // rad per frame^2
+    accAdjusted: number; // rad per frame^2
+    chosenIndex: number;
 }
 
 const girlImages: string[] = [
@@ -56,7 +60,10 @@ export default class Bouquet extends React.Component<undefined, State> {
             v: 0,
             angle: 0,
             v0: V0,
-            acc: ACC
+            v0Adjusted: V0,
+            acc: ACC,
+            accAdjusted: ACC,
+            chosenIndex: -1
         };
     }
 
@@ -64,17 +71,17 @@ export default class Bouquet extends React.Component<undefined, State> {
         const { isSpinning } = this.state;
         if (isSpinning) {
             this.setState((oldState: State): State => {
-                const newV = oldState.v + oldState.acc;
+                const newV = oldState.v + oldState.accAdjusted;
                 return newV > 0
                     ? {
                         ...oldState,
                         angle: oldState.angle + oldState.v,
-                        v: oldState.v + oldState.acc
+                        v: newV
                     }
                     : {
                         ...oldState,
                         isSpinning: false,
-                        v: V0
+                        v: oldState.v0
                     };
             });
         }
@@ -88,11 +95,37 @@ export default class Bouquet extends React.Component<undefined, State> {
     }
 
     onCenterClick = () => {
-        this.setState(oldState => (
-            oldState.isSpinning
-                ? { isSpinning: false, v: 0 }
-                : { isSpinning: true, v: oldState.v0 }
-        ));
+        this.setState(oldState => {
+            if (oldState.isSpinning) {
+                return {
+                    ...oldState,
+                    isSpinning: false,
+                    v: 0,
+                    v0Adjusted: oldState.v0,
+                    accAdjusted: oldState.acc,
+                    chosenIndex: -1
+                };
+            }
+            const chosenIndex = seedRandomIndex(GIRLS_COUNT);
+            const { v0, acc } = countV0AndAccForIndex(
+                chosenIndex,
+                oldState.acc,
+                oldState.v0,
+                oldState.angle,
+                GIRLS_COUNT
+            );
+            // console.log(`v0: ${oldState.v0} -> ${v0}`);
+            // console.log(`a: ${oldState.acc} -> ${acc}`);
+            // console.log(`t: ${getTime(acc, v0) / FPS} sec`);
+            return {
+                ...oldState,
+                isSpinning: true,
+                v: v0,
+                v0Adjusted: v0,
+                accAdjusted: acc,
+                chosenIndex
+            };
+        });
     };
 
     onV0Change = (v0: number) => {
@@ -100,7 +133,6 @@ export default class Bouquet extends React.Component<undefined, State> {
             const newV0 = (Math.PI * v0 / 180) / FPS;
             return {
                 isSpinning: false,
-                v0: newV0,
                 acc: oldState.acc * (newV0 / oldState.v0)
             };
         }));
@@ -115,6 +147,7 @@ export default class Bouquet extends React.Component<undefined, State> {
 
     // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
+        const { chosenIndex } = this.state;
         return (
             <div className="Bouquet">
                 <div
@@ -146,9 +179,10 @@ export default class Bouquet extends React.Component<undefined, State> {
                 <Field
                     label="Длительность вращения: "
                     suffix={<span>&thinsp;сек</span>}
-                    value={Math.round(- (this.state.v0 / this.state.acc) / FPS)}
+                    value={Math.round(getTime(this.state.acc, this.state.v0) / FPS)}
                     onChange={this.onSpinDurationChange}
                 />
+                {chosenIndex !== -1 ? <ChosenGirl chosenIndex={chosenIndex} /> : null}
             </div>
         );
     }
@@ -173,4 +207,17 @@ export default class Bouquet extends React.Component<undefined, State> {
                 />
             ));
     }
+}
+
+function ChosenGirl(props: {chosenIndex: number}): JSX.Element {
+    return (
+        <div>
+            Выбранный портрет:&nbsp;
+            <img
+                className="Bouquet_img"
+                src={girlImages[props.chosenIndex]}
+                alt={`girl_image_${props.chosenIndex}`}
+            />
+        </div>
+    );
 }

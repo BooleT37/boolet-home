@@ -1,4 +1,5 @@
 import { Position } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
+import { getAccBySpeedAndTime } from "src/components/App/pages/wedding/Bouquet/movementUtils";
 
 export const GIRL_IMAGE_HEIGHT = 160;
 export const GIRL_IMAGE_WIDTH = 160;
@@ -29,4 +30,4 @@ export const GIRLS_COUNT = 5;
 const V0_GRAD_PER_SEC = 120;
 export const V0 = (Math.PI * V0_GRAD_PER_SEC / 180) / FPS; // rad per frame
 export const SPIN_DURATION =  FPS * 10; // frames
-export const ACC = - V0 / SPIN_DURATION;
+export const ACC = getAccBySpeedAndTime(V0, SPIN_DURATION);
