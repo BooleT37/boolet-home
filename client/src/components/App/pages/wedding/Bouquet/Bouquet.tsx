@@ -1,9 +1,12 @@
+import { IconButton } from "@material-ui/core";
+import { Settings } from "@material-ui/icons";
 import * as classNames from "classnames";
 import * as React from "react";
-import { Position } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
+import { Position, Player } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
 import { StyledHighlightedGirlImage } from "src/components/App/pages/wedding/Bouquet/Bouquet.styles";
 import Field from "src/components/App/pages/wedding/Bouquet/Field/Field";
 import { getTime } from "src/components/App/pages/wedding/Bouquet/movementUtils";
+import PlayersSettingsModal from "src/components/App/pages/wedding/Bouquet/PlayersSettingsModal/PlayersSettingsModal";
 
 import {
     WHEEL_WIDTH,
@@ -14,14 +17,13 @@ import {
     GIRL_IMAGE_WIDTH,
     GIRL_IMAGE_HEIGHT,
     V0,
-    GIRLS_COUNT,
     FPS,
-    ACC
+    ACC,
+    DEFAULT_PLAYERS
 } from "./Bouquet.constants";
 
 import "./Bouquet.css";
 import {
-    firstNWithRepeat,
     getCirclePositions,
     getBouquetPosition,
     countV0AndAccForIndex,
@@ -44,16 +46,21 @@ import * as girlImg11 from "./images/girls/girl-11.png";
 import * as girlImg12 from "./images/girls/girl-12.png";
 import * as girlImg13 from "./images/girls/girl-13.png";
 
-interface State {
+interface MotionState {
     isSpinning: boolean;
     angle: number; // rad
-    v0: number; // rad per frame
-    v0Adjusted: number; // rad per frame
     v: number;
-    acc: number; // rad per frame^2
-    accAdjusted: number; // rad per frame^2
     chosenIndex: number;
     isFinalAnimationPlaying: boolean;
+}
+
+interface State extends MotionState {
+    v0: number; // rad per frame
+    v0Adjusted: number;
+    acc: number; // rad per frame^2
+    accAdjusted: number;
+    players: Player[];
+    playersSettingsModalVisible: boolean;
 }
 
 const girlImages: string[] = [
@@ -61,14 +68,10 @@ const girlImages: string[] = [
     girlImg8, girlImg9, girlImg10, girlImg11, girlImg12, girlImg13
 ];
 
-const DEFAULT_STATE: State = {
+const STATIONARY_STATE: MotionState = {
     isSpinning: false,
-    v: 0,
     angle: 0,
-    v0: V0,
-    v0Adjusted: V0,
-    acc: ACC,
-    accAdjusted: ACC,
+    v: 0,
     chosenIndex: -1,
     isFinalAnimationPlaying: false
 };
@@ -77,7 +80,15 @@ export default class Bouquet extends React.Component<undefined, State> {
     constructor() {
         super(undefined);
 
-        this.state = DEFAULT_STATE;
+        this.state = {
+            ...STATIONARY_STATE,
+            players: DEFAULT_PLAYERS,
+            v0: V0,
+            v0Adjusted: V0,
+            acc: ACC,
+            accAdjusted: ACC,
+            playersSettingsModalVisible: false
+        };
     }
 
     iterateLoop = () => {
@@ -123,13 +134,13 @@ export default class Bouquet extends React.Component<undefined, State> {
                     isFinalAnimationPlaying: false
                 };
             }
-            const chosenIndex = seedRandomIndex(GIRLS_COUNT);
+            const chosenIndex = seedRandomIndex(oldState.players.length);
             const { v0, acc } = countV0AndAccForIndex(
                 chosenIndex,
                 oldState.acc,
                 oldState.v0,
                 oldState.angle,
-                GIRLS_COUNT
+                oldState.players.length
             );
             // console.log(`v0: ${oldState.v0} -> ${v0}`);
             // console.log(`a: ${oldState.acc} -> ${acc}`);
@@ -150,6 +161,7 @@ export default class Bouquet extends React.Component<undefined, State> {
         this.setState((oldState => {
             const newV0 = (Math.PI * v0 / 180) / FPS;
             return {
+                ...oldState,
                 isSpinning: false,
                 v0: newV0,
                 acc: oldState.acc * (newV0 / oldState.v0)
@@ -159,16 +171,38 @@ export default class Bouquet extends React.Component<undefined, State> {
 
     onSpinDurationChange = (spinDuration: number) => {
         this.setState(oldState => ({
+            ...oldState,
             isSpinning: false,
             acc:  - oldState.v0 / (spinDuration * FPS)
         }));
     };
 
+    onPlayerSettingsModalOpen = () => {
+        this.setState({playersSettingsModalVisible: true});
+    };
+
+    onPlayerSettingsModalClose = () => {
+        this.setState({playersSettingsModalVisible: false});
+    };
+
+    onPlayerSettingsModalSubmit = (players: Player[]) => {
+        this.setState({
+            playersSettingsModalVisible: false,
+            players
+        });
+    };
+
     // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
-        const { chosenIndex, isFinalAnimationPlaying, angle } = this.state;
+        const {
+            chosenIndex,
+            isFinalAnimationPlaying,
+            angle,
+            playersSettingsModalVisible,
+            players
+        } = this.state;
         const bouquetPosition: Position = isFinalAnimationPlaying
-            ? getBouquetPositionNextToGirl(angle, chosenIndex)
+            ? getBouquetPositionNextToGirl(angle, chosenIndex, players.length)
             : getBouquetPosition(angle);
         const bouquetClassName = classNames(
             "Bouquet_img",
@@ -209,26 +243,38 @@ export default class Bouquet extends React.Component<undefined, State> {
                     value={Math.round(getTime(this.state.acc, this.state.v0) / FPS)}
                     onChange={this.onSpinDurationChange}
                 />
+                <span className="Bouquet_settings">
+                    <IconButton onClick={this.onPlayerSettingsModalOpen}>
+                        <Settings/>
+                    </IconButton>
+                </span>
+                <PlayersSettingsModal
+                    open={playersSettingsModalVisible}
+                    players={players}
+                    onClose={this.onPlayerSettingsModalClose}
+                    onSubmit={this.onPlayerSettingsModalSubmit}
+                />
             </div>
         );
     }
 
     renderGirls(): JSX.Element[] {
-        const { angle, isFinalAnimationPlaying, chosenIndex} = this.state;
+        const { angle, isFinalAnimationPlaying, chosenIndex, players } = this.state;
         const positions = getCirclePositions(
             WHEEL_CENTER,
-            GIRLS_COUNT,
+            players.length,
             RADIUS,
             GIRL_IMAGE_WIDTH,
             GIRL_IMAGE_HEIGHT,
             angle
         );
-        return firstNWithRepeat(girlImages, GIRLS_COUNT)
-            .map((img, i) => (
+        return players
+            .map((player, i) => (
                 <Girl
-                    key={i}
+                    name={player.name}
+                    key={player.name}
                     highlighted={isFinalAnimationPlaying && i === chosenIndex}
-                    img={img}
+                    img={girlImages[player.imageIndex]}
                     index={i}
                     position={positions[i]}
                 />
@@ -241,14 +287,18 @@ interface GirlProps {
     position: Position;
     img: string;
     index: number;
+    name: string;
 }
 
-function Girl({ highlighted, img, position, index }: GirlProps): JSX.Element {
+function Girl({ highlighted, img, position, index, name }: GirlProps): JSX.Element {
     const children = (
-        <img
-            src={img}
-            alt={`girl_image_${index}`}
-        />
+        <div>
+            <img
+                src={img}
+                alt={`girl_image_${index}`}
+            />
+            <div>{name}</div>
+        </div>
     );
     if (highlighted) {
         return (

@@ -1,4 +1,4 @@
-import { Position } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
+import { Position, Player } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
 import { getAccBySpeedAndTime } from "src/components/App/pages/wedding/Bouquet/movementUtils";
 
 export const GIRL_IMAGE_HEIGHT = 160;
@@ -25,9 +25,15 @@ export const BRIDE_IMAGE_POSITION: Position = {
 
 export const FPS = 60;
 
-export const GIRLS_COUNT = 5;
-
 const V0_GRAD_PER_SEC = 120;
 export const V0 = (Math.PI * V0_GRAD_PER_SEC / 180) / FPS; // rad per frame
 export const SPIN_DURATION =  FPS * 10; // frames
 export const ACC = getAccBySpeedAndTime(V0, SPIN_DURATION);
+
+export const DEFAULT_PLAYERS: Player[] = [
+    { name: "Игрок 1", imageIndex: 1 },
+    { name: "Игрок 2", imageIndex: 2 },
+    { name: "Игрок 3", imageIndex: 3 },
+    { name: "Игрок 4", imageIndex: 4 },
+    { name: "Игрок 5", imageIndex: 5 }
+];

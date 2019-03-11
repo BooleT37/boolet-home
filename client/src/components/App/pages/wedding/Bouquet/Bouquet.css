@@ -33,3 +33,8 @@
     transition: top 3s, left 3s;
 }
 
+.Bouquet_settings {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

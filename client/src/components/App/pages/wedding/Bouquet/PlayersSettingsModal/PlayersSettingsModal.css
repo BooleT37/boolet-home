@@ -1,0 +1,19 @@
+.PlayersSettingsModal {
+    width: 360px;
+    margin: 10% auto 0;
+}
+
+.PlayersSettingsModal_content {
+    padding: 20px;
+    text-align: center;
+}
+
+.PlayersSettingsModal_close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+.PlayersSettingsModal_field {
+    margin-bottom: 0.5rem;
+}
