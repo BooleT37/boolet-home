@@ -151,6 +151,7 @@ export default class Bouquet extends React.Component<undefined, State> {
             const newV0 = (Math.PI * v0 / 180) / FPS;
             return {
                 isSpinning: false,
+                v0: newV0,
                 acc: oldState.acc * (newV0 / oldState.v0)
             };
         }));
