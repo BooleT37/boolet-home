@@ -13,3 +13,9 @@ export interface Settings {
     v0: number;
     t: number;
 }
+
+export interface SettingsInState {
+    players: Player[];
+    v0: number;
+    acc: number;
+}

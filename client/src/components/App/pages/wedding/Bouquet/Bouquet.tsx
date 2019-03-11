@@ -2,9 +2,8 @@ import { IconButton } from "@material-ui/core";
 import { Settings as SettingsIcon } from "@material-ui/icons";
 import * as classNames from "classnames";
 import * as React from "react";
-import { Position, Player, Settings } from "./Bouquet.models";
+import { Position, Player, Settings, SettingsInState } from "./Bouquet.models";
 import { StyledHighlightedGirlImage } from "./Bouquet.styles";
-import { getTime } from "./movementUtils";
 import PlayersSettingsModal from "./PlayersSettingsModal/PlayersSettingsModal";
 
 import {
@@ -15,10 +14,7 @@ import {
     BRIDE_IMAGE_POSITION,
     GIRL_IMAGE_WIDTH,
     GIRL_IMAGE_HEIGHT,
-    V0,
-    FPS,
-    ACC,
-    DEFAULT_PLAYERS
+    DEFAULT_SETTINGS, SETTINGS_LOCAL_STORAGE_KEY
 } from "./Bouquet.constants";
 
 import "./Bouquet.css";
@@ -26,7 +22,7 @@ import {
     getCirclePositions,
     getBouquetPosition,
     countV0AndAccForIndex,
-    seedRandomIndex, getBouquetPositionNextToGirl
+    seedRandomIndex, getBouquetPositionNextToGirl, getSettingsFromState, convertSettingsToState
 } from "./Bouquet.utils";
 
 import * as bouquetImg from "./images/Bouquet.png";
@@ -79,13 +75,21 @@ export default class Bouquet extends React.Component<undefined, State> {
     constructor() {
         super(undefined);
 
+        let settings: Settings;
+        if (localStorage[SETTINGS_LOCAL_STORAGE_KEY]) {
+            settings = JSON.parse(localStorage.getItem(SETTINGS_LOCAL_STORAGE_KEY));
+        } else {
+            settings = DEFAULT_SETTINGS;
+        }
+        const settingsInState: SettingsInState = convertSettingsToState(settings);
+
         this.state = {
             ...STATIONARY_STATE,
-            players: DEFAULT_PLAYERS,
-            v0: V0,
-            v0Adjusted: V0,
-            acc: ACC,
-            accAdjusted: ACC,
+            players: settingsInState.players,
+            v0: settingsInState.v0,
+            v0Adjusted: settingsInState.v0,
+            acc: settingsInState.acc,
+            accAdjusted: settingsInState.acc,
             playersSettingsModalVisible: false
         };
     }
@@ -165,14 +169,10 @@ export default class Bouquet extends React.Component<undefined, State> {
     };
 
     onPlayerSettingsModalSubmit = (settings: Settings) => {
-        const newV0 = (Math.PI * settings.v0 / 180) / FPS;
-        const newAcc = - newV0 / (settings.t * FPS);
-
+        localStorage.setItem(SETTINGS_LOCAL_STORAGE_KEY, JSON.stringify(settings));
         this.setState({
             playersSettingsModalVisible: false,
-            players: settings.players,
-            v0: newV0,
-            acc: newAcc
+            ...convertSettingsToState(settings)
         });
     };
 
@@ -184,6 +184,7 @@ export default class Bouquet extends React.Component<undefined, State> {
             angle,
             playersSettingsModalVisible,
             players,
+            acc,
             v0
         } = this.state;
         const bouquetPosition: Position = isFinalAnimationPlaying
@@ -195,11 +196,9 @@ export default class Bouquet extends React.Component<undefined, State> {
             { Bouquet_bouquet_moving: isFinalAnimationPlaying }
         );
 
-        const settings: Settings = {
-            players,
-            v0: Math.round(v0 * FPS * 180 / Math.PI),
-            t: Math.round(getTime(this.state.acc, this.state.v0) / FPS)
-        };
+        const settings: Settings = getSettingsFromState(
+            { players, v0, acc }
+        );
 
         return (
             <div className="Bouquet">

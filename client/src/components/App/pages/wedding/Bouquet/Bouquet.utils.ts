@@ -5,10 +5,10 @@ import {
     BOUQUET_IMAGE_HEIGHT,
     RADIUS,
     GIRL_IMAGE_WIDTH,
-    GIRL_IMAGE_HEIGHT
-} from "src/components/App/pages/wedding/Bouquet/Bouquet.constants";
-import { getAcc, getV0, getTime, getDistance } from "src/components/App/pages/wedding/Bouquet/movementUtils";
-import { Position } from "./Bouquet.models";
+    GIRL_IMAGE_HEIGHT, FPS
+} from "./Bouquet.constants";
+import { Position, SettingsInState, Settings } from "./Bouquet.models";
+import { getAcc, getV0, getTime, getDistance } from "./movementUtils";
 
 function range(to: number): number[] {
     return Array.from(new Array(to), (val, index) => index);
@@ -130,5 +130,24 @@ export function getBouquetPositionNextToGirl(
     return {
         left: girlPosition.left + GIRL_IMAGE_WIDTH,
         top: girlPosition.top + (GIRL_IMAGE_HEIGHT - BOUQUET_IMAGE_HEIGHT) / 2
+    };
+}
+
+export function getSettingsFromState(state: SettingsInState): Settings {
+    return {
+        players: state.players,
+        v0: Math.round(state.v0 * FPS * 180 / Math.PI),
+        t: Math.round(getTime(state.acc, state.v0) / FPS)
+    };
+}
+
+export function convertSettingsToState(settings: Settings): SettingsInState {
+    const newV0 = (Math.PI * settings.v0 / 180) / FPS;
+    const newAcc = - newV0 / (settings.t * FPS);
+
+    return {
+        players: settings.players,
+        v0: newV0,
+        acc: newAcc
     };
 }
