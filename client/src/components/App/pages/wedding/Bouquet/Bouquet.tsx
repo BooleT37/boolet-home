@@ -1,12 +1,11 @@
 import { IconButton } from "@material-ui/core";
-import { Settings } from "@material-ui/icons";
+import { Settings as SettingsIcon } from "@material-ui/icons";
 import * as classNames from "classnames";
 import * as React from "react";
-import { Position, Player } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
-import { StyledHighlightedGirlImage } from "src/components/App/pages/wedding/Bouquet/Bouquet.styles";
-import Field from "src/components/App/pages/wedding/Bouquet/Field/Field";
-import { getTime } from "src/components/App/pages/wedding/Bouquet/movementUtils";
-import PlayersSettingsModal from "src/components/App/pages/wedding/Bouquet/PlayersSettingsModal/PlayersSettingsModal";
+import { Position, Player, Settings } from "./Bouquet.models";
+import { StyledHighlightedGirlImage } from "./Bouquet.styles";
+import { getTime } from "./movementUtils";
+import PlayersSettingsModal from "./PlayersSettingsModal/PlayersSettingsModal";
 
 import {
     WHEEL_WIDTH,
@@ -157,26 +156,6 @@ export default class Bouquet extends React.Component<undefined, State> {
         });
     };
 
-    onV0Change = (v0: number) => {
-        this.setState((oldState => {
-            const newV0 = (Math.PI * v0 / 180) / FPS;
-            return {
-                ...oldState,
-                isSpinning: false,
-                v0: newV0,
-                acc: oldState.acc * (newV0 / oldState.v0)
-            };
-        }));
-    };
-
-    onSpinDurationChange = (spinDuration: number) => {
-        this.setState(oldState => ({
-            ...oldState,
-            isSpinning: false,
-            acc:  - oldState.v0 / (spinDuration * FPS)
-        }));
-    };
-
     onPlayerSettingsModalOpen = () => {
         this.setState({playersSettingsModalVisible: true});
     };
@@ -185,10 +164,15 @@ export default class Bouquet extends React.Component<undefined, State> {
         this.setState({playersSettingsModalVisible: false});
     };
 
-    onPlayerSettingsModalSubmit = (players: Player[]) => {
+    onPlayerSettingsModalSubmit = (settings: Settings) => {
+        const newV0 = (Math.PI * settings.v0 / 180) / FPS;
+        const newAcc = - newV0 / (settings.t * FPS);
+
         this.setState({
             playersSettingsModalVisible: false,
-            players
+            players: settings.players,
+            v0: newV0,
+            acc: newAcc
         });
     };
 
@@ -199,7 +183,8 @@ export default class Bouquet extends React.Component<undefined, State> {
             isFinalAnimationPlaying,
             angle,
             playersSettingsModalVisible,
-            players
+            players,
+            v0
         } = this.state;
         const bouquetPosition: Position = isFinalAnimationPlaying
             ? getBouquetPositionNextToGirl(angle, chosenIndex, players.length)
@@ -209,6 +194,13 @@ export default class Bouquet extends React.Component<undefined, State> {
             "Bouquet_bouquet",
             { Bouquet_bouquet_moving: isFinalAnimationPlaying }
         );
+
+        const settings: Settings = {
+            players,
+            v0: Math.round(v0 * FPS * 180 / Math.PI),
+            t: Math.round(getTime(this.state.acc, this.state.v0) / FPS)
+        };
+
         return (
             <div className="Bouquet">
                 <div
@@ -231,26 +223,14 @@ export default class Bouquet extends React.Component<undefined, State> {
                     </span>
                     {this.renderGirls()}
                 </div>
-                <Field
-                    label="Начальная скорость: "
-                    suffix={<span>&thinsp;&deg;&nbsp;/ сек</span>}
-                    value={Math.round(this.state.v0 * FPS * 180 / Math.PI)}
-                    onChange={this.onV0Change}
-                />
-                <Field
-                    label="Длительность вращения: "
-                    suffix={<span>&thinsp;сек</span>}
-                    value={Math.round(getTime(this.state.acc, this.state.v0) / FPS)}
-                    onChange={this.onSpinDurationChange}
-                />
                 <span className="Bouquet_settings">
                     <IconButton onClick={this.onPlayerSettingsModalOpen}>
-                        <Settings/>
+                        <SettingsIcon/>
                     </IconButton>
                 </span>
                 <PlayersSettingsModal
                     open={playersSettingsModalVisible}
-                    players={players}
+                    settings={settings}
                     onClose={this.onPlayerSettingsModalClose}
                     onSubmit={this.onPlayerSettingsModalSubmit}
                 />

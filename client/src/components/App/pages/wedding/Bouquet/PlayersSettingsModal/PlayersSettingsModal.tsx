@@ -1,19 +1,19 @@
 import { Modal, TextField, Button, IconButton, Paper } from "@material-ui/core";
 import { Add, Delete, Close } from "@material-ui/icons";
 import * as React from "react";
-import { Player } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
+import { Settings } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
 
 import "./PlayersSettingsModal.css";
 
 interface Props {
     open: boolean;
-    players: Player[];
+    settings: Settings;
     onClose(): void;
-    onSubmit(players: Player[]): void;
+    onSubmit(settings: Settings): void;
 }
 
 interface State {
-    currentPlayers: Player[];
+    currentSettings: Settings;
 }
 
 export default class PlayersSettingsModal extends React.Component<Props, State> {
@@ -21,57 +21,93 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
         super(props);
 
         this.state = {
-            currentPlayers: props.players
+            currentSettings: props.settings
         };
     }
 
     onPlayerNameChange = (playerIndex: number, value: string): void => {
-        this.setState(oldState => {
-            const currentPlayers = oldState.currentPlayers.slice();
-            currentPlayers[playerIndex].name = value;
+        this.setState((oldState: State): State => {
+            const players = oldState.currentSettings.players.slice();
+            players[playerIndex].name = value;
             return {
                 ...oldState,
-                currentPlayers
+                currentSettings: {
+                    ...oldState.currentSettings,
+                    players
+                }
             };
         });
     };
 
     onPlayerAdd = (): void => {
-        this.setState(oldState => {
+        this.setState((oldState: State): State => {
+            const players = oldState.currentSettings.players;
             return {
                 ...oldState,
-                currentPlayers: oldState.currentPlayers.concat({
-                    name: "",
-                    imageIndex: oldState.currentPlayers.length
-                })
+                currentSettings: {
+                    ...oldState.currentSettings,
+                    players: players.concat({
+                        name: "",
+                        imageIndex: players.length
+                    })
+                }
             };
         });
     };
 
     onPlayerRemove = (playerIndex: number): void => {
-        this.setState(oldState => {
-            const currentPlayers = oldState.currentPlayers.slice();
-            currentPlayers.splice(playerIndex, 1);
+        this.setState((oldState: State): State => {
+            const players = oldState.currentSettings.players.slice();
+            players.splice(playerIndex, 1);
             return {
                 ...oldState,
-                currentPlayers
+                currentSettings: {
+                    ...oldState.currentSettings,
+                    players
+                }
             };
         });
     };
 
+    onV0Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const v0 = e.target.value;
+        this.setState((oldState: State): State => ({
+            currentSettings: {
+                ...oldState.currentSettings,
+                v0: parseInt(v0, 10) || 0
+            }
+        }));
+    };
+
+    onTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const t = e.target.value;
+        this.setState((oldState: State): State => ({
+            currentSettings: {
+                ...oldState.currentSettings,
+                t: parseInt(t, 10) || 0
+            }
+        }));
+    };
+
     onClose = () => {
         this.setState({
-            currentPlayers: this.props.players
+            currentSettings: this.props.settings
         });
         this.props.onClose();
     };
 
     onSubmit = () => {
-        this.props.onSubmit(this.state.currentPlayers);
+        this.props.onSubmit(this.state.currentSettings);
     };
 
     render(): JSX.Element {
         const { open } = this.props;
+        const {
+            currentSettings: {
+                v0,
+                t
+            }
+        } = this.state;
 
         return (
             <Modal
@@ -87,12 +123,35 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
                         </IconButton>
                     </div>
                     {this.renderFields()}
-                    <Button
-                        onClick={this.onPlayerAdd}
+                    <div
+                        className="PlayersSettingsModal_AddButton"
                     >
-                        <Add/>
-                         Добавить
-                    </Button>
+                        <Button
+                            onClick={this.onPlayerAdd}
+                        >
+                            <Add/>
+                             Добавить
+                        </Button>
+                    </div>
+                    <div>
+                        <div className="PlayersSettingsModal_field ">
+                            <TextField
+                                label="Начальная скорость"
+                                helperText={<span>&thinsp;&deg;&nbsp;/ сек</span>}
+                                value={v0}
+                                onChange={this.onV0Change}
+                            />
+                        </div>
+                        <div className="PlayersSettingsModal_field">
+                            <TextField
+                                className="PlayersSettingsModal_field"
+                                label="Время вращения"
+                                helperText={<span>&thinsp;сек</span>}
+                                value={t}
+                                onChange={this.onTimeChange}
+                            />
+                        </div>
+                    </div>
                     <Button
                         onClick={this.onSubmit}
                         color="primary"
@@ -105,8 +164,7 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
     }
 
     renderFields(): JSX.Element[] {
-        const { currentPlayers } = this.state;
-        return currentPlayers.map((p, i) => {
+        return this.state.currentSettings.players.map((p, i) => {
             const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 this.onPlayerNameChange(i, e.target.value);
             };

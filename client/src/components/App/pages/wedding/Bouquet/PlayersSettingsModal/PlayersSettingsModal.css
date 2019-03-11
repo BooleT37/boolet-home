@@ -4,8 +4,7 @@
 }
 
 .PlayersSettingsModal_content {
-    padding: 20px;
-    text-align: center;
+    padding: 20px 60px;
 }
 
 .PlayersSettingsModal_close {
@@ -16,4 +15,8 @@
 
 .PlayersSettingsModal_field {
     margin-bottom: 0.5rem;
+}
+
+.PlayersSettingsModal_AddButton {
+    margin-bottom: 1rem;
 }

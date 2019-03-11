@@ -7,3 +7,9 @@ export interface Player {
     name: string;
     imageIndex: number;
 }
+
+export interface Settings {
+    players: Player[];
+    v0: number;
+    t: number;
+}
