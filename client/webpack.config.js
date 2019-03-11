@@ -158,11 +158,11 @@ function getBabelOptions() {
             {
                 targets: {
                     'browsers': 'last 2 versions',
-                },
-            },
+                }
+            }
         ],
         '@babel/preset-typescript',
-        '@babel/preset-react',
+        '@babel/preset-react'
     ];
 
     const plugins = [
@@ -175,6 +175,12 @@ function getBabelOptions() {
         [
             '@babel/plugin-proposal-decorators',
             { 'legacy': true }
+        ],
+        [
+            'babel-plugin-styled-components',
+            {
+                "ssr": false
+            }
         ]
     ];
 

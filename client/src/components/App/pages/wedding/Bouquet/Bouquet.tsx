@@ -1,6 +1,7 @@
 import * as classNames from "classnames";
 import * as React from "react";
 import { Position } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
+import { StyledHighlightedGirlImage } from "src/components/App/pages/wedding/Bouquet/Bouquet.styles";
 import Field from "src/components/App/pages/wedding/Bouquet/Field/Field";
 import { getTime } from "src/components/App/pages/wedding/Bouquet/movementUtils";
 
@@ -52,7 +53,7 @@ interface State {
     acc: number; // rad per frame^2
     accAdjusted: number; // rad per frame^2
     chosenIndex: number;
-    isBouquetMovingToGirl: boolean;
+    isFinalAnimationPlaying: boolean;
 }
 
 const girlImages: string[] = [
@@ -60,21 +61,23 @@ const girlImages: string[] = [
     girlImg8, girlImg9, girlImg10, girlImg11, girlImg12, girlImg13
 ];
 
+const DEFAULT_STATE: State = {
+    isSpinning: false,
+    v: 0,
+    angle: 0,
+    v0: V0,
+    v0Adjusted: V0,
+    acc: ACC,
+    accAdjusted: ACC,
+    chosenIndex: -1,
+    isFinalAnimationPlaying: false
+};
+
 export default class Bouquet extends React.Component<undefined, State> {
     constructor() {
         super(undefined);
 
-        this.state = {
-            isSpinning: false,
-            v: 0,
-            angle: 0,
-            v0: V0,
-            v0Adjusted: V0,
-            acc: ACC,
-            accAdjusted: ACC,
-            chosenIndex: -1,
-            isBouquetMovingToGirl: false
-        };
+        this.state = DEFAULT_STATE;
     }
 
     iterateLoop = () => {
@@ -82,25 +85,26 @@ export default class Bouquet extends React.Component<undefined, State> {
         if (isSpinning) {
             this.setState((oldState: State): State => {
                 const newV = oldState.v + oldState.accAdjusted;
-                return newV > 0
-                    ? {
+                if (newV > 0) {
+                    return {
                         ...oldState,
                         angle: oldState.angle + oldState.v,
-                        isBouquetMovingToGirl: false,
+                        isFinalAnimationPlaying: false,
                         v: newV
-                    }
-                    : {
-                        ...oldState,
-                        isSpinning: false,
-                        isBouquetMovingToGirl: true,
-                        v: oldState.v0
                     };
+                }
+                return {
+                    ...oldState,
+                    isSpinning: false,
+                    isFinalAnimationPlaying: true,
+                    v: oldState.v0
+                };
             });
         }
         requestAnimationFrame(this.iterateLoop);
     };
 
-    // tslint:disable-next-line:prefer-function-over-method
+// tslint:disable-next-line:prefer-function-over-method
     componentDidMount(): void {
         document.title = "Свадебный букет";
         this.iterateLoop();
@@ -116,7 +120,7 @@ export default class Bouquet extends React.Component<undefined, State> {
                     v0Adjusted: oldState.v0,
                     accAdjusted: oldState.acc,
                     chosenIndex: -1,
-                    isBouquetMovingToGirl: false
+                    isFinalAnimationPlaying: false
                 };
             }
             const chosenIndex = seedRandomIndex(GIRLS_COUNT);
@@ -137,7 +141,7 @@ export default class Bouquet extends React.Component<undefined, State> {
                 v0Adjusted: v0,
                 accAdjusted: acc,
                 chosenIndex,
-                isBouquetMovingToGirl: false
+                isFinalAnimationPlaying: false
             };
         });
     };
@@ -161,14 +165,14 @@ export default class Bouquet extends React.Component<undefined, State> {
 
     // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
-        const { chosenIndex, isBouquetMovingToGirl, angle } = this.state;
-        const bouquetPosition: Position = isBouquetMovingToGirl
+        const { chosenIndex, isFinalAnimationPlaying, angle } = this.state;
+        const bouquetPosition: Position = isFinalAnimationPlaying
             ? getBouquetPositionNextToGirl(angle, chosenIndex)
             : getBouquetPosition(angle);
         const bouquetClassName = classNames(
             "Bouquet_img",
             "Bouquet_bouquet",
-            { Bouquet_bouquet_moving: isBouquetMovingToGirl }
+            { Bouquet_bouquet_moving: isFinalAnimationPlaying }
         );
         return (
             <div className="Bouquet">
@@ -209,23 +213,57 @@ export default class Bouquet extends React.Component<undefined, State> {
     }
 
     renderGirls(): JSX.Element[] {
+        const { angle, isFinalAnimationPlaying, chosenIndex} = this.state;
         const positions = getCirclePositions(
             WHEEL_CENTER,
             GIRLS_COUNT,
             RADIUS,
             GIRL_IMAGE_WIDTH,
             GIRL_IMAGE_HEIGHT,
-            this.state.angle
+            angle
         );
         return firstNWithRepeat(girlImages, GIRLS_COUNT)
             .map((img, i) => (
-                <img
+                <Girl
                     key={i}
-                    className="Bouquet_img"
-                    src={img}
-                    alt={`girl_image_${i}`}
-                    style={positions[i]}
+                    highlighted={isFinalAnimationPlaying && i === chosenIndex}
+                    img={img}
+                    index={i}
+                    position={positions[i]}
                 />
             ));
     }
+}
+
+interface GirlProps {
+    highlighted: boolean;
+    position: Position;
+    img: string;
+    index: number;
+}
+
+function Girl({ highlighted, img, position, index }: GirlProps): JSX.Element {
+    const children = (
+        <img
+            src={img}
+            alt={`girl_image_${index}`}
+        />
+    );
+    if (highlighted) {
+        return (
+            <StyledHighlightedGirlImage
+                style={position}
+            >
+                {children}
+            </StyledHighlightedGirlImage>
+        );
+    }
+    return (
+        <div
+            className="Bouquet_img"
+            style={position}
+        >
+            {children}
+        </div>
+    );
 }
