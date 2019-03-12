@@ -230,6 +230,7 @@ export default class Bouquet extends React.Component<undefined, State> {
                 <PlayersSettingsModal
                     open={playersSettingsModalVisible}
                     settings={settings}
+                    images={girlImages}
                     onClose={this.onPlayerSettingsModalClose}
                     onSubmit={this.onPlayerSettingsModalSubmit}
                 />

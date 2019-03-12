@@ -1,5 +1,5 @@
 .PlayersSettingsModal {
-    width: 360px;
+    width: 400px;
     margin: 10% auto 0;
 }
 
@@ -19,4 +19,9 @@
 
 .PlayersSettingsModal_AddButton {
     margin-bottom: 1rem;
+}
+
+.PlayersSettingsModal_select {
+    vertical-align: bottom;
+    margin-left: 0.5rem;
 }

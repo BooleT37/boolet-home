@@ -1,4 +1,4 @@
-import { Modal, TextField, Button, IconButton, Paper } from "@material-ui/core";
+import { Modal, TextField, Button, IconButton, Paper, Select, MenuItem } from "@material-ui/core";
 import { Add, Delete, Close } from "@material-ui/icons";
 import * as React from "react";
 import { Settings } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
@@ -8,6 +8,7 @@ import "./PlayersSettingsModal.css";
 interface Props {
     open: boolean;
     settings: Settings;
+    images: string[];
     onClose(): void;
     onSubmit(settings: Settings): void;
 }
@@ -29,6 +30,20 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
         this.setState((oldState: State): State => {
             const players = oldState.currentSettings.players.slice();
             players[playerIndex].name = value;
+            return {
+                ...oldState,
+                currentSettings: {
+                    ...oldState.currentSettings,
+                    players
+                }
+            };
+        });
+    };
+
+    onImageChange = (playerIndex: number, imageIndex: number): void => {
+        this.setState((oldState: State): State => {
+            const players = oldState.currentSettings.players.slice();
+            players[playerIndex].imageIndex = imageIndex;
             return {
                 ...oldState,
                 currentSettings: {
@@ -153,6 +168,12 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
                         </div>
                     </div>
                     <Button
+                        onClick={this.onClose}
+                        color="default"
+                    >
+                         Отмена
+                    </Button>
+                    <Button
                         onClick={this.onSubmit}
                         color="primary"
                     >
@@ -171,6 +192,14 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
             const onRemove = () => {
                 this.onPlayerRemove(i);
             };
+            const onImageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+                this.onImageChange(i, parseInt(e.target.value, 10));
+            };
+            const items = this.props.images.map((img, imgIndex) => (
+                <MenuItem value={imgIndex} key={imgIndex}>
+                    <img src={img} alt={`image_${imgIndex}`} width={20} height={20}/>
+                </MenuItem>
+            ));
             return (
                 <div
                     key={i}
@@ -181,7 +210,17 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
                         value={p.name}
                         onChange={onChange}
                     />
-                    <IconButton onClick={onRemove} title="Удалить">
+                    <Select
+                        className="PlayersSettingsModal_select"
+                        value={p.imageIndex}
+                        onChange={onImageChange}
+                    >
+                        {items}
+                    </Select>
+                    <IconButton
+                        onClick={onRemove}
+                        title="Удалить"
+                    >
                         <Delete color="error"/>
                     </IconButton>
                 </div>
