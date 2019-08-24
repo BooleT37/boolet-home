@@ -7,7 +7,7 @@
     "noImplicitAny": false,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["react"],
+    "types": [ "react", "node" ],
     "paths": {
       "src/*": [ "src/*" ],
       "serverModels/*": [ "../server/src/models/*" ]

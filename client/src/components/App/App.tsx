@@ -48,7 +48,7 @@ class App extends React.Component<{}, State> {
   render(): JSX.Element {
     return (
       <div className="app">
-        <MuiThemeProvider theme={createMuiTheme({typography: {useNextVariants: true}})}>
+        <MuiThemeProvider theme={createMuiTheme()}>
             <Router>
                 <div>
                     <Route exact path="/" render={this.renderHomePage} />

@@ -30,7 +30,7 @@ module.exports = () => {
 
     return {
         context: __dirname,
-        entry: './src/entry.tsx',
+        entry: ['regenerator-runtime', './src/entry.tsx'],
         output: {
             path: resolve(__dirname, 'dist'),
             publicPath,
