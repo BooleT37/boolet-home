@@ -117,3 +117,5 @@ server/dist
 
 #local configs
 server/config/local.json
+
+.npmrc

@@ -30,7 +30,7 @@ module.exports = () => {
 
     return {
         context: __dirname,
-        entry: ['@babel/polyfill', './src/entry.tsx'],
+        entry: './src/entry.tsx',
         output: {
             path: resolve(__dirname, 'dist'),
             publicPath,
