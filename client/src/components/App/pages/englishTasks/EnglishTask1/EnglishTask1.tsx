@@ -49,7 +49,6 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
         this.setState({ invalidInputs, checkButtonPressed: true });
     };
 
-    // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
         const allInputsCorrect = this.state.invalidInputs.size === 0;
         return (
@@ -59,7 +58,6 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
                     <p>Fill the gaps with words in past simple</p>
                 </div>
                 <div className="EnglishTask1__images">
-                    {/* tslint:disable-next-line:jsx-no-multiline-js */}
                     {images.map((src, ind) => (
                         <img
                             key={ind}
@@ -68,7 +66,6 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
                             alt={`image_${ind}`}
                         />
                     ))}
-                    {/* tslint:disable-next-line:jsx-no-multiline-js */}
                     {inputs.map(input => (
                         <div
                             key={input.id}
@@ -78,7 +75,6 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
                             <Input
                                 value={this.state.inputValues[input.id]}
                                 error={this.state.invalidInputs.has(input.id)}
-                                // tslint:disable-next-line:jsx-no-lambda
                                 onChange={e => { this.onInputChange(input.id, e.target.value); }}
                                 placeholder={input.hint}
                                 style={{ fontSize: "28px" }}

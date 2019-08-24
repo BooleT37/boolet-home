@@ -44,7 +44,6 @@ export default class Q extends React.Component<{}, State> {
         }
     };
 
-    // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
         const slides = poemQuatrains.map((q, i) => (
             <QSlide

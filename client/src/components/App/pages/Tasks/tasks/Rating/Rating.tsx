@@ -2,7 +2,6 @@ import * as React from "react";
 import "./Rating.css";
 
 export default class Rating extends React.Component {
-    // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
         return (
             <form className="rating">

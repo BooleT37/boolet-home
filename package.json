@@ -14,7 +14,7 @@
     "watch:server": "node node_modules/nodemon/bin/nodemon.js --config server/nodemon.json",
     "watch:client": "cross-env NODE_ENV=developement webpack-dev-server --config client/webpack.config.js",
     "run:server": "npm run build:server && npm start",
-    "lint:server": "tslint -p server -e /client/*"
+    "lint:server": "echo 0"
   },
   "dependencies": {
     "@babel/core": "^7.0.0-rc.3",
@@ -75,7 +75,6 @@
     "babel-plugin-styled-components": "^1.10.0",
     "nodemon": "^1.18.3",
     "style-loader": "^1.0.0",
-    "tslint": "^5.11.0",
     "webpack-dev-server": "^3.1.9"
   }
 }

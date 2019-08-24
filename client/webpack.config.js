@@ -142,8 +142,7 @@ function getPlugins(isProduction) {
         }));
     } else {
         plugins.push(new ForkTsCheckerWebpackPlugin({
-            tsconfig: resolve(__dirname, 'tsconfig.json'),
-            tslint: isProduction ? undefined : resolve(__dirname, 'tslint.json'),
+            tsconfig: resolve(__dirname, 'tsconfig.json')
         }));
         plugins.push(new webpack.HotModuleReplacementPlugin());
     }

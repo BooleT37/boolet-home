@@ -118,7 +118,6 @@ export default class Bouquet extends React.Component<undefined, State> {
         requestAnimationFrame(this.iterateLoop);
     };
 
-// tslint:disable-next-line:prefer-function-over-method
     componentDidMount(): void {
         document.title = "Свадебный букет";
         this.iterateLoop();
@@ -176,7 +175,6 @@ export default class Bouquet extends React.Component<undefined, State> {
         });
     };
 
-    // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
         const {
             chosenIndex,

@@ -7,7 +7,6 @@ import Flexbox from "./tasks/Flexbox/Flexbox";
 import NewPolyfill from "./tasks/NewPolyfill/NewPolyfill";
 
 export default class Tasks extends React.Component {
-    // tslint:disable-next-line:prefer-function-over-method
     render(): React.ReactNode {
         return (
             <div className="tasks">

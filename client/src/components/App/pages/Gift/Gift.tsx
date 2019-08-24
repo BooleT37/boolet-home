@@ -20,7 +20,6 @@ const backgroundColors = [
 ];
 
 export default class Gift extends React.Component {
-    // tslint:disable-next-line:prefer-function-over-method
     render(): React.ReactNode {
         return (
             <TouchCarousel

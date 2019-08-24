@@ -11,7 +11,6 @@ interface Props {
 }
 
 export default class Home extends React.Component<Props> {
-    // tslint:disable-next-line:prefer-function-over-method
     render(): React.ReactNode {
         const translations = this.props.language === Language.Ru ? ru : en;
         return (

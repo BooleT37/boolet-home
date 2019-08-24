@@ -18,7 +18,6 @@ interface Props {
 }
 
 export default class OneIdChosenModal extends React.PureComponent<Props> {
-    // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
         return (
             <Modal open={this.props.open} onClose={this.props.onCancel} className="OneIdChosenModal">

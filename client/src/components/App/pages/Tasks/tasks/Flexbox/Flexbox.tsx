@@ -2,7 +2,6 @@ import * as React from "react";
 import "./Flexbox.css";
 
 export default class Flexbox extends React.Component {
-    // tslint:disable-next-line:prefer-function-over-method
     render(): JSX.Element {
         return (
             <div className="flexbox">
