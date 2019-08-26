@@ -1,5 +1,6 @@
 .page {
     background: #efefef;
+    min-height: 100vh;
 }
 
 .page__container {
