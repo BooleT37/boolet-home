@@ -1,11 +1,11 @@
 .page {
     background: #efefef;
-    min-height: 620px;
 }
 
 .page__container {
     position: relative;
     padding-top: 1rem;
+    min-height: 620px;
 }
 
 .page__content {

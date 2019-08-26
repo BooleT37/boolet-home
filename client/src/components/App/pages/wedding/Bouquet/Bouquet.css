@@ -1,9 +1,6 @@
-body {
-    background: linear-gradient(90deg, #ffdae3, #bbc4ec);
-}
-
 .Bouquet {
     text-align: center;
+    background: linear-gradient(90deg, #ffdae3, #bbc4ec);
 }
 
 .Bouquet_wheel {
