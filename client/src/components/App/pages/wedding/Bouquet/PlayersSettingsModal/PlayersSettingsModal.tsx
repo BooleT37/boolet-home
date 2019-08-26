@@ -84,7 +84,7 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
         });
     };
 
-    onV0Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onV0Change = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const v0 = e.target.value;
         this.setState((oldState: State): State => ({
             currentSettings: {
@@ -94,7 +94,7 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
         }));
     };
 
-    onTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onTimeChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const t = e.target.value;
         this.setState((oldState: State): State => ({
             currentSettings: {
@@ -104,14 +104,14 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
         }));
     };
 
-    onClose = () => {
+    onClose = (): void => {
         this.setState({
             currentSettings: this.props.settings
         });
         this.props.onClose();
     };
 
-    onSubmit = () => {
+    onSubmit = (): void => {
         this.props.onSubmit(this.state.currentSettings);
     };
 
@@ -186,13 +186,13 @@ export default class PlayersSettingsModal extends React.Component<Props, State> 
 
     renderFields(): JSX.Element[] {
         return this.state.currentSettings.players.map((p, i) => {
-            const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
                 this.onPlayerNameChange(i, e.target.value);
             };
-            const onRemove = () => {
+            const onRemove = (): void => {
                 this.onPlayerRemove(i);
             };
-            const onImageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+            const onImageChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
                 this.onImageChange(i, parseInt(e.target.value, 10));
             };
             const items = this.props.images.map((img, imgIndex) => (

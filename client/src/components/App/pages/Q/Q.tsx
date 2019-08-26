@@ -71,7 +71,7 @@ export default class Q extends React.Component<{}, State> {
             "q__container",
             `q__container_activeSlide_${this.state.activeSlide}`,
             {
-                q_container_surprise: this.state.surpriseReached
+                "q_container_surprise": this.state.surpriseReached
             }
         );
 

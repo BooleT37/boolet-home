@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default class LanguageToggle extends React.Component<Props> {
-    onLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onLanguageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.props.onChange(e.target.checked ? Language.En : Language.Ru);
     };
 
@@ -54,11 +54,11 @@ function Label(props: {caption: string, current: boolean, onClick(e: React.Mouse
     const className = classNames(
         "languageToggle__label",
         {
-            languageToggle__label_current: props.current
+            "languageToggle__label_current": props.current
         }
     );
     return (
-        <span className={className} onClick={props.onClick}>
+        <span className={className} onClick={e => { props.onClick(e) }}>
             {props.caption}
         </span>
     );

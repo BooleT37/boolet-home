@@ -26,7 +26,7 @@ export function getCirclePositions(
     radius: number,
     imageWidth: number,
     imageHeight: number,
-    angle: number = 0
+    angle = 0
 ): Position[] {
     return getCircleAngles(n)
         .map(currentAngle => currentAngle + angle)

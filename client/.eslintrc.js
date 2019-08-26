@@ -41,8 +41,18 @@ module.exports = {
         rules: {
           '@typescript-eslint/array-type': ['error', {'array-simple': true }],
           '@typescript-eslint/no-unused-vars': 'off',
+          '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
+          '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
+          '@typescript-eslint/member-delimiter-style': [
+            'error',
+            {
+              multiline: { delimiter: "semi", requireLast: true },
+              singleline: { delimiter: "comma", requireLast: false }
+            }
+          ],
+          '@typescript-eslint/interface-name-prefix': 'off',
           'react/jsx-uses-react': 'error',
-          'react/jsx-uses-vars': 'error',
+          'react/jsx-uses-vars': 'error'
         }
     }
   ]

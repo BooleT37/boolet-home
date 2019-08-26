@@ -94,7 +94,7 @@ export default class Bouquet extends React.Component<undefined, State> {
         };
     }
 
-    iterateLoop = () => {
+    iterateLoop = (): void => {
         const { isSpinning } = this.state;
         if (isSpinning) {
             this.setState((oldState: State): State => {
@@ -123,7 +123,7 @@ export default class Bouquet extends React.Component<undefined, State> {
         this.iterateLoop();
     }
 
-    onCenterClick = () => {
+    onCenterClick = (): void => {
         this.setState(oldState => {
             if (oldState.isSpinning) {
                 return {
@@ -159,15 +159,15 @@ export default class Bouquet extends React.Component<undefined, State> {
         });
     };
 
-    onPlayerSettingsModalOpen = () => {
+    onPlayerSettingsModalOpen = (): void => {
         this.setState({playersSettingsModalVisible: true});
     };
 
-    onPlayerSettingsModalClose = () => {
+    onPlayerSettingsModalClose = (): void => {
         this.setState({playersSettingsModalVisible: false});
     };
 
-    onPlayerSettingsModalSubmit = (settings: Settings) => {
+    onPlayerSettingsModalSubmit = (settings: Settings): void => {
         localStorage.setItem(SETTINGS_LOCAL_STORAGE_KEY, JSON.stringify(settings));
         this.setState({
             playersSettingsModalVisible: false,
@@ -191,7 +191,7 @@ export default class Bouquet extends React.Component<undefined, State> {
         const bouquetClassName = classNames(
             "Bouquet_img",
             "Bouquet_bouquet",
-            { Bouquet_bouquet_moving: isFinalAnimationPlaying }
+            { 'Bouquet_bouquet_moving': isFinalAnimationPlaying }
         );
 
         const settings: Settings = getSettingsFromState(

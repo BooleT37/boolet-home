@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default class Field extends React.Component<Props> {
-    onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.props.onChange(parseInt(e.target.value, 10));
     };
 

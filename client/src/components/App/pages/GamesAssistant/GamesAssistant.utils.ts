@@ -1,5 +1,6 @@
 import GameModel from "serverModels/GameModel";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getErrorMessage(e: any): string {
     let message = "";
     if (e.status) {

@@ -3,6 +3,13 @@ import * as React from "react";
 
 import "./InlineBlock.less";
 
+function getHtmlAttributes(props: Props): Partial<Props> {
+    const newProps = {...{}, ...props};
+    delete newProps.verticalAlign;
+    delete newProps.className;
+    return newProps;
+}
+
 export type VerticalAlign = number | "baseline" | "bottom" | "middle" | "sub" | "super"
     | "text-bottom" | "text-top" | "top" | "inherit";
 
@@ -40,9 +47,3 @@ export default class InlineBlock extends React.Component<Props, undefined> {
     }
 }
 
-function getHtmlAttributes(props: Props): Partial<Props> {
-    const newProps = {...{}, ...props};
-    delete newProps.verticalAlign;
-    delete newProps.className;
-    return newProps;
-}

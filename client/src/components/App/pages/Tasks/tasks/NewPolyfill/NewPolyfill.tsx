@@ -1,5 +1,5 @@
 import * as React from "react";
-
+/* eslint-disable */
 function Car(make, model, year) {
     this.make = make;
     this.model = model;

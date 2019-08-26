@@ -32,7 +32,7 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
         }
     }
 
-    onInputChange = (id: number, value: string) => {
+    onInputChange = (id: number, value: string): void => {
         const inputValues = this.state.inputValues.slice();
         inputValues[id] = value;
         const invalidInputs = new Set(this.state.invalidInputs);
@@ -41,7 +41,7 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
         this.setState({ inputValues, checkButtonPressed: false, invalidInputs });
     };
 
-    onCheckButtonClick = () => {
+    onCheckButtonClick = (): void => {
         const invalidInputs = new Set(inputs
             .filter(input => this.state.inputValues[input.id].toLowerCase() !== input.answer.toLowerCase())
             .map(input => input.id)
@@ -103,11 +103,11 @@ export default class EnglishTask1 extends React.Component<undefined, State> {
     }
 }
 
-const CorrectText = () => <div className="EnglishTask1__correct">Все верно! Ты умница!</div>;
-const IncorrectText = (props: {count: number}) => (
+const CorrectText = (): JSX.Element => <div className="EnglishTask1__correct">Все верно! Ты умница!</div>;
+const IncorrectText = (props: {count: number}): JSX.Element => (
     <div className="EnglishTask1__incorrect">Есть ошибки :( Общее число ошибок: {props.count}</div>
 );
-const Footer = () => (
+const Footer = (): JSX.Element => (
     <div className="EnglishTask1__footer">
         © Copyright <a target="_blank" href="https://www.instagram.com/sanesparza/">sanesparza</a><br/>
         Check out his awesome webtoon&nbsp;

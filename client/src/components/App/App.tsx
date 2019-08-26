@@ -41,7 +41,7 @@ class App extends React.Component<{}, State> {
     return this.state.language === Language.Ru ? ru.pageTitles : en.pageTitles;
   }
 
-  onLanguageChange = (language: Language) => {
+  onLanguageChange = (language: Language): void => {
     this.setState({ language });
   };
 
@@ -86,12 +86,12 @@ class App extends React.Component<{}, State> {
     );
   }
 
-  renderHomePage = () =>
+  renderHomePage = (): React.ReactNode =>
     this.renderPage(Home, this.getPageTitles().home, MainMenuItem.Home, {
       language: this.state.language
     })();
 
-  renderCounterPage = () =>
+  renderCounterPage = (): React.ReactNode =>
     this.renderPage(
       Counter,
       this.getPageTitles().counter,
@@ -99,7 +99,7 @@ class App extends React.Component<{}, State> {
       { language: this.state.language }
     )();
 
-  renderTimeCalculatorPage = () =>
+  renderTimeCalculatorPage = (): React.ReactNode =>
     this.renderPage(
       TimeCalculator,
       this.getPageTitles().timeCalculator,
@@ -107,7 +107,7 @@ class App extends React.Component<{}, State> {
       { language: this.state.language }
     )();
 
-  renderGamesAssistantPage = () =>
+  renderGamesAssistantPage = (): React.ReactNode =>
     this.renderPage(
       GamesAssistant,
       this.getPageTitles().gamesAssistant,
@@ -115,7 +115,7 @@ class App extends React.Component<{}, State> {
       { language: this.state.language }
     )();
 
-  renderRentCalculatorPage = () =>
+  renderRentCalculatorPage = (): React.ReactNode =>
     this.renderPage(RentCalculator, this.getPageTitles().gamesAssistant, null, {
       language: this.state.language
     })();
@@ -124,9 +124,10 @@ class App extends React.Component<{}, State> {
     Component: Component,
     title: string,
     menuItem?: MainMenuItem,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     componentProps?: any // fixme fix 'any' type
   ): (() => React.ReactNode) => {
-    return () => (
+    return (): React.ReactNode => (
       <Page
         title={title}
         menuItem={menuItem}

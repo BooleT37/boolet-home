@@ -40,7 +40,7 @@ export default class MainMenu extends React.Component<Props> {
     }
 
     renderTab(value: MainMenuItem, label: string, path: string): JSX.Element {
-        const onClick = () => { this.props.history.push(path); };
+        const onClick = (): void => { this.props.history.push(path); };
         return (
             <Tab value={value} label={label} onClick={onClick}/>
         );

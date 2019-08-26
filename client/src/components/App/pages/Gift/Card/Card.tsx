@@ -29,7 +29,7 @@ export default class Card extends React.Component<Props, State> {
         const captions = this.props.captions.map((c, i) => <Caption caption={c} index={i} key={i}/>);
         return (
             <div
-                className={classNames("card", {card_active: this.state.active})}
+                className={classNames("card", { "card_active": this.state.active })}
                 style={{backgroundColor: this.props.backgroundColor}}
             >
                 <div className="card__buttonWrapper">

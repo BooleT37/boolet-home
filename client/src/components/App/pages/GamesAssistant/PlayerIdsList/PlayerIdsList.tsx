@@ -13,7 +13,7 @@ interface Props {
 export default class PlayerIdsList extends React.Component<Props> {
     render(): JSX.Element {
         const list = this.props.ids.map(id => {
-            const onDelete = () => { this.props.onDelete(id); };
+            const onDelete = (): void => { this.props.onDelete(id); };
             return (
                 <RowItem key={id}>
                     <Chip onDelete={onDelete} label={id} />

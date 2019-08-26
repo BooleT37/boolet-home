@@ -96,7 +96,7 @@ export default class GamesAssistant extends React.Component<Props, State> {
         this.setState({games: [], loading: true, errorMessage: ""});
         try {
             const api: ISteamApi = this.state.useFakeApi ? FakeSteamApi : SteamApi;
-            const responses = await Promise.all(this.state.playerIds.map(async id => api.getGames(id)));
+            const responses = await Promise.all(this.state.playerIds.map(async id => await api.getGames(id)));
             const commonGames = getCommonElements(responses.map(r => r.games), areGamesEqual);
             this.setState({loading: false, games: commonGames});
         } catch (e) {
@@ -222,7 +222,7 @@ export default class GamesAssistant extends React.Component<Props, State> {
 
 function Spinner(props: {shown: boolean}): JSX.Element {
     return (
-        <div className={classNames("GamesAssistant__spinner", {GamesAssistant__spinner_shown: props.shown})}>
+        <div className={classNames("GamesAssistant__spinner", {"GamesAssistant__spinner_shown": props.shown})}>
             <CircularProgress size={20}/>
         </div>
     );

@@ -45,6 +45,7 @@ export default class TimeCalculator extends React.Component<Props, State> {
     }
 
     onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.setState(this.getNextStateByInputValue(e.target.value, this.state.intervals, false) as any);
     };
 
@@ -107,6 +108,7 @@ export default class TimeCalculator extends React.Component<Props, State> {
     }
 
     count = () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.setState(this.getNextStateByInputValue(this.state.inputValue, this.state.intervals, true) as any);
     };
 
@@ -120,7 +122,7 @@ export default class TimeCalculator extends React.Component<Props, State> {
 
     render(): JSX.Element {
         const intervals = this.state.intervals.map((interval, index) => {
-                const onRemove = () => {
+                const onRemove = (): void => {
                     this.onIntervalRemove(interval.id);
                 };
                 return (
@@ -198,8 +200,8 @@ function ErrorMessage(props: { message: string }): JSX.Element {
     );
 }
 
-function parseInterval(str: string, language: Language, onlyFullString: boolean = false): TimeInterval {
-    const matches = str.match(getTimeRegExp(language));
+function parseInterval(str: string, language: Language, onlyFullString = false): TimeInterval {
+    const matches = getTimeRegExp(language).exec(str);
     if (!matches) {
         return null;
     }
@@ -230,7 +232,7 @@ function intervalToString(interval: TimeInterval, language: Language): string {
 }
 
 function removeLeadingPlus(str: string): string {
-    if (str[0] === "+") {
+    if (str.startsWith("+")) {
         return str.substring(1);
     }
     return str;

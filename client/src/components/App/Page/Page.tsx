@@ -13,6 +13,10 @@ import "./Page.css";
 
 const MainMenuWithRouter = withRouter(MainMenu) as React.ComponentClass<MainMenuProps>;
 
+function setPageTitle(title: string): void {
+    document.title = `Boolet-Home | ${title}`;
+}
+
 interface Props {
     menuItem?: MainMenuItem;
     language: Language;
@@ -68,6 +72,3 @@ function Footer(props: {title: string}): JSX.Element {
     );
 }
 
-function setPageTitle(title: string): void {
-    document.title = `Boolet-Home | ${title}`;
-}
