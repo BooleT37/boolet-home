@@ -6,7 +6,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "types": ["react"],
+    "types": ["react", "node"],
     "paths": {
       "src/*": [ "src/*" ]
     }

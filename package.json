@@ -14,7 +14,8 @@
     "watch:server": "node node_modules/nodemon/bin/nodemon.js --config server/nodemon.json",
     "watch:client": "cross-env NODE_ENV=developement webpack-dev-server --config client/webpack.config.js",
     "run:server": "npm run build:server && npm start",
-    "lint:server": "echo 0"
+    "lint:server": "",
+    "lint:client": "eslint -c client/.eslintrc.js --ignore-pattern 'client/dist/*' \"client/**/*.js\" \"client/**/*.ts\" \"client/**/*.tsx\""
   },
   "dependencies": {
     "@babel/core": "^7.0.0-rc.3",
@@ -73,7 +74,16 @@
   },
   "devDependencies": {
     "@types/styled-components": "4.1.18",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
     "babel-plugin-styled-components": "^1.10.0",
+    "eslint": "^6.2.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslit": "^6.0.0",
     "nodemon": "^1.18.3",
     "style-loader": "^1.0.0",
     "webpack-dev-server": "^3.1.9"
