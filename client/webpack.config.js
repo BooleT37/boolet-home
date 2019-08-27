@@ -5,12 +5,14 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 process.env.NODE_CONFIG_DIR = resolve(__dirname, "config");
 const config = require('config');
 
 module.exports = () => {
     const isProduction = process.env.NODE_ENV === 'production';
+    const analyze = !!process.env.ANALYZE;
     const publicPath = '/';
 
     const fileLoaderOptions = {
@@ -114,11 +116,11 @@ module.exports = () => {
             maxEntrypointSize: 1000000,
             maxAssetSize: 800000,
         },
-        plugins: getPlugins(isProduction),
+        plugins: getPlugins(isProduction, analyze),
     };
 };
 
-function getPlugins(isProduction) {
+function getPlugins(isProduction, analyze) {
     const plugins = [
         new MiniCssExtractPlugin({
             filename: 'bundle.css',
@@ -145,6 +147,10 @@ function getPlugins(isProduction) {
             tsconfig: resolve(__dirname, 'tsconfig.json')
         }));
         plugins.push(new webpack.HotModuleReplacementPlugin());
+    }
+
+    if (analyze) {
+        plugins.push(new BundleAnalyzerPlugin())
     }
 
     return plugins;

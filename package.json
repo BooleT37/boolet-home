@@ -15,7 +15,8 @@
     "watch:client": "cross-env NODE_ENV=developement webpack-dev-server --config client/webpack.config.js",
     "run:server": "npm run build:server && npm start",
     "lint:server": "",
-    "lint:client": "eslint -c client/.eslintrc.js --ignore-pattern 'client/dist/*' \"client/**/*.js\" \"client/**/*.ts\" \"client/**/*.tsx\""
+    "lint:client": "eslint -c client/.eslintrc.js --ignore-pattern 'client/dist/*' \"client/**/*.js\" \"client/**/*.ts\" \"client/**/*.tsx\"",
+    "analyze": "cross-env NODE_ENV=production ANALYZE=true webpack --config client/webpack.config.js"
   },
   "dependencies": {
     "@babel/core": "^7.0.0-rc.3",
@@ -86,6 +87,7 @@
     "eslit": "^6.0.0",
     "nodemon": "^1.18.3",
     "style-loader": "^1.0.0",
+    "webpack-bundle-analyzer": "^3.4.1",
     "webpack-dev-server": "^3.1.9"
   }
 }

@@ -1,4 +1,4 @@
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
+import { MuiThemeProvider, createMuiTheme, CircularProgress } from "@material-ui/core";
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -11,7 +11,6 @@ import en from "./translations/en";
 import ru from "./translations/ru";
 
 import Counter from "./pages/Counter/Counter";
-import EnglishTask1 from "./pages/englishTasks/EnglishTask1/EnglishTask1";
 import GamesAssistant from "./pages/GamesAssistant/GamesAssistant";
 import Gift from "./pages/Gift/Gift";
 import Home from "./pages/Home/Home";
@@ -19,7 +18,6 @@ import Q from "./pages/Q/Q";
 import RentCalculator from "./pages/RentCalculator/RentCalculator";
 import Tasks from "./pages/Tasks/Tasks";
 import TimeCalculator from "./pages/TimeCalculator/TimeCalculator";
-import Bouquet from "./pages/wedding/Bouquet/Bouquet";
 
 import IPageTitles from "./translations/IPageTitles";
 
@@ -73,11 +71,17 @@ class App extends React.Component<{}, State> {
                     />
                     <Route
                         path="/english/task1"
-                        component={EnglishTask1}
+                        render={ () => {
+                          const EnglishTask1 = React.lazy(() => import("./pages/englishTasks/EnglishTask1/EnglishTask1"));
+                          return <React.Suspense fallback={<CircularProgress />}><EnglishTask1/></React.Suspense>;
+                        }}
                     />
                     <Route
                         path="/wedding/bouquet"
-                        component={Bouquet}
+                        component={() => {
+                          const Bouquet = React.lazy(() => import("./pages/wedding/Bouquet/Bouquet"));
+                          return <React.Suspense fallback={<CircularProgress />}><Bouquet/></React.Suspense>;
+                        }}
                     />
                 </div>
             </Router>
