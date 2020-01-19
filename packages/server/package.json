@@ -6,9 +6,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "tsc -p ",
+    "start": "node dist/server.js",
+    "build": "tsc -p .",
     "watch": "node node_modules/nodemon/bin/nodemon.js --config nodemon.json",
-    "run": "npm run build:server && npm start",
+    "run": "yarn run build && yarn start",
     "lint": "exit 0"
   },
   "dependencies": {
@@ -19,6 +20,12 @@
     "ignore-styles": "^5.0.1",
     "module-alias": "^2.2.2",
     "nodemon": "^2.0.2",
-    "ts-node": "^8.6.2"
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.36",
+    "@types/node": "^13.1.8",
+    "@types/react": "^16.9.17"
   }
 }

@@ -2,6 +2,29 @@
 # yarn lockfile v1
 
 
+"@types/config@^0.0.36":
+  version "0.0.36"
+  resolved "http://binary:80/artifactory/api/npm/npm/@types/config/-/config-0.0.36.tgz#bf53ca640f3a1a6a2072a9f33e02a44def07a40b"
+  integrity sha1-v1PKZA86GmogcqnzPgKkTe8HpAs=
+
+"@types/node@^13.1.8":
+  version "13.1.8"
+  resolved "http://binary:80/artifactory/api/npm/npm/@types/node/-/node-13.1.8.tgz#1d590429fe8187a02707720ecf38a6fe46ce294b"
+  integrity sha1-HVkEKf6Bh6AnB3IOzzim/kbOKUs=
+
+"@types/prop-types@*":
+  version "15.7.3"
+  resolved "http://binary:80/artifactory/api/npm/npm/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
+  integrity sha1-KrDV2i5YFflLC51LldHl8kOrLKc=
+
+"@types/react@^16.9.17":
+  version "16.9.17"
+  resolved "http://binary:80/artifactory/api/npm/npm/@types/react/-/react-16.9.17.tgz#58f0cc0e9ec2425d1441dd7b623421a867aa253e"
+  integrity sha1-WPDMDp7CQl0UQd17YjQhqGeqJT4=
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
 abbrev@1:
   version "1.1.1"
   resolved "http://binary:80/artifactory/api/npm/npm/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -238,6 +261,11 @@ crypto-random-string@^1.0.0:
   version "1.0.0"
   resolved "http://binary:80/artifactory/api/npm/npm/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
   integrity sha1-ojD2T1aDEOFJgAmUB5DsmVRbyn4=
+
+csstype@^2.2.0:
+  version "2.6.8"
+  resolved "http://binary:80/artifactory/api/npm/npm/csstype/-/csstype-2.6.8.tgz#0fb6fc2417ffd2816a418c9336da74d7f07db431"
+  integrity sha1-D7b8JBf/0oFqQYyTNtp01/B9tDE=
 
 debug@2.6.9, debug@^2.2.0:
   version "2.6.9"
@@ -1066,6 +1094,11 @@ type-is@~1.6.17, type-is@~1.6.18:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.24"
+
+typescript@^3.7.5:
+  version "3.7.5"
+  resolved "http://binary:80/artifactory/api/npm/npm/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
+  integrity sha1-BpLiH2X9QQi5MwI4qsEd0uF3oa4=
 
 undefsafe@^2.0.2:
   version "2.0.2"

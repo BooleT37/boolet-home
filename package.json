@@ -6,13 +6,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "node packages/server/dist/server.js",
+    "start": "yarn --cwd packages/server start",
     "postinstall": "if-env NODE_ENV=production && npm run build:all",
-    "build:all": "concurrently \"npm run build:server\" \"npm run build:client\"",
-    "build:client": "cross-env NODE_ENV=production webpack --config client/webpack.config.js",
-    "watch:client": "cross-env NODE_ENV=developement webpack-dev-server --config client/webpack.config.js",
+    "build:all": "concurrently \"npm run server/build\" \"npm run build:client\"",
+    "build:client": "cross-env NODE_ENV=production webpack --config packages/client/webpack.config.js",
+    "watch:client": "cross-env NODE_ENV=developement webpack-dev-server --config packages/client/webpack.config.js",
     "lint:client": "eslint -c client/.eslintrc.js --ignore-pattern 'client/dist/*' \"client/**/*.js\" \"client/**/*.ts\" \"client/**/*.tsx\"",
-    "analyze": "cross-env NODE_ENV=production ANALYZE=true webpack --config client/webpack.config.js"
+    "analyze": "cross-env NODE_ENV=production ANALYZE=true webpack --config packages/client/webpack.config.js"
   },
   "dependencies": {
     "@babel/core": "^7.0.0-rc.3",
