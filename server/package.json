@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alexey Levin",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p ",
+    "watch": "node node_modules/nodemon/bin/nodemon.js --config nodemon.json",
+    "run": "npm run build:server && npm start",
+    "lint": "exit 0"
+  },
+  "dependencies": {
+    "config": "^3.2.5",
+    "express": "^4.17.1",
+    "express-history-api-fallback": "^2.2.1",
+    "express-http-proxy": "^1.6.0",
+    "ignore-styles": "^5.0.1",
+    "module-alias": "^2.2.2",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2"
+  }
+}

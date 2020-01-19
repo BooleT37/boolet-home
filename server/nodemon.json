@@ -1,6 +1,6 @@
 {
   "ignore": ["**/*.test.ts", "**/*.spec.ts", ".git", "node_modules"],
-  "watch": ["server/src"],
-  "exec": "npm run lint:server && npm run build:server && node server/dist/server.js",
+  "watch": ["src"],
+  "exec": "yarn run lint && yarn run build && node dist/server.js",
   "ext": "ts"
 }

@@ -5,7 +5,7 @@
     "noImplicitAny": false,
     "sourceMap": true,
     "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "types": ["react", "node"],
     "paths": {
       "src/*": [ "src/*" ]
