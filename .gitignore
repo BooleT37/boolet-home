@@ -112,10 +112,10 @@ typings/
 # next.js build output
 .next
 
-client/dist
-server/dist
+packages/client/dist
+packages/server/dist
 
 #local configs
-server/config/local.json
+packages/server/config/local.json
 
 .npmrc
