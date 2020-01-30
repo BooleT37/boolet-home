@@ -801,7 +801,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.4":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.4":
   version "7.8.3"
   resolved "http://binary:80/artifactory/api/npm/npm/@babel/runtime/-/runtime-7.8.3.tgz#0811944f73a6c926bb2ad35e918dcc1bfab279f1"
   integrity sha1-CBGUT3OmySa7KtNekY3MG/qyefE=
@@ -6818,13 +6818,6 @@ react-router@5.1.2, react-router@^5.0.1:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-spring@^7.1.0:
-  version "7.2.11"
-  resolved "http://binary:80/artifactory/api/npm/npm/react-spring/-/react-spring-7.2.11.tgz#90962121c925c8a3181801b926eaf94c9b5c942e"
-  integrity sha1-kJYhIcklyKMYGAG5Jur5TJtclC4=
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-
 react-swipe-events@^1.0.3:
   version "1.0.3"
   resolved "http://binary:80/artifactory/api/npm/npm/react-swipe-events/-/react-swipe-events-1.0.3.tgz#65db1abc9fd9b816ca427ae3d500497c38bebd4d"
@@ -6834,13 +6827,6 @@ react-swipe-events@^1.0.3:
     prop-types "^15.6.0"
     react "^16.2.0"
     react-dom "^16.2.0"
-
-react-touch-carousel@^0.9.3:
-  version "0.9.3"
-  resolved "http://binary:80/artifactory/api/npm/npm/react-touch-carousel/-/react-touch-carousel-0.9.3.tgz#5a98a4f221ce8967267073c99230f14d7719f00b"
-  integrity sha1-Wpik8iHOiWcmcHPJkjDxTXcZ8As=
-  dependencies:
-    react-spring "^7.1.0"
 
 react-transition-group@^4.3.0:
   version "4.3.0"

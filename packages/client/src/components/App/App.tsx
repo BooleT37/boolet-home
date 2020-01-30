@@ -12,7 +12,6 @@ import ru from "./translations/ru";
 
 import Counter from "./pages/Counter/Counter";
 import GamesAssistant from "./pages/GamesAssistant/GamesAssistant";
-import Gift from "./pages/Gift/Gift";
 import Home from "./pages/Home/Home";
 import RentCalculator from "./pages/RentCalculator/RentCalculator";
 import Tasks from "./pages/Tasks/Tasks";
@@ -54,7 +53,6 @@ class App extends React.Component<{}, State> {
                         path="/tasks"
                         render={this.renderPage(Tasks, this.getPageTitles().tasks)}
                     />
-                    <Route path="/gift" component={Gift} />
                     <Route
                         path="/timeCalculator"
                         render={this.renderTimeCalculatorPage}

@@ -21,7 +21,7 @@ export default class Card extends React.Component<Props, State> {
         };
     }
 
-    setActive = () => {
+    setActive = (): void => {
         this.setState({active: true});
     };
 

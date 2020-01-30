@@ -7,3 +7,4 @@ export const clientPath = path.join(packages, "client");
 export const clientDistPath = path.join(clientPath, "dist");
 export const englishTasksPath = path.join(clientPath, "/packages/english-tasks/dist");
 export const qPath = path.join(clientPath, "/packages/q/dist");
+export const giftPath = path.join(clientPath, "/packages/gift/dist");

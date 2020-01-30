@@ -6,9 +6,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "../../scripts/build",
-    "watch": "../../scripts/watch",
-    "lint": "../../scripts/lint"
+    "build": "../../packages-scripts/build",
+    "watch": "../../packages-scripts/watch",
+    "lint": "../../packages-scripts/lint"
   },
   "devDependencies": {
     "cross-env": "^7.0.0"

@@ -1,8 +1,8 @@
 {
-  "name": "english-tasks",
+  "name": "gift",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Alexey Levin",
+  "author": "Alexey LEvin",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -12,5 +12,8 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.0"
+  },
+  "dependencies": {
+    "react-touch-carousel": "^0.9.3"
   }
 }

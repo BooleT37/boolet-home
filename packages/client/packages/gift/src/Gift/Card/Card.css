@@ -1,4 +1,4 @@
-@import "~src/components/App/App.animations.css";
+@import "../../../../../src/sharedAnimations.css";
 
 .card {
     width: 100%;
