@@ -1,0 +1,16 @@
+{
+  "name": "q",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alexey Levin",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "cross-env NODE_ENV=production ../../node_modules/.bin/webpack --config webpack.config.js",
+    "watch": "cross-env NODE_ENV=developement ../../node_modules/.bin/webpack-dev-server",
+    "lint": "eslint --ignore-pattern 'dist/*' ',**/*.js', ',**/*.ts', ',**/*.tsx'"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}

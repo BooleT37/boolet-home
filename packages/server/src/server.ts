@@ -12,8 +12,8 @@ const port = process.env.PORT || 8000;
 const app = express();
 
 app.use("/", express.static(paths.clientDistPath));
-
 app.use("/english-tasks", express.static(paths.englishTasksPath));
+app.use("/Q", express.static(paths.qPath));
 
 app.use(fallback("index.html", { root: paths.clientDistPath }));
 

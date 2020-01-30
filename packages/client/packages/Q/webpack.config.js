@@ -4,6 +4,6 @@ module.exports = {
     ...baseConfig,
     output: {
         ...baseConfig.output,
-        publicPath: '/english-tasks'
+        publicPath: '/Q'
     }
 };
