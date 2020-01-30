@@ -119,3 +119,4 @@ packages/server/dist
 packages/server/config/local.json
 
 .npmrc
+/packages/client/packages/english-tasks/dist/

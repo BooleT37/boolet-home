@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "types": [ "react", "node" ]
+  }
+}

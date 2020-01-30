@@ -7,8 +7,9 @@
   "private": true,
   "scripts": {
     "start": "yarn --cwd packages/server start",
-    "postinstall": "if-env NODE_ENV=production && npm run build:all",
-    "build-all": "concurrently \"yarn --cwd packages/server build\" \"yarn --cwd packages/client build\""
+    "watch": "node node_modules/nodemon/bin/nodemon.js --config nodemon.json",
+    "postinstall": "if-env NODE_ENV=production && npm run build-all",
+    "build-all": "concurrently \"yarn --cwd packages/server build\" \"yarn --cwd packages/client build-all\""
   },
   "dependencies": {
     "concurrently": "^5.0.2"

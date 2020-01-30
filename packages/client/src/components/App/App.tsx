@@ -70,13 +70,6 @@ class App extends React.Component<{}, State> {
                         render={this.renderRentCalculatorPage}
                     />
                     <Route
-                        path="/english/task1"
-                        render={ () => {
-                          const EnglishTask1 = React.lazy(() => import("./pages/englishTasks/EnglishTask1/EnglishTask1"));
-                          return <React.Suspense fallback={<CircularProgress />}><EnglishTask1/></React.Suspense>;
-                        }}
-                    />
-                    <Route
                         path="/wedding/bouquet"
                         component={() => {
                           const Bouquet = React.lazy(() => import("./pages/wedding/Bouquet/Bouquet"));

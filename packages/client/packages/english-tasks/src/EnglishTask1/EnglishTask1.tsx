@@ -14,7 +14,7 @@ interface State {
     checkButtonPressed: boolean;
 }
 
-export default class EnglishTask1 extends React.Component<undefined, State> {
+export default class EnglishTask1 extends React.Component<{}, State> {
     constructor() {
         super(undefined);
 

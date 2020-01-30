@@ -5,15 +5,17 @@ import * as fallback from "express-history-api-fallback";
 
 import "./aliasesSetup";
 
-import { clientDistPath } from "./paths";
+import * as paths from "./paths";
 import { initializeGamesAssistantRoutes } from "./games-assistant";
 
 const port = process.env.PORT || 8000;
 const app = express();
 
-app.use("/", express.static(clientDistPath));
+app.use("/", express.static(paths.clientDistPath));
 
-app.use(fallback("index.html", { root: clientDistPath }));
+app.use("/english-tasks", express.static(paths.englishTasksPath));
+
+app.use(fallback("index.html", { root: paths.clientDistPath }));
 
 initializeGamesAssistantRoutes(app);
 
