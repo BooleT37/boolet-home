@@ -4,7 +4,7 @@ import * as classNames from "classnames";
 import * as React from "react";
 import { Position, Player, Settings, SettingsInState } from "./Bouquet.models";
 import { StyledHighlightedGirlImage } from "./Bouquet.styles";
-import PlayersSettingsModal from "./PlayersSettingsModal/PlayersSettingsModal";
+import PlayersSettingsModal from "./PlayersSettingsModal";
 
 import {
     WHEEL_WIDTH,
@@ -71,7 +71,7 @@ const STATIONARY_STATE: MotionState = {
     isFinalAnimationPlaying: false
 };
 
-export default class Bouquet extends React.Component<undefined, State> {
+export default class Bouquet extends React.Component<{}, State> {
     constructor() {
         super(undefined);
 

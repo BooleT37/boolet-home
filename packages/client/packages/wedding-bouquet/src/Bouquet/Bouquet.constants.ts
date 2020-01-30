@@ -1,4 +1,4 @@
-import { Position, Player, Settings } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
+import { Position, Player, Settings } from "./Bouquet.models";
 
 export const GIRL_IMAGE_HEIGHT = 160;
 export const GIRL_IMAGE_WIDTH = 160;

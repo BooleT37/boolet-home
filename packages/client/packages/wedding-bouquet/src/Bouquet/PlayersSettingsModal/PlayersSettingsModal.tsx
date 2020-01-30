@@ -1,7 +1,8 @@
 import { Modal, TextField, Button, IconButton, Paper, Select, MenuItem } from "@material-ui/core";
 import { Add, Delete, Close } from "@material-ui/icons";
 import * as React from "react";
-import { Settings } from "src/components/App/pages/wedding/Bouquet/Bouquet.models";
+
+import { Settings } from "../Bouquet.models";
 
 import "./PlayersSettingsModal.css";
 

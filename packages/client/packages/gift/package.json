@@ -1,7 +1,6 @@
 {
   "name": "gift",
   "version": "1.0.0",
-  "main": "index.js",
   "author": "Alexey LEvin",
   "license": "MIT",
   "private": true,

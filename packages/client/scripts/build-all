@@ -1,4 +1,5 @@
 concurrently "yarn build" \
 "yarn --cwd packages/english-tasks build" \
 "yarn --cwd packages/gift build" \
-"yarn --cwd packages/Q build"
+"yarn --cwd packages/Q build" \
+"yarn --cwd packages/wedding-bouquet build"

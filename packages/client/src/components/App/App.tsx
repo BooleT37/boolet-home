@@ -1,4 +1,4 @@
-import { MuiThemeProvider, createMuiTheme, CircularProgress } from "@material-ui/core";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -64,13 +64,6 @@ class App extends React.Component<{}, State> {
                     <Route
                         path="/rentCalculator"
                         render={this.renderRentCalculatorPage}
-                    />
-                    <Route
-                        path="/wedding/bouquet"
-                        component={() => {
-                          const Bouquet = React.lazy(() => import("./pages/wedding/Bouquet/Bouquet"));
-                          return <React.Suspense fallback={<CircularProgress />}><Bouquet/></React.Suspense>;
-                        }}
                     />
                 </div>
             </Router>
