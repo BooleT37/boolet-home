@@ -1,6 +1,7 @@
 .PlayersSettingsModal {
     width: 400px;
     margin: 10% auto 0;
+    overflow: scroll;
 }
 
 .PlayersSettingsModal_content {

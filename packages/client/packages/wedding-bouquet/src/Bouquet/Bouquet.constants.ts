@@ -25,8 +25,6 @@ export const BRIDE_IMAGE_POSITION: Position = {
 export const FPS = 60;
 
 const V0_GRAD_PER_SEC = 120;
-export const V0 = (Math.PI * V0_GRAD_PER_SEC / 180) / FPS; // rad per frame
-export const SPIN_DURATION =  FPS * 10; // frames
 
 export const DEFAULT_PLAYERS: Player[] = [
     { name: "Игрок 1", imageIndex: 1 },
@@ -38,8 +36,8 @@ export const DEFAULT_PLAYERS: Player[] = [
 
 export const DEFAULT_SETTINGS: Settings = {
     players: DEFAULT_PLAYERS,
-    v0: V0,
-    t: SPIN_DURATION
+    v0: V0_GRAD_PER_SEC,
+    t: 10
 };
 
 export const SETTINGS_LOCAL_STORAGE_KEY = "bouquet-settings";
