@@ -7,10 +7,9 @@ const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-module.exports = (cwd) => {
+module.exports = (cwd, publicPath) => {
     const isProduction = process.env.NODE_ENV === 'production';
     const analyze = !!process.env.ANALYZE;
-    const publicPath = '/';
 
     const fileLoaderOptions = {
         name: '[name]-[hash].[ext]',

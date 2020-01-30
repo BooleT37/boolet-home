@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
-const baseConfig = require('./configs/webpack.config')(__dirname);
+const baseConfig = require('./configs/generateWebpackConfig')(__dirname, '/');
 
 process.env.NODE_CONFIG_DIR = resolve(__dirname, "config");
 const config = require('config');

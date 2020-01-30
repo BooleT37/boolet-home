@@ -1,9 +1,1 @@
-const baseConfig = require('../../configs/webpack.config')(__dirname);
-
-module.exports = {
-    ...baseConfig,
-    output: {
-        ...baseConfig.output,
-        publicPath: '/wedding-bouquet'
-    }
-};
+module.exports = require('../../configs/generateWebpackConfig')(__dirname, '/wedding-bouquet');

@@ -1,9 +1,2 @@
-const baseConfig = require('../../configs/webpack.config')(__dirname);
+module.exports = require('../../configs/generateWebpackConfig')(__dirname, '/english-tasks');
 
-module.exports = {
-    ...baseConfig,
-    output: {
-        ...baseConfig.output,
-        publicPath: '/english-tasks'
-    }
-};
