@@ -30,14 +30,14 @@ export default class Q extends React.Component<{}, State> {
         }
     }
 
-    moveToNextSlide = () => {
+    moveToNextSlide = (): void => {
         console.log(this.state.activeSlide + 1);
         if (this.state.activeSlide < poemQuatrains.length - 1) {
             this.setState({ activeSlide: this.state.activeSlide + 1 });
         }
     };
 
-    moveToPreviousSlide = () => {
+    moveToPreviousSlide = (): void => {
         // console.log(this.state.activeSlide - 1);
         if (this.state.activeSlide > 0 || (this.state.surpriseReached && this.state.activeSlide === 0)) {
             this.setState({ activeSlide: this.state.activeSlide - 1 });

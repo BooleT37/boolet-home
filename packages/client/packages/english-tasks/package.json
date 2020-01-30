@@ -6,9 +6,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "cross-env NODE_ENV=production ../../node_modules/.bin/webpack --config webpack.config.js --silent",
-    "watch": "cross-env NODE_ENV=developement ../../node_modules/.bin/webpack-dev-server",
-    "lint": "eslint --ignore-pattern 'dist/*' ',**/*.js', ',**/*.ts', ',**/*.tsx'"
+    "build": "../../scripts/build",
+    "watch": "../../scripts/watch",
+    "lint": "../../scripts/lint"
   },
   "devDependencies": {
     "cross-env": "^7.0.0"

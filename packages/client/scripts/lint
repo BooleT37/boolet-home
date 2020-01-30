@@ -1,0 +1,1 @@
+../../node_modules/.bin/eslint src/** --ext .js --ext .ts --ext .tsx --ignore-pattern "dist/*"
