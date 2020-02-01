@@ -14,5 +14,8 @@
   "dependencies": {
     "concurrently": "^5.0.2",
     "if-env": "^1.0.4"
+  },
+  "engines": {
+    "yarn": "1.21.1"
   }
 }
