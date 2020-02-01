@@ -8,10 +8,11 @@
   "scripts": {
     "start": "yarn --cwd packages/server start",
     "watch": "node node_modules/nodemon/bin/nodemon.js --config nodemon.json",
-    "postinstall": "if-env NODE_ENV=production && npm run build-all",
+    "postinstall": "if-env NODE_ENV=production && concurrently \"yarn --cwd packages/server install\" \"yarn --cwd packages/client install-all\"",
     "build-all": "concurrently \"yarn --cwd packages/server build\" \"yarn --cwd packages/client build-all\""
   },
   "dependencies": {
-    "concurrently": "^5.0.2"
+    "concurrently": "^5.0.2",
+    "if-env": "^1.0.4"
   }
 }

@@ -9,7 +9,7 @@
     "watch": "../../packages-scripts/watch",
     "lint": "../../packages-scripts/lint"
   },
-  "devDependencies": {
+  "dependencies": {
     "cross-env": "^7.0.0"
   }
 }

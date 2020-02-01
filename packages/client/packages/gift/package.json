@@ -9,10 +9,8 @@
     "watch": "../../packages-scripts/watch",
     "lint": "../../packages-scripts/lint"
   },
-  "devDependencies": {
-    "cross-env": "^7.0.0"
-  },
   "dependencies": {
+    "cross-env": "^7.0.0",
     "react-touch-carousel": "^0.9.3"
   }
 }
