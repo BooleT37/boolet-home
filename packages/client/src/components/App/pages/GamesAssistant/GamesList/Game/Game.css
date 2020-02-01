@@ -11,3 +11,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.Game__list-tile {
+    display: inline-block;
+}

@@ -35,7 +35,7 @@ export default class Game extends React.PureComponent<Props> {
         const game = this.props.game;
         return (
             <a href={this.getGameUrl()} target="_blank" title={game.name}>
-                <GridListTile component="span" key={game.id}>
+                <GridListTile component="span" key={game.id} className="Game__list-tile">
                     <img src={this.getLogoSrcOrDefault()} alt={game.name} />
                     <GridListTileBar
                         title={this.renderGameTitle()}

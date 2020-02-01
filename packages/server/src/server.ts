@@ -17,9 +17,9 @@ app.use("/Q", express.static(paths.qPath));
 app.use("/gift", express.static(paths.giftPath));
 app.use("/wedding-bouquet", express.static(paths.bouquetPath));
 
-app.use(fallback("index.html", { root: paths.clientDistPath }));
-
 initializeGamesAssistantRoutes(app);
+
+app.use(fallback("index.html", { root: paths.clientDistPath }));
 
 app.listen(port, () => {
     console.log(`Server running on ${port}!`);
