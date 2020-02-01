@@ -1,0 +1,6 @@
+if [ "$NODE_ENV" = "production" ]
+then
+  concurrently "npm --prefix packages/server install"\
+    "npm --prefix packages/client run install-all"
+  npm run build-all
+fi
