@@ -1,5 +1,5 @@
-concurrently "yarn install --frozen-lockfile" \
-"yarn --cwd packages/english-tasks install --frozen-lockfile" \
-"yarn --cwd packages/gift install --frozen-lockfile" \
-"yarn --cwd packages/Q install --frozen-lockfile" \
-"yarn --cwd packages/wedding-bouquet install --frozen-lockfile"
+concurrently "yarn install --no-lockfile" \
+"yarn --cwd packages/english-tasks install --no-lockfile" \
+"yarn --cwd packages/gift install --no-lockfile" \
+"yarn --cwd packages/Q install --no-lockfile" \
+"yarn --cwd packages/wedding-bouquet install --no-lockfile"
