@@ -9,10 +9,13 @@
     "start": "node dist/server.js",
     "build": "tsc -p .",
     "watch": "node node_modules/nodemon/bin/nodemon.js --config nodemon.json",
-    "run": "yarn run build && yarn start",
+    "run": "npm run build && npm start",
     "lint": "exit 0"
   },
   "dependencies": {
+    "@types/config": "^0.0.36",
+    "@types/node": "^13.1.8",
+    "@types/react": "^16.9.17",
     "config": "^3.2.5",
     "express": "^4.17.1",
     "express-history-api-fallback": "^2.2.1",
@@ -23,9 +26,5 @@
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
-  "devDependencies": {
-    "@types/config": "^0.0.36",
-    "@types/node": "^13.1.8",
-    "@types/react": "^16.9.17"
-  }
+  "devDependencies": {}
 }

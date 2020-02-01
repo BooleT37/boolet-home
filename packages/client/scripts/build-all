@@ -1,5 +1,5 @@
-concurrently "yarn build" \
-"yarn --cwd packages/english-tasks build" \
-"yarn --cwd packages/gift build" \
-"yarn --cwd packages/Q build" \
-"yarn --cwd packages/wedding-bouquet build"
+concurrently "npm run build" \
+"npm --prefix packages/english-tasks run build" \
+"npm --prefix packages/gift run build" \
+"npm --prefix packages/Q run build" \
+"npm --prefix packages/wedding-bouquet run build"

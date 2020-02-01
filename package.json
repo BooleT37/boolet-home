@@ -6,16 +6,16 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "yarn --cwd packages/server start",
+    "start": "npm --prefix packages/server start",
     "watch": "node node_modules/nodemon/bin/nodemon.js --config nodemon.json",
-    "postinstall": "if-env NODE_ENV=production && concurrently \"yarn --cwd packages/server install\" \"yarn --cwd packages/client install-all\"",
-    "build-all": "concurrently \"yarn --cwd packages/server build\" \"yarn --cwd packages/client build-all\""
+    "postinstall": "if-env NODE_ENV=production && concurrently \"npm --prefix packages/server install\" \"npm --prefix packages/client run install-all\"",
+    "build-all": "concurrently \"npm --prefix packages/server run build\" \"npm --prefix packages/client run build-all\""
   },
   "dependencies": {
     "concurrently": "^5.0.2",
     "if-env": "^1.0.4"
   },
   "engines": {
-    "yarn": "1.21.1"
+    "node": "11.10.1"
   }
 }

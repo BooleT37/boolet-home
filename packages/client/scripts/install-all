@@ -1,5 +1,5 @@
-concurrently "yarn install --no-lockfile" \
-"yarn --cwd packages/english-tasks install --no-lockfile" \
-"yarn --cwd packages/gift install --no-lockfile" \
-"yarn --cwd packages/Q install --no-lockfile" \
-"yarn --cwd packages/wedding-bouquet install --no-lockfile"
+concurrently "npm install" \
+"npm --prefix packages/english-tasks install" \
+"npm --prefix packages/gift install" \
+"npm --prefix packages/Q install" \
+"npm --prefix packages/wedding-bouquet install"
