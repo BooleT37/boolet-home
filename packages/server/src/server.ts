@@ -12,7 +12,7 @@ const port = process.env.PORT || 8000;
 const app = express();
 
 app.use("/", express.static(paths.clientDistPath));
-app.use("/english-tasks", express.static(paths.englishTasksPath));
+app.use("/tasks", express.static(paths.tasksPath));
 app.use("/Q", express.static(paths.qPath));
 app.use("/gift", express.static(paths.giftPath));
 app.use("/wedding-bouquet", express.static(paths.bouquetPath));

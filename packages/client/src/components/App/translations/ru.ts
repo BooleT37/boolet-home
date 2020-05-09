@@ -4,7 +4,7 @@ const ru: { pageTitles: IPageTitles } = {
     pageTitles: {
         home: "Домашняя страница",
         counter: "Счетчик",
-        tasks: "Задачи",
+        programmingTasks: "Задачи",
         gift: "Подарок",
         timeCalculator: "Калькулятор времени",
         q: "Предложение",

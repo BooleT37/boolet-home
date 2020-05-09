@@ -5,7 +5,7 @@ type IPageTitles = {
 type PageTitles =
       "home"
     | "counter"
-    | "tasks"
+    | "programmingTasks"
     | "gift"
     | "timeCalculator"
     | "q"

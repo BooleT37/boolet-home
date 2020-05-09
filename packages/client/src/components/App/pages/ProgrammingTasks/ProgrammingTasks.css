@@ -1,0 +1,11 @@
+.programming-tasks {
+  margin-left: 3rem;
+}
+
+.programming-tasks__list {
+  display: flex;
+}
+
+.programming-tasks__list li {
+  margin-right: 2rem;
+}

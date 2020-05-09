@@ -119,7 +119,7 @@ packages/server/config/local.json
 
 packages/client/dist
 packages/server/dist
-/packages/client/packages/english-tasks/dist/
+/packages/client/packages/tasks/dist/
 /packages/client/packages/Q/dist/
 /packages/client/packages/gift/dist/
 /packages/client/packages/wedding-bouquet/dist/

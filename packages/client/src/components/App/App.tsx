@@ -14,7 +14,7 @@ import Counter from "./pages/Counter/Counter";
 import GamesAssistant from "./pages/GamesAssistant/GamesAssistant";
 import Home from "./pages/Home/Home";
 import RentCalculator from "./pages/RentCalculator/RentCalculator";
-import Tasks from "./pages/Tasks/Tasks";
+import ProgrammingTasks from "src/components/App/pages/ProgrammingTasks/ProgrammingTasks";
 import TimeCalculator from "./pages/TimeCalculator/TimeCalculator";
 
 import IPageTitles from "./translations/IPageTitles";
@@ -50,8 +50,8 @@ class App extends React.Component<{}, State> {
                     <Route exact path="/" render={this.renderHomePage} />
                     <Route path="/counter" render={this.renderCounterPage} />
                     <Route
-                        path="/tasks"
-                        render={this.renderPage(Tasks, this.getPageTitles().tasks)}
+                        path="/programming-tasks"
+                        render={this.renderPage(ProgrammingTasks, this.getPageTitles().programmingTasks)}
                     />
                     <Route
                         path="/timeCalculator"

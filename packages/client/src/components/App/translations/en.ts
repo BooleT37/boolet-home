@@ -4,7 +4,7 @@ const en: { pageTitles: IPageTitles } = {
     pageTitles: {
         home: "Home page",
         counter: "Counter",
-        tasks: "Tasks",
+        programmingTasks: "Tasks",
         gift: "Gift",
         timeCalculator: "Time calculator",
         q: "Question",

@@ -1,5 +1,5 @@
 concurrently "npm run build" \
-"npm --prefix packages/english-tasks run build" \
+"npm --prefix packages/tasks run build" \
 "npm --prefix packages/gift run build" \
 "npm --prefix packages/Q run build" \
 "npm --prefix packages/wedding-bouquet run build"

@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "npm --prefix packages/server start",
-    "watch": "node node_modules/nodemon/bin/nodemon.js --config nodemon.json",
+    "watch": "npm --prefix packages/server run watch",
     "postinstall": "scripts/postinstall",
     "build-all": "concurrently \"npm --prefix packages/server run build\" \"npm --prefix packages/client run build-all\""
   },

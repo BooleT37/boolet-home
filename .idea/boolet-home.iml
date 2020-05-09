@@ -6,9 +6,10 @@
       <excludeFolder url="file://$MODULE_DIR$/client/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/client/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/client/packages/Q/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/client/packages/english-tasks/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/client/packages/gift/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/client/packages/tasks/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/client/packages/wedding-bouquet/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/server/dist" />
       <excludeFolder url="file://$MODULE_DIR$/server/dist" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
