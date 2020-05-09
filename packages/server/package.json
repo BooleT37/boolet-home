@@ -16,7 +16,9 @@
     "@types/config": "^0.0.36",
     "@types/node": "^13.1.8",
     "@types/react": "^16.9.17",
+    "body-parser": "^1.19.0",
     "config": "^3.2.5",
+    "ejs": "^3.1.2",
     "express": "^4.17.1",
     "express-history-api-fallback": "^2.2.1",
     "express-http-proxy": "^1.6.0",
@@ -26,5 +28,7 @@
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/ejs": "^3.0.3"
+  }
 }
