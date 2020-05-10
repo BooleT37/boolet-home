@@ -1,3 +1,7 @@
+<% var listTag = data['day-list-style'] === 'ordered' ? '<ol>' : '<ul>'%>
+<% var listClosingTag = data['day-list-style'] === 'ordered' ? '</ol>' : '</ul>'%>
+<% var tasksTag = data['task-list-style'] === 'ordered' ? '<ol>' : '<ul>'%>
+<% var tasksClosingTag = data['task-list-style'] === 'ordered' ? '</ol>' : '</ul>'%>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -21,21 +25,21 @@
     <tr>
         <td style="vertical-align: top">
             <%- data['day-1-tasks-img'] ? `<img src="${data['day-1-tasks-img']}" width="${data['day-1-tasks-img-width']}" height="${data['day-1-tasks-img-height']}" alt="day-1-tasks-img" />` : '' %>
-            <ol>
+            <%- listTag %>
                 <%- data['day-1-tasks'] ? data['day-1-tasks'].filter(task => !!task).map(task => `<li> ${task} </li>`).join(' ') : '' %>
-            </ol>
+            <%- listClosingTag %>
         </td>
         <td style="vertical-align: top">
             <%- data['day-2-tasks-img'] ? `<img src="${data['day-2-tasks-img']}" width="${data['day-2-tasks-img-width']}" height="${data['day-2-tasks-img-height']}" alt="day-2-tasks-img" />` : '' %>
-            <ol>
+            <%- listTag %>
                 <%- data['day-2-tasks'] ? data['day-2-tasks'].filter(task => !!task).map(task => `<li> ${task} </li>`).join(' ') : '' %>
-            </ol>
+            <%- listClosingTag %>
         </td>
         <td style="vertical-align: top">
             <%- data['day-3-tasks-img'] ? `<img src="${data['day-3-tasks-img']}" width="${data['day-3-tasks-img-width']}" height="${data['day-3-tasks-img-height']}" alt="day-3-tasks-img" />` : '' %>
-            <ol>
+            <%- listTag %>
                 <%- data['day-3-tasks'] ? data['day-3-tasks'].filter(task => !!task).map(task => `<li> ${task} </li>`).join(' ') : '' %>
-            </ol>
+            <%- listClosingTag %>
         </td>
     </tr>
     </tbody>
@@ -51,16 +55,16 @@
         <tr>
             <% if (data['tasks-1']) { %>
                 <td>
-                    <ul>
+                    <%- tasksTag %>
                         <%- data['tasks-1'].filter(task => !!task).map(task => `<li> ${task} </li>`).join(' ') %>
-                    </ul>
+                    <%- tasksClosingTag %>
                 </td>
             <% } %>
             <% if (data['tasks-2']) { %>
                 <td width="300">
-                    <ul>
+                    <%- tasksTag %>
                         <%- data['tasks-2'].filter(task => !!task).map(task => `<li> ${task} </li>`).join(' ') %>
-                    </ul>
+                    <%- tasksClosingTag %>
                 </td>
             <% } %>
         </tr>
