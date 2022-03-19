@@ -4,7 +4,13 @@ import ISteamApi from "./ISteamApi";
 
 const SteamApi: ISteamApi = {
     getGames: async (playerId: string): Promise<GetGamesResponse> => {
-        return AxiosInstance.get(`getGames?playerId=${playerId}`).then(r => r.data);
+        const response = await AxiosInstance.get(`getGames?playerId=${playerId}`).then(r => r.data);
+
+        if (!response.games) {
+            throw new Error('Unexpected response from Steam API')
+        }
+
+        return response
     }
 };
 

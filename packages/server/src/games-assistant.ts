@@ -3,7 +3,7 @@ import { getGamesForPlayerId } from "./fakeData";
 import PlayerIdNotFoundError from "./PlayerIdNotFoundError";
 import * as proxy from "express-http-proxy";
 import * as config from "config";
-import { IncomingHttpHeaders, OutgoingHttpHeaders } from "http2";
+import type { IncomingHttpHeaders, OutgoingHttpHeaders, IncomingMessage } from "http";
 
 export function initializeGamesAssistantRoutes(app: express.Express): void {
     app.use("/api/getGames", proxy("http://api.steampowered.com",
@@ -15,8 +15,9 @@ export function initializeGamesAssistantRoutes(app: express.Express): void {
                 headers["Access-Control-Allow-Origin"] = "*";
                 return headers;
             },
-            userResDecorator: (proxyRes: express.Response, proxyResData): string => {
+            userResDecorator: (proxyRes: IncomingMessage, proxyResData): string => {
                 if (proxyRes.statusCode >= 400) {
+                    console.error(proxyResData.toString())
                     return JSON.stringify({
                         error: true
                     });
@@ -26,7 +27,9 @@ export function initializeGamesAssistantRoutes(app: express.Express): void {
             }
         }));
 
-    app.get("/api/fakeGetGames", (req, res) => {
+        type FakeGetGamesRequest = express.Request<{}, {}, {}, { playerId: string }>
+
+        app.get("/api/fakeGetGames", (req: FakeGetGamesRequest, res) => {
         try {
             const playerId = req.query.playerId.toLowerCase();
             res.setHeader("Content-type", "application/json");

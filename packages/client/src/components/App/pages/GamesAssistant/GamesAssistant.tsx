@@ -1,4 +1,4 @@
-import * as classNames from "classnames";
+import classNames from "classnames";
 import * as React from "react";
 
 import Button from "@material-ui/core/Button/Button";
@@ -66,25 +66,25 @@ export default class GamesAssistant extends React.Component<Props, State> {
         };
     }
 
-    onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({inputValue: e.target.value, errorMessage: ""});
     };
 
-    onInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    onInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         if (e.keyCode === 13 || e.which === 13) { // Enter
             this.addPlayerId();
         }
     };
 
-    addPlayerId = () => {
+    addPlayerId = (): void => {
         this.setState({playerIds: this.state.playerIds.concat(this.state.inputValue), inputValue: ""});
     };
 
-    deletePlayerId = (id: string) => {
+    deletePlayerId = (id: string): void => {
         this.setState({playerIds: this.state.playerIds.filter(currentId => currentId !== id)});
     };
 
-    onShowGamesButtonClick = async () => {
+    onShowGamesButtonClick = async (): Promise<void> => {
         if (this.state.playerIds.length === 1) {
             this.openOneIdChosenModal();
         } else {
@@ -104,21 +104,21 @@ export default class GamesAssistant extends React.Component<Props, State> {
         }
     }
 
-    onUseFakeApiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onUseFakeApiChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.checked;
         localStorage.setItem(LocalStorageItems.UseFakeApi, value.toString());
         this.setState({useFakeApi: e.target.checked});
     };
 
-    openOneIdChosenModal = () => {
+    openOneIdChosenModal = (): void => {
         this.setState({oneIdChosenModalOpen: true});
     };
 
-    closeOneIdChosenModal = () => {
+    closeOneIdChosenModal = (): void => {
         this.setState({oneIdChosenModalOpen: false});
     };
 
-    onOneIdChosenModalConfirm = async () => {
+    onOneIdChosenModalConfirm = async (): Promise<void> => {
         this.closeOneIdChosenModal();
         await this.showGames();
     };

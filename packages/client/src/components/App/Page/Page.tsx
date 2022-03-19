@@ -8,6 +8,7 @@ import MainMenu, { InitialProps as MainMenuProps } from "./MainMenu/MainMenu";
 import MainMenuItem from "./MainMenu/MainMenuItem";
 import en from "./translations/en";
 import ru from "./translations/ru";
+import ErrorBoundary from './ErrorBoundary'
 
 import "./Page.css";
 
@@ -44,7 +45,9 @@ export default class extends React.Component<Props> {
                 <div className="page__container">
                     <Card>
                         <div className="page__content">
-                            {this.props.children}
+                            <ErrorBoundary>
+                                {this.props.children}
+                            </ErrorBoundary>
                         </div>
                     </Card>
                     <LanguageToggle language={this.props.language} onChange={this.props.onLanguageChange}/>

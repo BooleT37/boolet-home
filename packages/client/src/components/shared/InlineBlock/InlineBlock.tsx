@@ -1,4 +1,4 @@
-import * as ClassNames from "classnames";
+import classNames from "classnames";
 import * as React from "react";
 
 import "./InlineBlock.less";
@@ -31,7 +31,7 @@ export default class InlineBlock extends React.Component<Props, undefined> {
         const verticalAlignClass = typeof this.props.verticalAlign === "string"
             ? `inlineBlock_verticalAlign_${this.props.verticalAlign}`
             : null;
-        const className = ClassNames(
+        const className = classNames(
             "inlineBlock",
             verticalAlignClass,
             { [this.props.className]: this.props.className !== undefined }

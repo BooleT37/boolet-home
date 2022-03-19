@@ -1,7 +1,7 @@
 import { IconButton } from "@material-ui/core";
 import { Settings as SettingsIcon } from "@material-ui/icons";
-import * as classNames from "classnames";
-import * as React from "react";
+import classNames from "classnames";
+import React from "react";
 import { Position, Player, Settings, SettingsInState } from "./Bouquet.models";
 import { StyledHighlightedGirlImage } from "./Bouquet.styles";
 import PlayersSettingsModal from "./PlayersSettingsModal";
