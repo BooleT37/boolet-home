@@ -23,6 +23,7 @@ app.use("/tasks", express.static(paths.tasksPath));
 app.use("/Q", express.static(paths.qPath));
 app.use("/gift", express.static(paths.giftPath));
 app.use("/wedding-bouquet", express.static(paths.bouquetPath));
+app.use("/subtitles", express.static(paths.subtitlesPath));
 
 initializeGamesAssistantRoutes(app);
 

@@ -36,7 +36,8 @@ module.exports = {
         },
         plugins: [
           '@typescript-eslint',
-          'react'
+          'react',
+          'react-hooks'
         ],
         rules: {
           '@typescript-eslint/array-type': ['error', {'array-simple': true }],
@@ -52,7 +53,9 @@ module.exports = {
           ],
           '@typescript-eslint/interface-name-prefix': 'off',
           'react/jsx-uses-react': 'error',
-          'react/jsx-uses-vars': 'error'
+          'react/jsx-uses-vars': 'error',
+          'react-hooks/rules-of-hooks': 'error',
+          'react-hooks/exhaustive-deps': 'warn'
         }
     }
   ]

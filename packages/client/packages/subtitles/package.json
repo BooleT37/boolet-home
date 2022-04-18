@@ -1,0 +1,15 @@
+{
+  "name": "subtitles",
+  "version": "1.0.0",
+  "author": "Alexey Levin",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "build": "../../packages-scripts/build",
+    "watch": "../../packages-scripts/watch",
+    "lint": "../../packages-scripts/lint"
+  },
+  "dependencies": {
+    "raw-loader": "^4.0.2"
+  }
+}

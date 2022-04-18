@@ -1,0 +1,67 @@
+.root {
+    text-align: center;
+}
+
+.toggle-interface {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 32px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.toggle-interface:not(.toggle-interface_shown)::after {
+    content: '/';
+    font-size: 45px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: gray;
+    position: absolute;
+    right: 20px;
+}
+
+.file-input {
+    margin-bottom: 10px;
+}
+
+.button {
+    font-size: 60px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.text {
+    margin-top: 20px;
+    min-height: 320px;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.steps {
+    font-size: 20px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.steps>* {
+    margin-left: 10px
+}
+
+.reset {
+    vertical-align: top;
+    font-size: 32px;
+    margin-right: 10px;
+    margin-top: 12px;
+    padding-bottom: 3px;
+}
+
+.font-size {
+    font-size: 20px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.font-size>* {
+    margin-left: 10px;
+}
