@@ -69,12 +69,14 @@ const Viewer: React.FC = () => {
 
     return (
         <div className="root">
-            <button
-                className={classNames("toggle-interface", { "toggle-interface_shown": interfaceShown })}
-                onClick={() => { setIntefaceShown(s => !s) }}
-            >
-                👁️
-            </button>
+            <div className="toggle-interface-wrapper">
+                <button
+                    className={classNames("toggle-interface", { "toggle-interface_shown": interfaceShown })}
+                    onClick={() => { setIntefaceShown(s => !s) }}
+                >
+                    👁️
+                </button>
+            </div>
             <div className="text" style={{fontSize}}>
                 {frame?.startTime <= tick ? frame?.text : ''}
             </div>
