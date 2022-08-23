@@ -48,13 +48,13 @@
     font-family: Arial, Helvetica, sans-serif
 }
 
-.steps {
+.fieldset {
     font-size: 20px;
     display: inline-block;
     vertical-align: top;
 }
 
-.steps>* {
+.fieldset>* {
     margin-left: 10px
 }
 
@@ -74,4 +74,8 @@
 
 .font-size>* {
     margin-left: 10px;
+}
+
+.speed-input {
+    margin-top: 15px;
 }

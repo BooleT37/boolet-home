@@ -5,26 +5,30 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 import subtitleToFrames from "./utils/subtitleToFrames";
 import tickToTime from "./utils/tickToTime";
+import { Frame } from "./types";
+
 import "./Viewer.css";
 
-const DELTA = 500;
+const TICK_DELTA = 500;
 
 const Viewer: React.FC = () => {
   const [tick, setTick] = React.useState(0);
   const [playing, setPlaying] = React.useState(false);
   const interval = React.useRef<number>(null);
-  const [frames, setFrames] = React.useState(null);
-  const [initialFrames, setInitialFrames] = React.useState(null);
-  const [step, setStep] = React.useState(DELTA);
+  const [frames, setFrames] = React.useState<Frame[]>(null);
+  const [initialFrames, setInitialFrames] = React.useState<Frame[]>(null);
+  const [step, setStep] = React.useState(TICK_DELTA);
   const [fontSize, setFontSize] = React.useState(60);
   const [interfaceShown, setIntefaceShown] = React.useState(true);
   const [eyeShown, setEyeShown] = React.useState(true);
+  const [speed, setSpeed] = React.useState(1);
+  const [speedDeltaPow, setSpeedDeltaPow] = React.useState(-1);
 
   const play = React.useCallback(() => {
     setPlaying(true);
     interval.current = window.setInterval(() => {
-      setTick((t) => t + DELTA);
-    }, DELTA);
+      setTick((t) => t + TICK_DELTA);
+    }, TICK_DELTA);
   }, []);
 
   const stop = React.useCallback(() => {
@@ -60,17 +64,17 @@ const Viewer: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    if (!frame || frame.startTime > tick) {
+    if (!frame || frame.startTime > tick * speed) {
       return;
     }
     let index = 0;
-    while (frames[index] && frames[index].endTime < tick) {
+    while (frames[index] && frames[index].endTime < tick * speed) {
       index++;
     }
     if (index) {
       setFrames((f) => f.slice(index));
     }
-  }, [frame, frames, tick]);
+  }, [frame, frames, tick, speed]);
 
   const hideEyeTimeout = React.useRef<number | null>(null);
 
@@ -95,6 +99,8 @@ const Viewer: React.FC = () => {
     };
   }, [showEye]);
 
+  const speedDelta = Math.pow(10, speedDeltaPow);
+
   return (
     <div className="root">
       <div className="toggle-interface-wrapper">
@@ -117,7 +123,7 @@ const Viewer: React.FC = () => {
         </button>
       </div>
       <div className="text" style={{ fontSize }}>
-        {frame?.startTime <= tick ? frame?.text : ""}
+        {frame?.startTime <= tick * speed ? frame?.text : ""}
       </div>
       {interfaceShown && (
         <div>
@@ -149,7 +155,7 @@ const Viewer: React.FC = () => {
                 value={tick}
                 min={0}
                 max={frames[frames.length - 1].endTime}
-                step={DELTA}
+                step={TICK_DELTA}
                 onChange={onSliderChange}
                 className="input"
               />
@@ -173,19 +179,19 @@ const Viewer: React.FC = () => {
                 >
                   🔁
                 </button>
-                <fieldset className="steps">
+                <fieldset className="fieldset">
                   <legend>step:</legend>
                   {step}
                   <button
                     onClick={() => {
-                      setStep((s) => Math.max(s - DELTA, DELTA));
+                      setStep((s) => Math.max(s - TICK_DELTA, TICK_DELTA));
                     }}
                   >
                     ➖
                   </button>
                   <button
                     onClick={() => {
-                      setStep((s) => s + DELTA);
+                      setStep((s) => s + TICK_DELTA);
                     }}
                   >
                     ➕
@@ -204,6 +210,50 @@ const Viewer: React.FC = () => {
                   <button
                     onClick={() => {
                       setFontSize((s) => s + 10);
+                    }}
+                  >
+                    ➕
+                  </button>
+                </fieldset>
+              </div>
+              <div>
+                <fieldset className="fieldset">
+                  <legend>speed:</legend>
+                  {speedDeltaPow > 0
+                    ? speed
+                    : Math.round(speed * Math.pow(10, -speedDeltaPow)) /
+                      Math.pow(10, -speedDeltaPow)}
+                  <button
+                    onClick={() => {
+                      setSpeed((s) => Math.max(s - speedDelta, speedDelta));
+                    }}
+                  >
+                    ➖
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSpeed((s) => s + speedDelta);
+                    }}
+                  >
+                    ➕
+                  </button>
+                </fieldset>
+                <fieldset className="font-size">
+                  <legend>speed delta:</legend>
+                  <span>
+                    {Math.round(speedDelta * Math.pow(10, -speedDeltaPow)) /
+                      Math.pow(10, -speedDeltaPow)}
+                  </span>
+                  <button
+                    onClick={() => {
+                      setSpeedDeltaPow((s) => s - 1);
+                    }}
+                  >
+                    ➖
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSpeedDeltaPow((s) => s + 1);
                     }}
                   >
                     ➕
