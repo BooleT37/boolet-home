@@ -30,6 +30,18 @@
     padding-bottom: 10px;
 }
 
+.step-button {
+    font-size: 40px;
+}
+
+.input {
+    width: 250px;
+}
+
+.time {
+    margin-bottom: 30px;
+}
+
 .text {
     margin-top: 20px;
     min-height: 320px;

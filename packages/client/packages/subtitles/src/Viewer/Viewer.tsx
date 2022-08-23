@@ -141,7 +141,9 @@ const Viewer: React.FC = () => {
                   </button>
                 )}
               </div>
-              <button onClick={onStepBackClick}>⏪</button>
+              <button className="step-button" onClick={onStepBackClick}>
+                ⏪
+              </button>
               <input
                 type="range"
                 value={tick}
@@ -152,6 +154,7 @@ const Viewer: React.FC = () => {
                 className="input"
               />
               <button
+                className="step-button"
                 onClick={() => {
                   setTick((t) =>
                     Math.min(t + step, frames[frames.length - 1].endTime)
@@ -160,7 +163,7 @@ const Viewer: React.FC = () => {
               >
                 ⏩
               </button>
-              <div>{tickToTime(tick)}</div>
+              <div className="time">{tickToTime(tick)}</div>
               <div>
                 <button
                   className="reset"
