@@ -139,45 +139,51 @@ const Viewer: React.FC = () => {
               <div>
                 {playing ? (
                   <button className="button" onClick={stop}>
-                    ⏹️
+                    <FontAwesomeIcon icon={solid("stop")} />
                   </button>
                 ) : (
                   <button className="button" onClick={play}>
-                    ▶️
+                    <FontAwesomeIcon icon={solid("play")} />
                   </button>
                 )}
               </div>
-              <button className="step-button" onClick={onStepBackClick}>
-                ⏪
+              <button className="step-button button" onClick={onStepBackClick}>
+                <FontAwesomeIcon icon={solid("backward")} />
               </button>
               <input
                 type="range"
                 value={tick}
                 min={0}
-                max={frames[frames.length - 1].endTime}
+                max={initialFrames[initialFrames.length - 1].endTime}
                 step={TICK_DELTA}
                 onChange={onSliderChange}
                 className="input"
               />
               <button
-                className="step-button"
+                className="step-button button"
                 onClick={() => {
                   setTick((t) =>
-                    Math.min(t + step, frames[frames.length - 1].endTime)
+                    Math.min(
+                      t + step,
+                      initialFrames[initialFrames.length - 1].endTime
+                    )
                   );
                 }}
               >
-                ⏩
+                <FontAwesomeIcon icon={solid("forward")} />
               </button>
-              <div className="time">{tickToTime(tick)}</div>
+              <div className="time">
+                {tickToTime(tick)}
+                {speed !== 1 ? ` (adj. ${tickToTime(tick * speed)})` : null}
+              </div>
               <div>
                 <button
-                  className="reset"
+                  className="reset button"
                   onClick={() => {
                     setTick(0);
                   }}
                 >
-                  🔁
+                  <FontAwesomeIcon icon={solid("repeat")} />
                 </button>
                 <fieldset className="fieldset">
                   <legend>step:</legend>
@@ -187,14 +193,14 @@ const Viewer: React.FC = () => {
                       setStep((s) => Math.max(s - TICK_DELTA, TICK_DELTA));
                     }}
                   >
-                    ➖
+                    <FontAwesomeIcon icon={solid("minus")} />
                   </button>
                   <button
                     onClick={() => {
                       setStep((s) => s + TICK_DELTA);
                     }}
                   >
-                    ➕
+                    <FontAwesomeIcon icon={solid("plus")} />
                   </button>
                 </fieldset>
                 <fieldset className="font-size">
@@ -205,14 +211,14 @@ const Viewer: React.FC = () => {
                       setFontSize((s) => Math.max(s - 10, 10));
                     }}
                   >
-                    ➖
+                    <FontAwesomeIcon icon={solid("minus")} />
                   </button>
                   <button
                     onClick={() => {
                       setFontSize((s) => s + 10);
                     }}
                   >
-                    ➕
+                    <FontAwesomeIcon icon={solid("plus")} />
                   </button>
                 </fieldset>
               </div>
@@ -228,14 +234,14 @@ const Viewer: React.FC = () => {
                       setSpeed((s) => Math.max(s - speedDelta, speedDelta));
                     }}
                   >
-                    ➖
+                    <FontAwesomeIcon icon={solid("minus")} />
                   </button>
                   <button
                     onClick={() => {
                       setSpeed((s) => s + speedDelta);
                     }}
                   >
-                    ➕
+                    <FontAwesomeIcon icon={solid("plus")} />
                   </button>
                 </fieldset>
                 <fieldset className="font-size">
@@ -249,14 +255,14 @@ const Viewer: React.FC = () => {
                       setSpeedDeltaPow((s) => s - 1);
                     }}
                   >
-                    ➖
+                    <FontAwesomeIcon icon={solid("minus")} />
                   </button>
                   <button
                     onClick={() => {
                       setSpeedDeltaPow((s) => s + 1);
                     }}
                   >
-                    ➕
+                    <FontAwesomeIcon icon={solid("plus")} />
                   </button>
                 </fieldset>
               </div>
