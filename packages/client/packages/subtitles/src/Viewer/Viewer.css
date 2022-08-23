@@ -13,16 +13,11 @@
     background: transparent;
     border: none;
     cursor: pointer;
+    transition: opacity 0.5s;
 }
 
-.toggle-interface:not(.toggle-interface_shown)::after {
-    content: '/';
-    font-size: 45px;
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
-    color: gray;
-    position: absolute;
-    right: 35px;
+.toggle-interface-hidden {
+    opacity: 0;
 }
 
 .file-input {

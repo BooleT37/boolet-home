@@ -177,7 +177,8 @@ function getBabelOptions() {
             {
                 "ssr": false
             }
-        ]
+        ],
+        'macros'
     ];
 
     // todo disable HMR in production
