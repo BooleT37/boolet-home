@@ -11,6 +11,9 @@ import "./Viewer.css";
 
 const TICK_DELTA = 500;
 
+const round = (num: number, percision: number): number =>
+  Math.round(num * Math.pow(10, percision)) / Math.pow(10, percision);
+
 const Viewer: React.FC = () => {
   const [tick, setTick] = React.useState(0);
   const [playing, setPlaying] = React.useState(false);
@@ -174,7 +177,9 @@ const Viewer: React.FC = () => {
               </button>
               <div className="time">
                 {tickToTime(tick)}
-                {speed !== 1 ? ` (adj. ${tickToTime(tick * speed)})` : null}
+                {speed !== 1
+                  ? ` (adj.\u00A0${tickToTime(round(tick * speed, 0))})`
+                  : null}
               </div>
               <div>
                 <button
@@ -225,10 +230,7 @@ const Viewer: React.FC = () => {
               <div>
                 <fieldset className="fieldset">
                   <legend>speed:</legend>
-                  {speedDeltaPow > 0
-                    ? speed
-                    : Math.round(speed * Math.pow(10, -speedDeltaPow)) /
-                      Math.pow(10, -speedDeltaPow)}
+                  {speedDeltaPow > 0 ? speed : round(speed, -speedDeltaPow)}
                   <button
                     onClick={() => {
                       setSpeed((s) => Math.max(s - speedDelta, speedDelta));
@@ -246,10 +248,7 @@ const Viewer: React.FC = () => {
                 </fieldset>
                 <fieldset className="font-size">
                   <legend>speed delta:</legend>
-                  <span>
-                    {Math.round(speedDelta * Math.pow(10, -speedDeltaPow)) /
-                      Math.pow(10, -speedDeltaPow)}
-                  </span>
+                  <span>{round(speedDelta, -speedDeltaPow)}</span>
                   <button
                     onClick={() => {
                       setSpeedDeltaPow((s) => s - 1);
