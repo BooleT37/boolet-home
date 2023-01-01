@@ -18,7 +18,7 @@
     "@types/node": "^13.1.8",
     "@types/react": "^16.9.17",
     "body-parser": "^1.19.0",
-    "config": "^3.2.5",
+    "config": "^3.3.8",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-history-api-fallback": "^2.2.1",
